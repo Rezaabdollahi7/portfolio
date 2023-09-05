@@ -5,7 +5,7 @@ function App(){
   return(
     <>
     <Navbar />
-    <p>this is app</p>
+   
     
     </>
     
