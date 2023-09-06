@@ -3,7 +3,7 @@
 Welcome to my front-end portfolio website project! This website showcases my skills and projects as a front-end developer. Below, you'll find information on how to run the project and its key features.
 
 ## Table of Contents
-- [Introduction](https://github.com/Rezaabdollahi7/portfolio#getting-started-)
+- [Introduction](#introduction)
 - [Getting Started](#getting-started)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
@@ -52,12 +52,13 @@ Responsive Design: The website is fully responsive, ensuring a seamless experien
 
 
 ## Technologies Used 🛠️
+[![My Skills](https://skillicons.dev/icons?i=html,css,js,react,tailwind,git,&perline=6)](https://skillicons.dev)
 
-    HTML
+ 	HTML
     CSS
-    Tailwind CSS
+  	JavaScript
     React
-    JavaScript
+    Tailwind CSS
 
 ## Contributing 🤝
 
@@ -70,3 +71,5 @@ If you'd like to contribute to this project, feel free to open an issue or submi
 MIT
 
 **Free Software, Hell Yeah!**
+
+
