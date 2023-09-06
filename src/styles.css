@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family:'conveat' ;
+    src: url('../public/fonts/caveat/Caveat-Bold.ttf') format('ttf'),
+    url('../public/fonts/caveat/Caveat-Regular.ttf') format('ttf'),
+    url('../public/fonts/caveat/Caveat-Medium.ttf') format('ttf'),
+    url('../public/fonts/caveat/Caveat-SemiBold.ttf') format('ttf') ;
+}
+
+@layer{
+    .f-conveat{
+        font-family: 'caveat';
+    }
+}
