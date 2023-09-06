@@ -27,14 +27,14 @@ To run this project locally, follow these steps:
    ```bash
    npm install
 1.Start the development server: 
-```
-npm start
+   ```bash nom start ```
+ 
 
 2.Open your web browser and visit http://localhost:3000 to view the website.
 
 
 
-Features ✨
+##Features ✨
 
     Responsive Design: The website is fully responsive, ensuring a seamless experience on various devices.
 
@@ -47,7 +47,7 @@ Features ✨
     Interactive UI: Use of JavaScript to enhance the user experience with animations and dynamic content.
 
 
-Technologies Used 🛠️
+##Technologies Used 🛠️
 
     HTML
     CSS
@@ -55,7 +55,7 @@ Technologies Used 🛠️
     React
     JavaScript
 
-Contributing 🤝
+##Contributing 🤝
 
 If you'd like to contribute to this project, feel free to open an issue or submit a pull request. Your feedback and contributions are highly appreciated.
 
