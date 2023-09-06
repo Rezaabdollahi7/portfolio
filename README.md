@@ -24,30 +24,34 @@ To run this project locally, follow these steps:
 
 3. Install the necessary dependencies by running:
 
-   ```bash
-   npm install
-1.Start the development server: 
-   ```bash nom start ```
+  ```sh
+    npm install 
+  ```
+4.  Start the development server: 
+
+  ```sh
+    npm start 
+  ```
+  
  
 
-2.Open your web browser and visit http://localhost:3000 to view the website.
+5. Open your web browser and visit http://localhost:3000 to view the website.
 
 
 
-##Features ✨
+## Features ✨
+Responsive Design: The website is fully responsive, ensuring a seamless experience on various devices.
 
-    Responsive Design: The website is fully responsive, ensuring a seamless experience on various devices.
+ Project Showcase: A dedicated section to display my portfolio projects with descriptions and links to GitHub repositories or live demos.
 
-    Project Showcase: A dedicated section to display my portfolio projects with descriptions and links to GitHub repositories or live demos.
+  Skills Section: Highlighting the key technologies and skills I possess.
 
-    Skills Section: Highlighting the key technologies and skills I possess.
+  Contact Form: A contact form for visitors to get in touch with me.
 
-    Contact Form: A contact form for visitors to get in touch with me.
-
-    Interactive UI: Use of JavaScript to enhance the user experience with animations and dynamic content.
+   Interactive UI: Use of JavaScript to enhance the user experience with animations and dynamic content.
 
 
-##Technologies Used 🛠️
+## Technologies Used 🛠️
 
     HTML
     CSS
@@ -55,11 +59,14 @@ To run this project locally, follow these steps:
     React
     JavaScript
 
-##Contributing 🤝
+## Contributing 🤝
 
 If you'd like to contribute to this project, feel free to open an issue or submit a pull request. Your feedback and contributions are highly appreciated.
 
 
-License 📝
 
-This project is licensed under the MIT License.
+## License 📝
+
+MIT
+
+**Free Software, Hell Yeah!**
