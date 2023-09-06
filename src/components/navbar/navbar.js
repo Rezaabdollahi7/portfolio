@@ -9,7 +9,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className='fixed top-0 left-0 container mx-auto p-6 bg-white/80  '>
+        <nav className='fixed top-0 left-0 container mx-auto p-5 bg-white/80 z-50 '>
             {/* main container */}
             <div className='flex items-center justify-between '>
                 {/* LOGO */}

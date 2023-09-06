@@ -3,15 +3,28 @@
 @tailwind utilities;
 
 @font-face {
-    font-family:'conveat' ;
+    font-family: 'conveat';
     src: url('../public/fonts/caveat/Caveat-Bold.ttf') format('ttf'),
-    url('../public/fonts/caveat/Caveat-Regular.ttf') format('ttf'),
-    url('../public/fonts/caveat/Caveat-Medium.ttf') format('ttf'),
-    url('../public/fonts/caveat/Caveat-SemiBold.ttf') format('ttf') ;
+        url('../public/fonts/caveat/Caveat-Regular.ttf') format('ttf'),
+        url('../public/fonts/caveat/Caveat-Medium.ttf') format('ttf'),
+        url('../public/fonts/caveat/Caveat-SemiBold.ttf') format('ttf');
 }
 
-@layer{
-    .f-conveat{
+@layer utilities {
+    .f-conveat {
         font-family: 'caveat';
     }
+
+    .bg-aboutMe {
+        background-image: url('../public/images/aboutMe.jpg');
+    }
+
+    #aboutMain {
+    background: rgba(30, 27, 75, 1);
+        -webkit-backdrop-filter: blur(50px);
+        backdrop-filter: blur(50px);
+    }
+
 }
+
+@layer components {}

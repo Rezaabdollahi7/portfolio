@@ -1,14 +1,15 @@
 // import components
 import Navbar from "./components/navbar/navbar"
+import AboutMe from "./components/aboutMe/aboutMe";
 
-function App(){
-  return(
+function App() {
+  return (
     <>
-    <Navbar />
-   
-    
+      <Navbar />
+      <AboutMe />
+
     </>
-    
+
   )
 }
 
