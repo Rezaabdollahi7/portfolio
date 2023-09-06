@@ -3,7 +3,7 @@
 Welcome to my front-end portfolio website project! This website showcases my skills and projects as a front-end developer. Below, you'll find information on how to run the project and its key features.
 
 ## Table of Contents
-- [Introduction](#introduction)
+- [Introduction](https://github.com/Rezaabdollahi7/portfolio#getting-started-)
 - [Getting Started](#getting-started)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
