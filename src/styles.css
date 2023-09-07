@@ -16,7 +16,7 @@
     }
 
     .bg-aboutMe {
-        background-image: url('../public/images/aboutMe.jpg');
+        background-image: url('../public/images/about-back.jpg');
     }
 
     .bg-pattern-1 {
@@ -30,9 +30,9 @@
     .bg-pattern-3 {
         background-image: url('../public/images/pattern3.jpg');
     }
-    
+
     #aboutMain {
-        background: rgba(30, 27, 75, 1);
+        background: rgba(30, 27, 75, 0.1);
         -webkit-backdrop-filter: blur(50px);
         backdrop-filter: blur(50px);
     }
