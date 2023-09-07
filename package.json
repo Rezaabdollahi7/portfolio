@@ -19,7 +19,7 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://Rezaabdollahi7.github.io/portfolio",
+  "homepage": "https://rezaabdollahi7.github.io/portfolio",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
