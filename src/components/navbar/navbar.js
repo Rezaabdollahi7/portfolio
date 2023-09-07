@@ -14,7 +14,7 @@ const Navbar = () => {
             <div className='flex items-center justify-between '>
                 {/* LOGO */}
                 <div className='logocontainer flex items-center gap-3 w-1/4 '>
-                    <img className='logo img w-14 rounded-md  ' src='./images/mainrlogo.png'></img>
+                    <img className='logo img w-14 rounded-md  ' src={process.env.PUBLIC_URL + '/images/mainrlogo.png'}></img>
                     <span className='logo-name uppercase font-bold text-xl text-transparent bg-clip-text  bg-gradient-to-r from-cyan-500 to-purple-500 f-conveat'>Rsona </span>
                 </div>
 

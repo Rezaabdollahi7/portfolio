@@ -9,7 +9,7 @@ const AboutMe = () => {
         <section className='w-full bg-aboutMe rounded-3xl mt-[25%]  lg:mt-[6.5%] lg:pt-16 '>
             <main id='aboutMain'  className='w-[95%]   lg:w-[85%] p-[3%]  mx-auto gap-32 mt-4  flex flex-col lg:flex-row  items-start justify-center lg:rounded-3xl '>
                 <div className="prof-container lg:w-1/2 mt-12">
-                    <img className='rounded-2xl' src="./images/my-pic.png" alt="prof-img" />
+                    <img className='rounded-2xl' src={process.env.PUBLIC_URL + '/images/my-pic.png'} alt="prof-img" />
                 </div>
 
                 <div className="prof-text-wrapper lg:w-1/2 -mt-12  lg:mt-12">
