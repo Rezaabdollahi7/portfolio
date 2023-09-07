@@ -19,8 +19,20 @@
         background-image: url('../public/images/aboutMe.jpg');
     }
 
+    .bg-pattern-1 {
+        background-image: url('../public/images/pattern1.jpg');
+    }
+
+    .bg-pattern-2 {
+        background-image: url('../public/images/pattern2.jpg');
+    }
+
+    .bg-pattern-3 {
+        background-image: url('../public/images/pattern3.jpg');
+    }
+    
     #aboutMain {
-    background: rgba(30, 27, 75, 1);
+        background: rgba(30, 27, 75, 1);
         -webkit-backdrop-filter: blur(50px);
         backdrop-filter: blur(50px);
     }
