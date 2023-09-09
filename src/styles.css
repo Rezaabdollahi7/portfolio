@@ -45,6 +45,9 @@
     .writting-mode{
         writing-mode: sideways-rl;
     }
+    .prof-img{
+        background-image: url('../public/images/pic (9).jpg');
+    }
 
 
 }

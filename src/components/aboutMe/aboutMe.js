@@ -6,10 +6,11 @@ import React, { useState } from 'react';
 const AboutMe = () => {
 
     return (
-        <section className='w-full bg-aboutMe rounded-3xl mt-[25%]  lg:mt-[6.5%] lg:pt-16 '>
-            <main id='aboutMain'  className='w-[95%]   lg:w-[85%] p-[3%]  mx-auto gap-32 mt-4  flex flex-col lg:flex-row  items-start justify-center lg:rounded-3xl '>
-                <div className="prof-container lg:w-1/2 mt-12">
-                    <img className='rounded-2xl' src={process.env.PUBLIC_URL + '/images/my-pic2.jpg'} alt="prof-img" />
+        <section className='w-full bg-aboutMe rounded-3xl mt-[25%]  lg:mt-[6.5%] lg:pt-16 lg:pb-16  '>
+            <main id='aboutMain'  className='w-[95%]   lg:w-[85%] p-[3%]  mx-auto gap-32 mt-4   flex flex-col lg:flex-row  items-start justify-center lg:rounded-3xl '>
+                <div className="prof-container prof-img bg-center bg-cover rounded-6xl  lg:w-1/2 mt-12">
+                    <img className='rounded-2xl ' src={process.env.PUBLIC_URL + '/images/my-pic4.png'} alt="prof-img" />
+                    
                 </div>
 
                 <div className="prof-text-wrapper lg:w-1/2 -mt-12  lg:mt-12">
