@@ -34,7 +34,9 @@
     .bg-edu {
         background-image: url('../public/images/bg-edu.jpg');
     }
-
+    .bg-skill{
+        background-image: url('../public/images/bg-skill\ copy.jpg');
+    }
     #aboutMain {
         background: rgba(30, 27, 75, 0.1);
         -webkit-backdrop-filter: blur(50px);
