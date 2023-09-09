@@ -6,7 +6,7 @@ const Education = () => {
 
     return (
         <section id='Education  '>
-            <section className="bg-edu    bg-blend-multiply bg-purple-400/10  bg-cover  w-full">
+            <section className="bg-edu    bg-blend-multiply bg-purple-400/10  bg-cover  w-full lg:pb-44">
                 <section className="education-wrapper w-[85%] mx-auto   flex fc-center">
                     {/* education tittle */}
                     <div className="edu-tittle w-full mt-20  flex flex-col items-center justify-center relative">
