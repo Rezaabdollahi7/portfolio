@@ -8,11 +8,51 @@ const Work_skill = () => {
         <section className="skil-all-wrapper w-full bg-skill rounded-bl-7xl ">
             <section className="work-skill-wrap  mx-auto grid lg:grid-cols-2 gap-5">
                 {/* left side */}
-                <section className='left-side col-span-1 bg-stone-950 -mt-24 mb-16 rounded-tr-6xl rounded-br-6xl  px-16'>
+                <section className='left-side col-span-1 bg-blend-multiply bg-pattern-2 bg-stone-800   -mt-24 mb-16 rounded-tr-6xl rounded-br-6xl  px-16'>
                     <h3 className=' text-3xl lg:text-5xl text-white font-bold w-full mt-24'> My Work &<span className='f-conveat'> Experience</span></h3>
                     <p className='lg:text-xl text-gray-300 mt-4 '>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
 
-                  
+                    <div className="work-exp-item-wrapper flex flex-col  ">
+                        {/* item 1 */}
+                        <div className="exp-item flex items-center justify-between lg:mt-16 rounded-5xl p-12 ">
+                            <span className="number  bg-blue-700  flex justify-center items-center   opacity-40 lg:p-7 lg:px-9 rounded-2xl text-white rotate-45">
+                                <span className=' w-full h-full top-1/2 left-1/2 text-3xl font-bold -rotate-45 ' >3</span>
+                            </span>
+                            <div className="item-text ml-2  ">
+                                <p className='text-lg text-gray-200 font-light '>2021 - 2014</p>
+                                <h5 className='uppercase lg:text-3xl text-white mt-4 font-bold '> ui/ux creative design </h5>
+                                <p className='mt-4  text-xl font-semibold text-favblue-50 ' >Incident Software House</p>
+                            </div>
+                            <button className='lg:p-3 rounded-lg bg-white font-bold text-favblue-50 flex items-center justify-center  text-2xl'>+</button>
+                        </div>
+                        {/* item 2 */}
+                        <div className="exp-item flex items-center justify-between lg:mt-8 bg-favblue-50 bg-blend-multiply bg-pattern-2 bg-center bg-cover  rounded-5xl p-12 ">
+                            <span className="number  bg-blue-300  flex justify-center items-center   opacity-40 lg:p-7 lg:px-9 rounded-2xl text-white rotate-45">
+                                <span className=' w-full h-full top-1/2 left-1/2 text-3xl font-bold -rotate-45 ' >1</span>
+                            </span>
+                            <div className="item-text ml-4  ">
+                                <p className='text-lg text-white font-light '>2011 - 2014</p>
+                                <h5 className='uppercase lg:text-3xl text-white mt-4 font-bold '> ui/ux creative design </h5>
+                                <p className='mt-4 text-white text-xl font-semibold ' >Incident Software House</p>
+                                <p className='text-gray-300/60 mt-8 text-lg '>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat dignissimos accusamus, soluta dolores fugiat ducimus necessitatibus adipisci cum quos. Hic?</p>
+                            </div>
+                            <button className='lg:p-3 rounded-lg bg-white font-bold text-favblue-50 flex items-center justify-center  text-2xl'>+</button>
+                        </div>
+
+                        {/* item 3 */}
+                        <div className="exp-item flex items-center justify-between lg:my-4 rounded-5xl p-12 ">
+                            <span className="number  bg-blue-700  flex justify-center items-center   opacity-40 lg:p-7 lg:px-9 rounded-2xl text-white rotate-45">
+                                <span className=' w-full h-full top-1/2 left-1/2 text-3xl font-bold -rotate-45 ' >2</span>
+                            </span>
+                            <div className="item-text ml-2  ">
+                                <p className='text-lg text-gray-200 font-light '>2021 - 2014</p>
+                                <h5 className='uppercase lg:text-3xl text-white mt-4 font-bold '> ui/ux creative design </h5>
+                                <p className='mt-4  text-xl font-semibold text-favblue-50 ' >Incident Software House</p>
+                            </div>
+                            <button className='lg:p-3 rounded-lg bg-white font-bold text-favblue-50 flex items-center justify-center  text-2xl'>+</button>
+                        </div>
+
+                    </div>
 
 
                 </section>
