@@ -56,9 +56,10 @@ const Work_skill = () => {
 
 
                 </section>
+                
                 {/* right side */}
-                <section className="rigt-side col-span-1 mt-16 lg:mt-32 w-[90%] ">
-                    <h3 className=' text-3xl lg:text-5xl text-white font-bold w-full'> My Skill &<span className='f-conveat'> Advantage</span></h3>
+                <section className="rigt-side col-span-1 mb-8  mt-12 lg:mb-0  lg:mt-32 mx-auto  w-[90%] ">
+                    <h3 className=' text-4xl lg:text-5xl text-white font-bold w-full'> My Skill &<span className='f-conveat'> Advantage</span></h3>
                     <p className='lg:text-xl text-gray-300 mt-4 '>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
 
                     <section className="skill-item-wrapper w-full grid grid-cols-1 lg:grid-cols-2 mt-8 gap-7 " >
