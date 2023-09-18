@@ -5,6 +5,7 @@ import BestServices from "./components/bestServices/bestServices";
 import Education from "./components/Education/Education";
 import Work_skill from "./components/work_skill/work_skill";
 import Funfact from "./components/Funfact/Funfact";
+import FreelancerWork from "./components/FreelancerWork/FreelancerWork";
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
       <Education/>
       <Work_skill/>
       <Funfact/>
+      <FreelancerWork/>
     </>
 
   )

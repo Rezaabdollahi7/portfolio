@@ -33,7 +33,6 @@ const Funfact = () => {
         // اگر به بخش FunFact اسکرول کردید و شمارش شروع نشده باشد، آن را آغاز کنید
         if (!scrolledToFunFact) {
             setScrolledToFunFact(true);
-            alert('now')
         }
     };
 
@@ -63,7 +62,7 @@ const Funfact = () => {
     ];
 
     return (
-        <section id="Funfact" className="w-full bg-pattern-1 bg-blend-multiply lg:bg-center bg-cover py-16">
+        <section id="Funfact" className="w-full bg-pattern-1 bg-blend-multiply lg:bg-center bg-cover py-16 lg:mb-16 ">
             <div className="funfact-wrapper grid lg:grid-cols-4 gap-6 w-[90%] lg:w-[80%] mx-auto">
                 {timers.map((timer, index) => (
                     <div
