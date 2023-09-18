@@ -9,11 +9,12 @@ const Funfact = () => {
     ];
 
     const [counts, setCounts] = useState(timers.map(() => 0));
+    const [scrolledToFunFact, setScrolledToFunFact] = useState(false);
 
     useEffect(() => {
         const intervalIds = timers.map((timer, index) => {
             return setInterval(() => {
-                if (counts[index] < timer.limit) {
+                if (scrolledToFunFact &&  counts[index] < timer.limit) {
                     setCounts((prevCounts) => {
                         const newCounts = [...prevCounts];
                         newCounts[index] += 1;
@@ -26,7 +27,23 @@ const Funfact = () => {
         return () => {
             intervalIds.forEach((id) => clearInterval(id));
         };
-    }, [counts]);
+    }, [counts, scrolledToFunFact]);
+
+    const handleScroll = () => {
+        // اگر به بخش FunFact اسکرول کردید و شمارش شروع نشده باشد، آن را آغاز کنید
+        if (!scrolledToFunFact) {
+            setScrolledToFunFact(true);
+            alert('now')
+        }
+    };
+
+    useEffect(() => {
+        // به عنوان یک مثال، در اینجا به وقتی به بخش FunFact اسکرول می‌کنید، شمارش شروع می‌شود
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [scrolledToFunFact]);
 
     const itemTexts = ['Happy Customers', 'Coffee Cups', 'Finished  Projects', 'Working Hours'];
     const svgAddresses = [
