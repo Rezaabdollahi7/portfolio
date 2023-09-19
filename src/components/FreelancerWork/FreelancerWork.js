@@ -1,7 +1,7 @@
 import React from "react";
 const FreelancerWork = () => {
     return (
-        <section id="freelancer" className="lg:w-[90%]  rounded-tr-9xl lg:rounded-br-9xl px-8 lg:px-28 py-12   bg-pattern-2 bg-center bg-cover bg-blend-multiply bg-blue-700 grid grid-cols-1   lg:grid-cols-2 gap-10  lg:gap-10 items-center  justify-center " >
+        <section id="freelancer" className="lg:w-[90%]  rounded-tr-9xl lg:rounded-br-9xl px-8 lg:px-28 py-12 -mb-[19%] z-40  bg-pattern-2 bg-center bg-cover bg-blend-multiply bg-blue-700 grid grid-cols-1   lg:grid-cols-2 gap-10  lg:gap-10 items-center  justify-center " >
             {/* text section */}
             <div className="freeTxt order-1  ">
                 <p className=" text-xl lg:text-2xl font-semibold text-white">I Am Available For</p>

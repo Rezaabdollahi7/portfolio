@@ -31,21 +31,33 @@
         background-image: url('../public/images/pattern3.jpg');
     }
 
+    .bg-pattern-4 {
+        background-image: url('../public/images/pattern4.jpg');
+    }
+
     .bg-edu {
         background-image: url('../public/images/bg-edu.jpg');
     }
-    .bg-skill{
+
+    .bg-skill {
         background-image: url('../public/images/bg-skill\ copy.jpg');
     }
+
+    .bg-plans {
+        background-image: url('../public/images/bg-plans.jpg');
+    }
+
     #aboutMain {
         background: rgba(30, 27, 75, 0.1);
         -webkit-backdrop-filter: blur(50px);
         backdrop-filter: blur(50px);
     }
-    .writting-mode{
+
+    .writting-mode {
         writing-mode: sideways-rl;
     }
-    .prof-img{
+
+    .prof-img {
         background-image: url('../public/images/pic (9).jpg');
     }
 

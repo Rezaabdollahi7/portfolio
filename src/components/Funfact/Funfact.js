@@ -71,7 +71,7 @@ const Funfact = () => {
                     >
                         <div dangerouslySetInnerHTML={{ __html: svgAddresses[index] }} />
                         <p className="text-3xl lg:text-4xl mt-4 text-favblue-100 font-bold">{counts[index]}</p>
-                        <h4 className="text-xl mt-4 text-gray-500">{itemTexts[index]}</h4>
+                        <h4 className="text-xl mt-4 text-gray-500 ">{itemTexts[index]}</h4>
                     </div>
                 ))}
             </div>
