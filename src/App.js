@@ -7,6 +7,7 @@ import Work_skill from "./components/work_skill/work_skill";
 import Funfact from "./components/Funfact/Funfact";
 import FreelancerWork from "./components/FreelancerWork/FreelancerWork";
 import PricingPlans from "./components/PricingPlans/PricingPlans";
+import AmazingWork from "./components/AmazingWork/AmazingWork";
 function App() {
   return (
     <>
@@ -18,6 +19,7 @@ function App() {
       <Funfact/>
       <FreelancerWork/>
       <PricingPlans/>
+      <AmazingWork/>
     </>
 
   )
