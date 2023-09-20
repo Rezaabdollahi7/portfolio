@@ -31,6 +31,10 @@
         background-image: url('../public/images/pattern3.jpg');
     }
 
+    .bg-pattern-3-blur {
+        background-image: url('../public/images/pattern3\ blur.jpg');
+    }
+
     .bg-pattern-4 {
         background-image: url('../public/images/pattern4\ copy.jpg');
     }
