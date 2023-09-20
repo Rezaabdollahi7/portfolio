@@ -2,14 +2,14 @@ import React from "react";
 
 const PricingPlans = () => {
     return (
-        <section id="PricingPlans" className="w-ull lg:pt-80 pb-16  relative    bg-plans  bg-center bg-cover bg-blend-multiply " >
+        <section id="PricingPlans" className="w-ull lg:pt-80 pb-16   bg-plans  bg-center bg-cover bg-blend-multiply " >
             <div className="tittle-wrap flex justify-center mt-32 items-center flex-col w-full">
                 <h3 className="lg:text-6xl text-favblue-100 font-bold " >My Pric<span className="bg-white rounded-3xl py-1 mx-1">ing</span> <span className="text-favblue-25 f-conveat">Plans</span> </h3>
                 <p className="text-xl text-center  lg:mt-8 text-gray-500">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <br />  tempor incididunt ut labore et dolore.</p>
             </div>
 
             {/* items wrap */}
-            <div className="item-wrap grid lg:grid-cols-3 gap-10 lg:w-[80%] mx-auto mt-16 ">
+            <div className="item-wrap grid lg:grid-cols-3 gap-10 lg:w-[80%] mx-auto mt-16  ">
                 {/* item 1 */}
                 <div className="item flex flex-col items-start justify-start  ">
                     <div className="item-tittle bg-pattern-4  rounded-tr-3xl rounded-tl-3xl w-full bg-cover  px-16 pb-8 pt-24 ">
