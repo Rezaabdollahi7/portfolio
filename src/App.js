@@ -9,6 +9,7 @@ import FreelancerWork from "./components/FreelancerWork/FreelancerWork";
 import PricingPlans from "./components/PricingPlans/PricingPlans";
 import AmazingWork from "./components/AmazingWork/AmazingWork";
 import FeaturedPosts from "./components/Featured posts/FeaturedPosts";
+import ContactMe from "./components/ContactMe/ContactMe";
 function App() {
   return (
     <>
@@ -22,6 +23,7 @@ function App() {
       <PricingPlans/>
       <AmazingWork/>
       <FeaturedPosts/>
+      <ContactMe/>
     </>
 
   )

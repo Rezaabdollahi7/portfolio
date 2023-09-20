@@ -11,9 +11,9 @@ const FeaturedPosts = () => {
 
                 <div className="fea-item-wrap grid lg:grid-cols-2 gap-5 mt-16 w-[80%] mx-auto">
                     {/* item 1 */}
-                    <div className="item flex fc-center   ">
+                    <div className="item flex fc-center  group ">
                         <div className="img-container overflow-hidden rounded-3xl ">
-                            <img className="rounded-3xl hover:scale-110 hover:rounded-3xl transition-all delay-75 duration-500" src={process.env.PUBLIC_URL + '/images/postimg1.jpg'} alt="" />
+                            <img className="rounded-3xl group-hover:scale-110 transition-all delay-75 duration-500" src={process.env.PUBLIC_URL + '/images/postimg1.jpg'} alt="" />
                         </div>
                         {/* post details (date and texts) */}
                         <div className="post-details-wrap flex lg:w-[70%] items-center relative -mt-7 lg:-mt-16 ">
@@ -23,7 +23,7 @@ const FeaturedPosts = () => {
                                 <p className="text-white text-xl mt-1  font-bold text-center">21</p>
                             </div>
                             {/* text section */}
-                            <div className="text-wrap fc-center pl-14  lg:px-16 py-6  lg:py-8 z-10 rounded-4xl bg-pattern-2 bg-blend-multiply bg-center bg-cover overflow-hidden bg-purple-400/20 ">
+                            <div className="text-wrap fc-center   pl-14  lg:px-16 py-6  lg:py-8 z-10 rounded-4xl bg-pattern-2 bg-blend-multiply bg-center bg-cover overflow-hidden bg-purple-400/20 ">
                                 <p className="  lg:text-lg font-semibold text-favblue-50 mb-2 ">By Berline Tokyo</p>
                                 <a href="# " className="lg:text-xl text-favblue-100 font-bold hover:text-favblue-25 transition-all duration-300 ">Spring Which I Enjoy With For Effective Agile Team</a>
                                 <div className="range-wrapper w-full h-[1px] bg-white mt-5">
@@ -41,9 +41,9 @@ const FeaturedPosts = () => {
                     </div>
 
                     {/* item 2 */}
-                    <div className="item flex fc-center   ">
+                    <div className="item flex fc-center group  ">
                         <div className="img-container overflow-hidden rounded-3xl ">
-                            <img className="rounded-3xl hover:scale-110 hover:rounded-3xl transition-all delay-75 duration-500" src={process.env.PUBLIC_URL + '/images/postimg2.jpg'} alt="" />
+                            <img className="rounded-3xl group-hover:scale-110  transition-all delay-75 duration-500" src={process.env.PUBLIC_URL + '/images/postimg2.jpg'} alt="" />
                         </div>
                         {/* post details (date and texts) */}
                         <div className="post-details-wrap flex lg:w-[70%] items-center relative -mt-7 lg:-mt-16 ">
