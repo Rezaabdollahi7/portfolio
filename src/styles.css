@@ -48,17 +48,14 @@
     }
 
     .bg-plans {
-        background-image: url('../public/images/bg-plans\ copy.jpg');
+        background-image: url('../public/images/pic99\ \(3\).jpg');
+        /* background-position: contain; */
+        background-size: cover;
     }
 
     .bg-contact {
         background-image: url('../public/images/bg-contact.jpg');
     }
-
-    .bg-contact-3 {
-        background-image: url('../public/images/bg-contact-3.jpg');
-    }
-
     .bg-contact-2 {
         background-image: url('../public/images/bg-contact-2.jpg');
     }
@@ -74,7 +71,10 @@
     }
 
     .prof-img {
-        background-image: url('../public/images/pic (9).jpg');
+        background-image: url('../public/images/pic99\ \(9\).jpg');
+        background-position: center;
+        background-size: contain;
+        background-size: cover;
     }
 
 
