@@ -2,36 +2,36 @@ import React from "react";
 
 const ContactMe = () => {
     return (
-        <section id="contact" className="w-full my-48 py-16  fc-center bg-contact bg-center bg-cover bg-blend-multiply">
-            <div className="contact-form-wrap lg:w-[80%] lg:py-16 mt-16  mx-auto fc-center  bg-contact-2 bg-center bg-cover rounded-6xl ">
-                <h5 className="text-6xl text-white font-bold w-full text-center " >Contact <span className="f-conveat">Me</span></h5>
-                <p className="text-lg mt-4  text-gray-400 w-full text-center ">Your email address will not be published. Required fields are marked *</p>
+        <section id="contact" className="w-full mt-32 py-16  fc-center bg-contact bg-center bg-cover bg-blend-multiply">
+            <div className="contact-form-wrap w-[95%]  lg:w-[80%] py-16   mt-16  mx-auto fc-center  bg-contact-2 bg-center bg-cover rounded-6xl ">
+                <h5 className="text-4xl  lg:text-6xl text-white font-bold w-full text-center " >Contact <span className="f-conveat">Me</span></h5>
+                <p className=" lg:text-lg mt-4  text-gray-400 w-full text-center ">Your email address will not be published. Required fields are marked *</p>
 
-                <div className="grid-wrap grid gap-10 lg:grid-cols-2 px-16">
-                    <form action="Post" className="flex flex-col col-span-1 relative">
+                <div className="grid-wrap grid gap-10 lg:grid-cols-2 lg:px-16  w-[90%] mx-auto ">
+                    <form action="Post" className="flex flex-col col-span-1 relative ">
                         <label className="text-white text-lg font-bold  mt-6 mb-1" htmlFor="nameInput">Your Name</label>
-                        <input className="bg-transparent border-2 border-gray-400 rounded-xl py-3 text-2xl  pl-3 text-white focus-visible:outline-2 focus-visible:outline-yellow-300 f-conveat  " type="text" name="" id="nameInput" />
+                        <input className="bg-transparent border-2 border-gray-400 rounded-xl py-3 text-2xl  pl-1 w-full  lg:pl-3 text-white focus-visible:outline-2 focus-visible:outline-yellow-300 f-conveat  " type="text" name="" id="nameInput" />
 
                         <label className="text-white text-lg font-bold  mt-6 mb-1" htmlFor="emailInput">Your Email</label>
-                        <input className="bg-transparent border-2 border-gray-400 rounded-xl py-3 text-2xl  pl-3 text-white focus-visible:outline-2 focus-visible:outline-yellow-300 f-conveat  " type="email" name="" id="emailInput" />
+                        <input className="bg-transparent border-2 border-gray-400 rounded-xl py-3 text-2xl  pl-1 w-full  lg:pl-3 text-white focus-visible:outline-2 focus-visible:outline-yellow-300 f-conveat  " type="email" name="" id="emailInput" />
 
                         <label className="text-white text-lg font-bold  mt-6 mb-1" htmlFor="messageInput">Write a Message</label>
-                        <textarea className="bg-transparent border-2 border-gray-400 rounded-xl py-3 text-2xl  pl-3 text-white focus-visible:outline-2 focus-visible:outline-yellow-300 f-conveat  resize-none  " name="" id="messageInput" cols="30" rows="10"></textarea>
+                        <textarea className="bg-transparent border-2 border-gray-400 rounded-xl py-3 text-2xl  pl-1 w-full  lg:pl-3 text-white focus-visible:outline-2 focus-visible:outline-yellow-300 f-conveat  resize-none  " name="" id="messageInput" cols="30" rows="10"></textarea>
 
                         <button type="submit" className="bg-white z-10 absolute right-0 bottom-0 text-favblue-50 text-xl font-bold tracking-wide f-conveat py-4 px-6 rounded-tl-xl rounded-br-xl hover:bg-favblue-100 hover:text-white transition-all duration-300 delay-75 ">Send Message</button>
 
                     </form>
 
-                    <div className="img-wrap relative">
+                    <div className="img-wrap relative order-first lg:order-last  flex justify-center ">
 
-                        <img className='rounded-full lg:w-[25rem] h-[25rem] mt-[26%] ' src={process.env.PUBLIC_URL + '/images/my-pic.png'} alt="prof-img" />
+                        <img className='rounded-full w-60 h-60  lg:w-[25rem] lg:h-[25rem] mt-[26%]  ' src={process.env.PUBLIC_URL + '/images/my-pic.png'} alt="prof-img" />
 
                     </div>
                 </div>
 
             </div>
 
-            <div className="my-info-items-wrapper grid grid-cols-1 lg:grid-cols-3 gap-10  lg:w-[80%] mx-auto  mt-24 ">
+            <div className="my-info-items-wrapper grid grid-cols-1 lg:grid-cols-3 gap-10 w-[90%]  lg:w-[80%] mx-auto  mt-24 ">
                 {/* item 1 */}
                 <div className="item flex border-2  border-dashed rounded-2xl p-4 py-7 ">
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 200 200" class="h-[3.4375rem] fill-favblue-50 ml-4 mt-1"><g><path d="M199,104.76c-2.11,6-5.94,10.32-12.04,12.49c-1.98,0.7-4.04,0.92-6.09,0.94c-2.01,0.02-2.45,0.88-2.45,2.72 c0.05,18,0.02,36,0.04,54c0,6.09-1.12,11.81-5.3,16.55c-4.18,4.74-9.37,7.44-15.74,7.49c-10.38,0.07-20.77,0.03-31.15,0.03 c-4.91,0-7.11-2.17-7.11-7.05c-0.01-14.97,0-29.94-0.01-44.91c0-4.34-1.83-7.56-5.87-9.4c-1.14-0.52-2.34-0.69-3.58-0.68 c-6.26,0.01-12.51-0.05-18.77,0.02c-5.51,0.05-9.46,4.07-9.48,9.62c-0.03,15.03-0.01,30.07-0.02,45.1c0,5.18-2.12,7.3-7.25,7.3 c-10.19,0-20.38,0.03-30.57-0.01c-11.39-0.05-20.49-8.72-21.28-20.12c-0.16-2.26-0.2-4.51-0.2-6.76c0-17.1-0.02-34.2,0.03-51.29 c0.01-1.77-0.46-2.54-2.36-2.58c-5.37-0.11-10.14-1.86-13.82-5.92c-6.84-7.54-6.6-18.1,0.51-25.73c0.48-0.52,1-1.01,1.5-1.51 C33.7,59.32,59.44,33.6,85.13,7.85C88.09,4.89,91.23,2.29,95.28,1c3.35,0,6.71,0,10.06,0c3.98,1.27,7.09,3.8,10,6.71 c25.45,25.5,50.91,50.98,76.41,76.43c3.09,3.09,5.89,6.31,7.25,10.55C199,98.05,199,101.41,199,104.76z M34.25,144.95 c0,10.52-0.01,21.03,0,31.55c0.01,6.53,3.95,10.55,10.45,10.59c7.48,0.04,14.96-0.03,22.44,0.05c1.72,0.02,2.22-0.55,2.21-2.23 c-0.07-7.35-0.08-14.71-0.01-22.06c0.06-6.19-0.32-12.38,0.25-18.56c0.99-10.74,10.06-19.28,20.8-19.45 c6.64-0.1,13.29-0.15,19.93,0.02c6.16,0.16,11.33,2.68,15.47,7.29c4.05,4.52,5.52,9.94,5.52,15.88c0,12.26,0.02,24.52-0.03,36.77 c-0.01,1.72,0.45,2.37,2.29,2.35c7.16-0.1,14.32-0.04,21.47-0.04c7.58-0.01,11.34-3.74,11.34-11.27c0-20.97,0-41.93,0.01-62.9 c0-4.4,2.3-6.7,6.66-6.73c2.45-0.02,4.9-0.02,7.35,0c2.96,0.02,5.3-1.07,6.57-3.86c1.2-2.61,0.59-5.24-1.73-7.57 c-26.67-26.69-53.34-53.38-80.03-80.06c-3.08-3.08-6.68-3.1-9.73-0.05C68.73,41.37,42.02,68.1,15.29,94.83 c-2.11,2.11-2.9,4.55-1.69,7.39c1.17,2.76,3.46,3.89,6.33,3.95c2.45,0.05,4.9,0.01,7.35,0.02c4.74,0.02,6.96,2.24,6.97,7.02 C34.25,123.79,34.25,134.37,34.25,144.95z"></path></g></svg>
