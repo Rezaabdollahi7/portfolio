@@ -10,6 +10,8 @@ import PricingPlans from "./components/PricingPlans/PricingPlans";
 import AmazingWork from "./components/AmazingWork/AmazingWork";
 import FeaturedPosts from "./components/Featured posts/FeaturedPosts";
 import ContactMe from "./components/ContactMe/ContactMe";
+import CustomFooter from "./components/Footer/CustomFooter";
+
 function App() {
   return (
     <>
@@ -24,6 +26,7 @@ function App() {
       <AmazingWork/>
       <FeaturedPosts/>
       <ContactMe/>
+      <CustomFooter/>
     </>
 
   )
