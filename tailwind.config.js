@@ -30,6 +30,8 @@ module.exports = {
       screens: {
         "miniLap" : '900px',
         "miniTab" : '600px',
+        "500px" : '500px',
+        "800px" : '800px',
       },
       
     },
