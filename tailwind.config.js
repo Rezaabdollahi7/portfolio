@@ -29,6 +29,7 @@ module.exports = {
       },
       screens: {
         "miniLap" : '900px',
+        "miniTab" : '600px',
       },
       
     },

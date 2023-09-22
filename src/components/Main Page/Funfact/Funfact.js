@@ -63,15 +63,15 @@ const Funfact = () => {
 
     return (
         <section id="Funfact" className="w-full bg-pattern-1 bg-blend-multiply lg:bg-center bg-cover py-16 lg:mb-16 ">
-            <div className="funfact-wrapper grid lg:grid-cols-4 gap-6 w-[90%] lg:w-[80%] mx-auto">
+            <div className="funfact-wrapper grid miniTab:grid-cols-2  lg:grid-cols-4 gap-6 w-[90%] lg:w-[80%] mx-auto">
                 {timers.map((timer, index) => (
                     <div
                         key={index}
                         className="fun-item flex flex-col items-center justify-center bg-pattern-2 bg-blend-multiply bg-purple-400/10 py-12 bg-center bg-cover rounded-3xl"
                     >
                         <div dangerouslySetInnerHTML={{ __html: svgAddresses[index] }} />
-                        <p className="text-3xl lg:text-4xl mt-4 text-favblue-100 font-bold">{counts[index]}</p>
-                        <h4 className="text-xl mt-4 text-gray-500 ">{itemTexts[index]}</h4>
+                        <p className="text-3xl lg:text-3xl xl:text-4xl  mt-4 text-favblue-100 font-bold">{counts[index]}</p>
+                        <h4 className="text-xl mt-4 text-gray-500 xl:font-semibold ">{itemTexts[index]}</h4>
                     </div>
                 ))}
             </div>
