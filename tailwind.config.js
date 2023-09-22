@@ -27,6 +27,10 @@ module.exports = {
         '8xl':'2.75rem',
         '9xl':'3rem',
       },
+      screens: {
+        "miniLap" : '900px',
+      },
+      
     },
   },
   plugins: [],
