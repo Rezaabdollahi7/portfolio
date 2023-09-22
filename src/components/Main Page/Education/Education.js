@@ -10,12 +10,12 @@ const Education = () => {
                 <section className="education-wrapper w-[85%] mx-auto   flex fc-center">
                     {/* education tittle */}
                     <div className="edu-tittle w-full mt-20  flex flex-col items-center justify-center relative">
-                        <h3 className='text-2xl lg:text-[3.5rem] font-bold text-favblue-100 ' >My Learn<span className='bg-white py-1  lg: rounded-2xl'>ing</span>  &  <span className='f-conveat text-favblue-50'>Education</span></h3>
-                        <p className='text-base  lg:text-xl text-gray-500 mt-8  text-center' >Lorem ipsum dolor sit amet, consectetur adipiscing elit, br  sed do eiusmod <br /> tempor incididunt ut labore et dolore.</p>
+                        <h3 className='text-[1.75rem] sm:text-4xl  lg:text-[3rem] xl:text-[3.5rem]  font-bold text-favblue-100 ' >My Learn<span className='bg-white py-1  lg: rounded-2xl'>ing</span>  &  <span className='f-conveat text-favblue-50'>Education</span></h3>
+                        <p className='text-base md:text-xl  lg:text-xl text-gray-500 mt-8  text-center' >I have a Bachelor's degree in Computer Science, with a focus on software development and algorithms. <br /> My studies encompassed areas such as machine learning, database management, and web development.</p>
                     </div>
 
                     {/* education items */}
-                    <div className="edu-item-wrap w-full mt-12 gap-8  grid lg:grid-cols-2">
+                    <div className="edu-item-wrap w-full mt-12 gap-8  grid  md:grid-cols-2">
                         {/* edu item */}
                         <div className="edu-item grid grid-cols-4 mb-8 relative group  bg-pattern-2 bg-center bg-cover rounded-[3rem] hover:bg-favblue-50   bg-blend-multiply  justify-start">
                             <div className="edu-item-right fc-center col-span-3 my-12 ml-8 ">
@@ -23,9 +23,9 @@ const Education = () => {
                                     <span className='w-4 h-4  flex relative mr-2 mt-2 '>
                                         <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75'></span>
                                         <span className='relative inline-flex rounded-full h-3 w-3 bg-sky-500'></span>
-                                    </span>  Harverd University</h4>
-                                <h5 className=' text-lg  lg:text-2xl text-favblue-50 mt-4 f-conveat group-hover:text-white transition duration-200 ease-in-out ' >Harverd University</h5>
-                                <p className='text-gray-500 text-lg  lg:text-lg mt-4 group-hover:text-white/70 transition duration-200 ease-in-out ' >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    </span>   University Education</h4>
+                                <h5 className=' text-xl md:text-2xl  lg:text-2xl text-favblue-50 mt-4 f-conveat group-hover:text-white transition duration-200 ease-in-out ' >Tabriz {'\u00A0'} 'Madani ' University</h5>
+                                <p className='text-gray-500 text-lg md:text-base  lg:text-lg mt-4 group-hover:text-white/70 transition duration-200 ease-in-out ' >My university years were a period of academic exploration and personal growth. I pursued my passion, acquired specialized knowledge, and forged lifelong connections.</p>
                             </div>
 
                             <div className="edu-item-left -mt-4  flex items-center justify-center  w-[53%] ml-auto mr-8 rounded-2xl h-[110%] mb-20 bg-favblue-50    text-white delay-75   group-hover:text-favblue-50 group-hover:bg-white transition duration-200 ease-in-out ">
@@ -39,9 +39,9 @@ const Education = () => {
                                     <span className='w-4 h-4  flex relative mr-2 mt-2 '>
                                         <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75'></span>
                                         <span className='relative inline-flex rounded-full h-3 w-3 bg-sky-500'></span>
-                                    </span>  Honours of UI/UX</h4>
-                                <h5 className=' text-lg  lg:text-2xl text-favblue-50 mt-4 f-conveat group-hover:text-white transition duration-200 ease-in-out ' >Cambridge University</h5>
-                                <p className='text-gray-500 text-lg  lg:text-lg mt-4 group-hover:text-white/70 transition duration-200 ease-in-out ' >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    </span>   High School Education</h4>
+                                <h5 className=' text-xl md:text-2xl  lg:text-2xl text-favblue-50 mt-4 f-conveat group-hover:text-white transition duration-200 ease-in-out ' >Ardabil {'\u00A0'}  'Andarzgho'  </h5>
+                                <p className='text-gray-500 text-lg md:text-base  lg:text-lg mt-4 group-hover:text-white/70 transition duration-200 ease-in-out ' >My high school years were transformative. They shaped my academic prowess, critical thinking skills, and set the stage for future success, both academically and personally.</p>
                             </div>
 
                             <div className="edu-item-left -mt-4  flex items-center justify-center  w-[53%] ml-auto mr-8 rounded-2xl h-[110%] mb-20 bg-favblue-50    text-white delay-75   group-hover:text-favblue-50 group-hover:bg-white transition duration-200 ease-in-out ">
@@ -55,9 +55,9 @@ const Education = () => {
                                     <span className='w-4 h-4  flex relative mr-2 mt-2 '>
                                         <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75'></span>
                                         <span className='relative inline-flex rounded-full h-3 w-3 bg-sky-500'></span>
-                                    </span>  Bachelor of Science</h4>
-                                <h5 className=' text-lg  lg:text-2xl text-favblue-50 mt-4 f-conveat group-hover:text-white transition duration-200 ease-in-out ' >TM Primary School</h5>
-                                <p className='text-gray-500 text-lg  lg:text-lg mt-4 group-hover:text-white/70 transition duration-200 ease-in-out ' >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    </span>  Middle School Education</h4>
+                                <h5 className=' text-xl md:text-2xl  lg:text-2xl text-favblue-50 mt-4 f-conveat group-hover:text-white transition duration-200 ease-in-out ' >'Moghaddas' {'\u00A0'} Magnet {'\u00A0'} Schools</h5>
+                                <p className='text-gray-500 text-lg md:text-base  lg:text-lg mt-4 group-hover:text-white/70 transition duration-200 ease-in-out ' >During my middle school years, I embarked on a journey of academic growth and self-discovery. I developed a strong foundation in various subjects and cultivated valuable study skills that continue to serve me well today.</p>
                             </div>
 
                             <div className="edu-item-left -mt-4  flex items-center justify-center  w-[53%] ml-auto mr-8 rounded-2xl h-[110%] mb-20 bg-favblue-50    text-white delay-75   group-hover:text-favblue-50 group-hover:bg-white transition duration-200 ease-in-out ">
@@ -71,9 +71,9 @@ const Education = () => {
                                     <span className='w-4 h-4  flex relative mr-2 mt-2 '>
                                         <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75'></span>
                                         <span className='relative inline-flex rounded-full h-3 w-3 bg-sky-500'></span>
-                                    </span>  School Certificate</h4>
-                                <h5 className=' text-lg  lg:text-2xl text-favblue-50 mt-4 f-conveat group-hover:text-white transition duration-200 ease-in-out ' >TM Primary School</h5>
-                                <p className='text-gray-500 text-lg  lg:text-lg mt-4 group-hover:text-white/70 transition duration-200 ease-in-out ' >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    </span>   Primary  Education</h4>
+                                <h5 className=' text-xl md:text-2xl  lg:text-2xl text-favblue-50 mt-4 f-conveat group-hover:text-white transition duration-200 ease-in-out ' >7 tir School</h5>
+                                <p className='text-gray-500 text-lg md:text-base  lg:text-lg mt-4 group-hover:text-white/70 transition duration-200 ease-in-out ' >During my elementary school years, I consistently ranked among the top students in our school. I took pride in being one of the best performers academically.</p>
                             </div>
 
                             <div className="edu-item-left -mt-4  flex items-center justify-center  w-[53%] ml-auto mr-8 rounded-2xl h-[110%] mb-20 bg-favblue-50    text-white delay-75   group-hover:text-favblue-50 group-hover:bg-white transition duration-200 ease-in-out ">
