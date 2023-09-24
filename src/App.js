@@ -11,7 +11,7 @@ import AmazingWork from "./components/Main Page/AmazingWork/AmazingWork";
 import FeaturedPosts from "./components/Main Page/Featured posts/FeaturedPosts";
 import ContactMe from "./components/Main Page/ContactMe/ContactMe";
 import CustomFooter from "./components/Main Page/Footer/CustomFooter";
-
+import UsersFeedback from "./components/Main Page/UsersFeedback/UsersFeedback";
 function App() {
   return (
     <>
@@ -25,6 +25,7 @@ function App() {
       <PricingPlans/>
       <AmazingWork/>
       <FeaturedPosts/>
+      <UsersFeedback/>
       <ContactMe/>
       <CustomFooter/>
     </>

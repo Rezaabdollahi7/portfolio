@@ -55,8 +55,13 @@
     .bg-contact {
         background-image: url('../public/images/bg-contact.jpg');
     }
+
     .bg-contact-2 {
         background-image: url('../public/images/bg-contact-2.jpg');
+    }
+
+    .bg-UsersFeedback {
+        background-image: url('../public/images/bg-usersFid.jpg');
     }
 
     #aboutMain {
