@@ -2,6 +2,7 @@ import { Header } from "@/sections/Header";
 import { HeroSection } from "@/sections/Hero";
 import { ProjectsSection } from "@/sections/Projects";
 import { TapeSection } from "@/sections/Tape";
+import { TestimonialsSection } from "@/sections/Testimonials";
 export default function Home() {
   return (
     <div className="relative flex flex-col items-center ">
@@ -9,6 +10,7 @@ export default function Home() {
       <HeroSection />
       <ProjectsSection />
       <TapeSection />
+      <TestimonialsSection/>
     </div>
   );
 }
