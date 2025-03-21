@@ -1,46 +1,24 @@
-import darkSaasLandingPage from "@/assets/images/dark-saas-landing-page.png";
-import lightSaasLandingPage from "@/assets/images/light-saas-landing-page.png";
-import aiStartupLandingPage from "@/assets/images/ai-startup-landing-page.png";
-
-const portfolioProjects = [
-  {
-    company: "Acme Corp",
-    year: "2022",
-    title: "Dark Saas Landing Page",
-    results: [
-      { title: "Enhanced user experience by 40%" },
-      { title: "Improved site speed by 50%" },
-      { title: "Increased mobile traffic by 35%" },
-    ],
-    link: "https://youtu.be/4k7IdSLxh6w",
-    image: darkSaasLandingPage,
-  },
-  {
-    company: "Innovative Co",
-    year: "2021",
-    title: "Light Saas Landing Page",
-    results: [
-      { title: "Boosted sales by 20%" },
-      { title: "Expanded customer reach by 35%" },
-      { title: "Increased brand awareness by 15%" },
-    ],
-    link: "https://youtu.be/7hi5zwO75yc",
-    image: lightSaasLandingPage,
-  },
-  {
-    company: "Quantum Dynamics",
-    year: "2023",
-    title: "AI Startup Landing Page",
-    results: [
-      { title: "Enhanced user experience by 40%" },
-      { title: "Improved site speed by 50%" },
-      { title: "Increased mobile traffic by 35%" },
-    ],
-    link: "https://youtu.be/Z7I5uSRHMHg",
-    image: aiStartupLandingPage,
-  },
-];
-
+import { portfolioProjects } from "@/consts/PortfolioProjects";
+import PortfolioCard from "@/components/PortfolioCard";
 export const ProjectsSection = () => {
-  return <div>Projects Section</div>;
+  return (
+    <section className="container pb-16 lg:py-24 px-3 lg:max-w-5xl">
+      <div className="flex justify-center">
+        <p className="uppercase font-semibold tracking-widest bg-gradient-to-r from-emerald-300 to-sky-400 text-transparent bg-clip-text text-center">
+          Real-world Results
+        </p>
+      </div>
+      <h2 className="font-serif text-3xl md:text-5xl  text-center mt-6">
+        Feautured Projects
+      </h2>
+      <p className="text-center md:text-lg lg:text-xl max-w-md mx-auto text-white/60 mt-4">
+        See How I transformed concepts into engaging digital experiences.
+      </p>
+      <div className="flex flex-col mt-10 gap-20 md:mt-20  ">
+        {portfolioProjects.map((project) => (
+          <PortfolioCard key={project.title} project={project} />
+        ))}
+      </div>
+    </section>
+  );
 };
