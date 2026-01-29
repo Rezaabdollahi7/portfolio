@@ -1,6 +1,10 @@
+import NavBar from "#components/Navbar.jsx";
+
 const App = () => {
   return (
-    <h1 className="text-red-500">Welcome My MacFolio</h1>
+    <main>
+      <NavBar />
+    </main>
   );
 };
 
