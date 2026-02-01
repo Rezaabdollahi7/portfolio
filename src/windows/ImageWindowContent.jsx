@@ -10,7 +10,7 @@ const ImageWindowContent = () => {
   const { name, imageUrl } = data;
 
   return (
-    <section id="txtfile">
+    <section id="imgfile">
       <div id="window-header">
         <WindowControlls target="imgfile" />
         <h2>{name}</h2>
@@ -31,5 +31,5 @@ const ImageWindowContent = () => {
   );
 };
 
-// const ImageWindow = WindowWrapper(ImageWindowContent, "imgfile");
-export default ImageWindowContent;
+const ImageWindow = WindowWrapper(ImageWindowContent, "imgfile");
+export default ImageWindow;
