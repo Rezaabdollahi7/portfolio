@@ -504,3 +504,11 @@ const WINDOW_CONFIG = {
 };
 
 export { INITIAL_Z_INDEX, WINDOW_CONFIG };
+
+export const wheather = {
+  city: "Dubai",
+  degre: "12°",
+  img: "/images/weather.webp",
+  text: "Party Cloudy",
+  minMax: "H:13° L:10°",
+};

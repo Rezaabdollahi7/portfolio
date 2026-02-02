@@ -5,6 +5,7 @@ import Draggable from "gsap/Draggable";
 import useWindowStore from "#store/window";
 import useLocationStore from "#store/location";
 import Calendar from "./Calendar";
+import Wheather from "./Wheather";
 
 const projects = locations.work?.children ?? [];
 
@@ -24,6 +25,7 @@ const Home = () => {
   return (
     <section id="home">
       <Calendar />
+      <Wheather />
       <ul>
         {projects.map((project) => (
           <li
