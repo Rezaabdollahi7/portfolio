@@ -19,6 +19,7 @@ const Contact = () => {
         <h3>Lets Connect</h3>
         <p>Got an idea ? A bug to fix ? or just wanna talk tech ? Im in</p>
         <p>Srezaabdollahi7@gmail.com</p>
+        <p>+98 921 981 1980</p>
         <ul>
           {socials.map(({ id, bg, link, icon, text }) => (
             <li key={id} style={{ background: bg }}>

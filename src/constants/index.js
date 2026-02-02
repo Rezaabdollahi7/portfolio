@@ -57,7 +57,7 @@ const dockApps = [
   {
     id: "contact",
     name: "Contact", // or "Get in touch"
-    icon: "contact.png",
+    icon: "contact.webp",
     canOpen: true,
   },
   {
@@ -106,7 +106,7 @@ const techStack = [
   },
   {
     category: "Mobile",
-    items: ["React Native", "Expo"],
+    items: ["React Native"],
   },
   {
     category: "Styling",
@@ -114,7 +114,7 @@ const techStack = [
   },
   {
     category: "Backend",
-    items: ["Node.js", "Express", "NestJS", "Hono"],
+    items: ["Node.js"],
   },
   {
     category: "Database",
@@ -132,7 +132,7 @@ const socials = [
     text: "Github",
     icon: "/icons/github.svg",
     bg: "#f4656b",
-    link: "https://github.com/JavaScript-Mastery-Pro",
+    link: "https://github.com/Rezaabdollahi7",
   },
   {
     id: 2,
@@ -143,13 +143,6 @@ const socials = [
   },
   {
     id: 3,
-    text: "Twitter/X",
-    icon: "/icons/twitter.svg",
-    bg: "#ff866b",
-    link: "https://x.com/jsmasterypro",
-  },
-  {
-    id: 4,
     text: "LinkedIn",
     icon: "/icons/linkedin.svg",
     bg: "#05b6f6",
