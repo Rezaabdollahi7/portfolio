@@ -393,4 +393,49 @@ body {
       }
     }
   }
+
+  #calendar {
+    @apply w-72 absolute right-6 top-6 bg-white rounded-4xl shadow-2xl p-5 font-sans border border-gray-200;
+
+    .calendar-header {
+      @apply flex items-center justify-between mb-8;
+
+      h2 {
+        @apply text-xl font-bold text-gray-800;
+      }
+
+      .calendar-prev,
+      .calendar-next {
+        @apply p-1 rounded-full;
+
+        svg {
+          @apply p-1 hover:bg-gray-200 rounded-full hover:cursor-pointer;
+        }
+      }
+    }
+
+    .calendar-weekdays {
+      @apply grid grid-cols-7 mb-4;
+
+      div {
+        @apply text-center text-sm font-semibold text-gray-500;
+      }
+    }
+
+    .calendar-days {
+      @apply grid grid-cols-7 gap-1;
+
+      .calendar-empty-day {
+        @apply h-10 w-10;
+      }
+
+      .calendar-day {
+        @apply h-8 w-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors text-gray-700 hover:bg-gray-100;
+      }
+
+      .calendar-today {
+        @apply bg-[#FF605C] text-white;
+      }
+    }
+  }
 }

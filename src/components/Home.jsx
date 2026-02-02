@@ -4,6 +4,7 @@ import clsx from "clsx";
 import Draggable from "gsap/Draggable";
 import useWindowStore from "#store/window";
 import useLocationStore from "#store/location";
+import Calendar from "./Calendar";
 
 const projects = locations.work?.children ?? [];
 
@@ -22,6 +23,7 @@ const Home = () => {
 
   return (
     <section id="home">
+      <Calendar />
       <ul>
         {projects.map((project) => (
           <li
