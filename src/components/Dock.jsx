@@ -63,13 +63,31 @@ const Dock = () => {
   const toggleApp = (app) => {
     if (!app.canOpen) return;
 
-    const window = windows[app.id];
+    // دریافت وضعیت فعلی پنجره finder
+    const finderWindow = windows.finder;
 
-    if (!window) {
-      console.error(`window not found for app ${app.id}`);
+    if (app.id === "trash") {
+      // اگر finder باز است و location آن "trash" است → ببند
+      if (finderWindow?.isOpen && finderWindow.data?.location === "trash") {
+        closeWindow("finder");
+      } else {
+        // در غیر این صورت، finder را با location="trash" باز کن
+        openWindow("finder", { location: "trash" });
+      }
       return;
     }
-    if (window.isOpen) {
+
+    if (app.id === "finder") {
+      if (finderWindow?.isOpen) {
+        openWindow("finder", { location: "work" });
+      } else {
+        openWindow("finder", { location: "work" });
+      }
+      return;
+    }
+
+    const window = windows[app.id];
+    if (window?.isOpen) {
       closeWindow(app.id);
     } else {
       openWindow(app.id);

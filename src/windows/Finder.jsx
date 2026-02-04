@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { WindowControlls } from "#components";
 import { Search } from "lucide-react";
 import WindowWrapper from "#hoc/WindowWrapper";
@@ -8,8 +8,17 @@ import clsx from "clsx";
 import useWindowStore from "#store/window";
 
 const Finder = () => {
+  const finderData = useWindowStore((state) => state.windows.finder.data);
   const { activeLocation, setActiveLocation } = useLocationStore();
   const { openWindow } = useWindowStore();
+
+  useEffect(() => {
+    const locationKey = finderData?.location || "work"; // default to work
+    const targetLocation = locations[locationKey];
+    if (targetLocation) {
+      setActiveLocation(targetLocation);
+    }
+  }, [finderData?.location, setActiveLocation]);
 
   const openItem = (item) => {
     if (item.fileType === "pdf") return openWindow("resume");

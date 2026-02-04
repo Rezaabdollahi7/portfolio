@@ -81,8 +81,8 @@ const Calendar = () => {
       </div>
 
       <div className="calendar-weekdays">
-        {dayNames.map((day) => (
-          <div key={day}>{day}</div>
+        {dayNames.map((day, i) => (
+          <div key={i}>{day}</div>
         ))}
       </div>
 
