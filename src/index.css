@@ -44,7 +44,7 @@ html.dark body {
   }
 
   nav {
-    @apply flex justify-between items-center backdrop-blur-3xl text-white p-2 px-5 select-none dark:bg-[#1e1e1e]/30;
+    @apply flex justify-between items-center backdrop-blur-3xl text-white p-1 px-5 select-none dark:bg-[#1e1e1e]/30;
 
     div {
       @apply flex items-center max-sm:w-full max-sm:justify-center gap-5;
@@ -447,5 +447,38 @@ html.dark body {
         @apply bg-[#FF605C] text-white dark:bg-[#FF605C];
       }
     }
+  }
+
+  #notch {
+    width: 140px;
+    background-color: #222;
+    border-radius: 0 0 0.5rem 0.5rem;
+    place-items: center;
+    height: 80%;
+    display: grid;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  #notch::before,
+  #notch::after {
+    content: "";
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 0;
+  }
+
+  #notch::before {
+    left: -16px;
+    box-shadow: 8px -8px #222;
+  }
+
+  #notch::after {
+    right: -16px;
+    box-shadow: 8px -8px #222;
+    rotate: 270deg;
   }
 }

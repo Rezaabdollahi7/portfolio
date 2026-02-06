@@ -23,11 +23,18 @@ const Finder = () => {
   const openItem = (item) => {
     if (item.fileType === "pdf") return openWindow("resume");
     if (item.kind === "folder") return setActiveLocation(item);
-    if (["fig", "url"].includes(item.fileType) && item.href)
+    if (item.fileType === "fig" && item.href)
       return window.open(item.href, "_blank");
+    if (item.fileType === "demo" && item.href) {
+      return openWindow("safari", { demoUrl: item.href });
+    }
+    if (item.fileType === "url" && item.href) {
+      return window.open(item.href, "_blank");
+    }
 
     openWindow(`${item.fileType}${item.kind}`, item);
   };
+
   const renderList = (name, items) => (
     <div>
       <h3>{name}</h3>

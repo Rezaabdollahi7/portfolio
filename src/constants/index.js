@@ -243,8 +243,8 @@ const WORK_LOCATION = {
           name: "nike.com",
           icon: "/images/safari.png",
           kind: "file",
-          fileType: "url",
-          href: "https://youtu.be/fZdTYswuZjU?si=Awjl-pIst9e09_UU",
+          fileType: "demo",
+          href: "https://nike-ecommerce-demo.vercel.app",
           position: "top-10 right-20",
         },
         {

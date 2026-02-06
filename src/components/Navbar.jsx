@@ -3,6 +3,7 @@ import { navLinks, navIcons } from "#constants";
 import useWindowStore from "#store/window";
 import { useTheme } from "../context/ThemeContext";
 import { Moon, Sun } from "lucide-react";
+import Notch from "./Notch";
 
 const NavBar = () => {
   const { openWindow } = useWindowStore();
@@ -21,6 +22,7 @@ const NavBar = () => {
           ))}
         </ul>
       </div>
+      <Notch />
       <div>
         <ul>
           {navIcons.map(({ id, img }) => (
