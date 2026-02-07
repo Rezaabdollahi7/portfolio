@@ -67,6 +67,48 @@ const dockApps = [
     canOpen: true,
   },
   {
+    id: "settings",
+    name: "settings", // was "Terminal"
+    icon: "settings.png",
+    canOpen: true,
+  },
+  {
+    id: "vscode",
+    name: "vscode", // was "vscode"
+    icon: "microsoft_visual_studio_code.png",
+    canOpen: true,
+  },
+  {
+    id: "spotify",
+    name: "spotify", // was "spotify"
+    icon: "spotify.png",
+    canOpen: true,
+  },
+  {
+    id: "github",
+    name: "github", // was "github"
+    icon: "github.webp",
+    canOpen: true,
+  },
+  {
+    id: "telegram",
+    name: "telegram", // was "telegram"
+    icon: "telegram.png",
+    canOpen: true,
+  },
+  {
+    id: "note",
+    name: "note", // was "notes"
+    icon: "Notes.png",
+    canOpen: true,
+  },
+  {
+    id: "mail",
+    name: "mail", // was "mail"
+    icon: "mail.webp",
+    canOpen: true,
+  },
+  {
     id: "trash",
     name: "Trash", // was "Trash"
     icon: "trash.png",
@@ -490,6 +532,12 @@ const WINDOW_CONFIG = {
   contact: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
   resume: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
   safari: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
+  note: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
+  github: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
+  mail: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
+  vscode: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
+  setting: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
+  telegram: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
   photos: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
   terminal: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
   trash: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
@@ -506,3 +554,14 @@ export const wheather = {
   text: "Party Cloudy",
   minMax: "H:13° L:10°",
 };
+
+export const noteTasks = [
+  { id: 1, text: "macOS-style portfolio website", completed: true },
+  { id: 2, text: "Finder window for project navigation", completed: true },
+  { id: 3, text: "Project demo preview inside Safari window", completed: true },
+  { id: 4, text: "Interactive resume viewer", completed: true },
+
+  { id: 5, text: "Add personal developer blog", completed: false },
+  { id: 6, text: "Mobile responsiveness optimization", completed: false },
+  { id: 7, text: "Implement new color themes", completed: false },
+];

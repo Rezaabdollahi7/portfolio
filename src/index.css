@@ -481,4 +481,70 @@ html.dark body {
     box-shadow: 8px -8px #222;
     rotate: 270deg;
   }
+
+  #note {
+    @apply w-xl absolute top-32 left-1/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e1e];
+
+    h2 {
+      @apply font-bold text-sm text-center w-full dark:text-gray-100;
+    }
+
+    .p-7 {
+      @apply p-7 flex-1 overflow-y-auto;
+
+      .space-y-8 {
+        @apply space-y-8;
+
+        > div {
+          /* Completed & Upcoming sections */
+
+          h3 {
+            @apply text-xs uppercase tracking-wider font-bold mb-2;
+          }
+
+          &:first-child h3 {
+            @apply text-green-700 dark:text-green-400;
+          }
+
+          &:last-child h3 {
+            @apply text-gray-500 dark:text-gray-400 my-3;
+          }
+
+          ul {
+            @apply space-y-4;
+
+            li {
+              @apply flex items-start gap-2 bg-white dark:bg-gray-800 p-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700;
+
+              .note-icon {
+                @apply w-5 h-5 mt-0.5 shrink-0;
+              }
+
+              .note-text {
+                @apply text-gray-700 dark:text-gray-200;
+              }
+
+              /* For completed tasks */
+              &.completed {
+                .note-text {
+                  @apply line-through text-gray-500 dark:text-gray-400;
+                }
+
+                .note-icon {
+                  @apply text-green-500;
+                }
+              }
+
+              /* For upcoming tasks (default) */
+              &:not(.completed) {
+                .note-icon {
+                  @apply text-gray-400;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

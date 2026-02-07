@@ -6,6 +6,7 @@ import Text from "./Text";
 import ImageWindowContent from "./ImageWindowContent";
 import Contact from "./Contact";
 import Photos from "./Photos";
+import Note from "./Note";
 export {
   Terminal,
   Safari,
@@ -15,4 +16,5 @@ export {
   ImageWindowContent,
   Contact,
   Photos,
+  Note,
 };
