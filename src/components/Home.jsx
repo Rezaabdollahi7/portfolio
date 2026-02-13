@@ -24,8 +24,8 @@ const Home = () => {
 
   return (
     <section id="home">
-      <Calendar />
-      <Wheather />
+      {/* <Calendar /> */}
+      {/* <Wheather /> */}
       <ul>
         {projects.map((project) => (
           <li
