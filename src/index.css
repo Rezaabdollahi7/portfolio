@@ -405,7 +405,7 @@ html.dark body {
   }
 
   #calendar {
-    @apply w-72 absolute right-6 top-6 bg-white rounded-4xl shadow-2xl p-5 font-sans border border-gray-200 dark:bg-[#1e1e1e] dark:border-none;
+    @apply w-72 absolute left-6 top-6 bg-white rounded-4xl shadow-2xl p-5 font-sans border border-gray-200 dark:bg-[#1e1e1e] dark:border-none;
 
     .calendar-header {
       @apply flex items-center justify-between mb-8;
