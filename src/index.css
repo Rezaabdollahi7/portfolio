@@ -128,13 +128,144 @@ html.dark body {
   #safari {
     @apply w-5xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e1e];
 
-    .search {
-      @apply flex items-center gap-3 w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2 dark:bg-[#323232] dark:border-none;
+    .safari-navigation {
+      @apply flex items-center gap-1 ml-5;
+    }
 
-      input {
-        @apply placeholder:text-gray-400 dark:bg-[#323232] dark:text-gray-100 dark:placeholder:text-gray-500;
+    .safari-address-bar {
+      @apply flex-1 flex items-center gap-3;
+
+      .search {
+        @apply flex items-center gap-3 w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2 dark:bg-[#323232] dark:border-none;
+
+        input {
+          @apply placeholder:text-gray-400 dark:bg-[#323232] dark:text-gray-100 dark:placeholder:text-gray-500;
+        }
       }
     }
+    .safari-actions {
+      @apply flex items-center gap-5;
+    }
+
+    .safari-tab-content {
+      @apply min-h-[calc(30rem)] max-h-[40rem] overflow-y-auto;
+    }
+
+    .safari-loading {
+      @apply w-full h-full flex flex-col items-center justify-center;
+
+      .loading-spinner {
+        @apply w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4;
+      }
+
+      p {
+        @apply text-gray-400;
+      }
+    }
+
+    /* Projects Grid Styles */
+    .projects-grid {
+      @apply w-full h-full overflow-y-auto p-6;
+
+      .projects-grid-items {
+        @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
+      }
+
+      .projects-grid-empty {
+        @apply flex flex-col items-center justify-center h-full text-gray-500;
+
+        .empty-icon {
+          @apply w-16 h-16 mb-4;
+        }
+
+        p {
+          @apply text-xl;
+        }
+      }
+    }
+
+    /* Project Card Styles */
+    .project-card {
+      @apply backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-300/50 cursor-pointer  relative transition-all duration-300;
+
+      &:hover {
+        @apply border-gray-500/50 scale-105 shadow-2xl shadow-blue-500/20;
+      }
+
+      .project-card-bg {
+        @apply absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-purple-500/0 opacity-0 transition-opacity duration-500;
+
+        .group:hover & {
+          @apply opacity-100;
+        }
+      }
+
+      .project-card-thumbnail {
+        @apply relative w-full h-52 overflow-hidden;
+
+        .project-card-overlay {
+          @apply absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent z-10;
+        }
+
+        .project-card-image {
+          @apply w-full h-full object-cover transition-transform duration-700;
+
+          .group:hover & {
+            @apply scale-110;
+          }
+        }
+      }
+
+      .project-card-content {
+        @apply p-5 relative z-10;
+
+        .project-card-title {
+          @apply text-lg font-semibold text-[#515151] mb-2 transition-colors;
+
+          .group:hover & {
+            @apply text-[#528abf];
+          }
+        }
+
+        .project-card-description {
+          @apply text-[#999999] text-sm mb-4 line-clamp-2;
+        }
+
+        .project-card-tech-stack {
+          @apply flex flex-wrap gap-2 mb-4;
+
+          .project-card-tech-badge {
+            @apply flex items-center gap-1.5 text-gray-500 px-2.5 py-1 rounded-full border border-gray-300/50 transition-all;
+
+            &:hover {
+              @apply border-[#528abf];
+            }
+
+            .project-card-tech-icon {
+              @apply w-4 h-4 object-contain;
+            }
+          }
+        }
+
+        .project-card-view-btn {
+          @apply w-full py-2.5 bg-[#f6c94e] text-black/70 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 shadow-lg;
+
+          &:hover {
+            @apply scale-105;
+          }
+
+          .project-card-arrow {
+            @apply w-4 h-4 transition-transform;
+
+            .group:hover & {
+              @apply translate-x-1;
+            }
+          }
+        }
+      }
+    }
+
+   
   }
 
   #terminal {

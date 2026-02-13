@@ -101,11 +101,9 @@ const Safari = () => {
     // Show loading skeleton when switching tabs
     if (isTabLoading && activeTab.type === "project-detail") {
       return (
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-gray-400">Loading project...</p>
-          </div>
+        <div className="safari-loading">
+          <div className="loading-spinner"></div>
+          <p>Loading project...</p>
         </div>
       );
     }
@@ -156,29 +154,23 @@ const Safari = () => {
   return (
     <section id="safari">
       {/* Window Header */}
-      <div id="window-header" className="border-b border-gray-700/50">
+      <div id="window-header" className="safari-window-header">
         <WindowControlls target="safari" />
-        <PanelLeft className="ml-10 icon" />
 
-        <div className="flex items-center gap-1 ml-5">
-          <ChevronRight className="icon" />
+        <div className="safari-navigation ml-[14%]">
           <ChevronLeft className="icon" />
+          <ChevronRight className="icon" />
         </div>
 
-        <div className="flex-1 flex-center gap-3">
+        <div className="safari-address-bar">
           <ShieldHalf className="icon" />
           <div className="search">
             <Search className="icon" />
-            <input
-              type="text"
-              value={getAddressBarUrl()}
-              readOnly
-              className="flex-1 bg-transparent"
-            />
+            <input type="text" value={getAddressBarUrl()} readOnly />
           </div>
         </div>
 
-        <div className="flex items-center gap-5">
+        <div className="safari-actions">
           <Share className="icon" />
           <Plus className="icon" />
           <Copy className="icon" />
@@ -195,9 +187,7 @@ const Safari = () => {
       />
 
       {/* Tab Content */}
-      <div className="tab-content min-h-[calc(30rem)] max-h-[40rem] overflow-y-scroll">
-        {getTabContent()}
-      </div>
+      <div className="safari-tab-content">{getTabContent()}</div>
     </section>
   );
 };
