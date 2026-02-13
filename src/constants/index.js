@@ -116,31 +116,6 @@ const dockApps = [
   },
 ];
 
-const blogPosts = [
-  {
-    id: 1,
-    date: "Sep 2, 2025",
-    title:
-      "TypeScript Explained: What It Is, Why It Matters, and How to Master It",
-    image: "/images/blog1.png",
-    link: "https://jsmastery.com/blog/typescript-explained-what-it-is-why-it-matters-and-how-to-master-it",
-  },
-  {
-    id: 2,
-    date: "Aug 28, 2025",
-    title: "The Ultimate Guide to Mastering Three.js for 3D Development",
-    image: "/images/blog2.png",
-    link: "https://jsmastery.com/blog/the-ultimate-guide-to-mastering-three-js-for-3d-development",
-  },
-  {
-    id: 3,
-    date: "Aug 15, 2025",
-    title: "The Ultimate Guide to Mastering GSAP Animations",
-    image: "/images/blog3.png",
-    link: "https://jsmastery.com/blog/the-ultimate-guide-to-mastering-gsap-animations",
-  },
-];
-
 const techStack = [
   {
     category: "Frontend",
@@ -243,7 +218,6 @@ export {
   navLinks,
   navIcons,
   dockApps,
-  blogPosts,
   techStack,
   socials,
   photosLinks,
@@ -564,4 +538,105 @@ export const noteTasks = [
   { id: 5, text: "Add personal developer blog", completed: false },
   { id: 6, text: "Mobile responsiveness optimization", completed: false },
   { id: 7, text: "Implement new color themes", completed: false },
+];
+
+export const projects = [
+  {
+    id: 1,
+    title: "E-Commerce Platform",
+    description:
+      "A full-featured online shopping platform with real-time inventory management and payment processing.",
+    thumbnail: "/images/projects/ecommerce-thumbnail.jpg",
+    screenshots: [
+      "/images/projects/ecommerce-1.jpg",
+      "/images/projects/ecommerce-2.jpg",
+      "/images/projects/ecommerce-3.jpg",
+      "/images/projects/ecommerce-4.jpg",
+    ],
+    videoUrl: "/videos/ecommerce-demo.mp4",
+    techStack: [
+      { name: "React", icon: "/images/techstack/react.png" },
+      { name: "TypeScript", icon: "/images/techstack/typescript.png" },
+      { name: "Node.js", icon: "/images/techstack/nodejs.png" },
+      { name: "MongoDB", icon: "/images/techstack/mongodb.png" },
+      { name: "Tailwind CSS", icon: "/images/techstack/tailwind.png" },
+    ],
+    demoUrl: "https://ecommerce-demo.netlify.app",
+    sourceUrl: "https://github.com/yourusername/ecommerce-platform",
+    challenges: [
+      "Real-time inventory synchronization",
+      "Payment gateway integration",
+      "Mobile-first responsive design",
+    ],
+    results: [
+      "+40% conversion rate increase",
+      "Reduced page load time by 2.5s",
+      "95% customer satisfaction score",
+    ],
+  },
+  {
+    id: 2,
+    title: "Task Management App",
+    description:
+      "A collaborative task management application with drag-and-drop interface and team collaboration features.",
+    thumbnail: "/images/projects/taskapp-thumbnail.jpg",
+    screenshots: [
+      "/images/projects/taskapp-1.jpg",
+      "/images/projects/taskapp-2.jpg",
+      "/images/projects/taskapp-3.jpg",
+    ],
+    videoUrl: "/videos/taskapp-demo.mp4",
+    techStack: [
+      { name: "React", icon: "/images/techstack/react.png" },
+      { name: "TypeScript", icon: "/images/techstack/typescript.png" },
+      { name: "Node.js", icon: "/images/techstack/nodejs.png" },
+      { name: "MongoDB", icon: "/images/techstack/mongodb.png" },
+      { name: "Tailwind CSS", icon: "/images/techstack/tailwind.png" },
+    ],
+    demoUrl: "https://taskapp-demo.vercel.app",
+    sourceUrl: "https://github.com/yourusername/task-management",
+    challenges: [
+      "Real-time data synchronization",
+      "Drag-and-drop performance optimization",
+      "Role-based access control",
+    ],
+    results: [
+      "+60% team productivity",
+      "Zero downtime deployment",
+      "500+ active daily users",
+    ],
+  },
+  {
+    id: 3,
+    title: "Weather Dashboard",
+    description:
+      "A weather forecasting application with real-time data, location tracking, and beautiful visualizations.",
+    thumbnail: "/images/projects/weather-thumbnail.jpg",
+    screenshots: [
+      "/images/projects/weather-1.jpg",
+      "/images/projects/weather-2.jpg",
+      "/images/projects/weather-3.jpg",
+      "/images/projects/weather-4.jpg",
+    ],
+    videoUrl: "/videos/weather-demo.mp4",
+    techStack: [
+      { name: "React", icon: "/images/techstack/react.png" },
+      { name: "TypeScript", icon: "/images/techstack/typescript.png" },
+      { name: "Node.js", icon: "/images/techstack/nodejs.png" },
+      { name: "MongoDB", icon: "/images/techstack/mongodb.png" },
+      { name: "Tailwind CSS", icon: "/images/techstack/tailwind.png" },
+    ],
+    demoUrl: "https://weather-dashboard.netlify.app",
+    sourceUrl: "https://github.com/yourusername/weather-app",
+    challenges: [
+      "API rate limiting handling",
+      "Geolocation accuracy",
+      "Responsive chart rendering",
+    ],
+    results: [
+      "99.9% API uptime",
+      "Sub-second load times",
+      "Featured on Product Hunt",
+    ],
+  },
 ];
