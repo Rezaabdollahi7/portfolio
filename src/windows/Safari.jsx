@@ -14,9 +14,9 @@ import {
 } from "lucide-react";
 import { projects } from "#constants";
 import { useState } from "react";
-import ProjectsGrid from "#components/ProjectsGrid";
-import ProjectDetail from "#components/ProjectDetail";
-import SafariTabs from "#components/SafariTabs";
+import ProjectsGrid from "#components/Safari/ProjectsGrid";
+import ProjectDetail from "#components/Safari/ProjectDetail";
+import SafariTabs from "#components/Safari/SafariTabs";
 
 const Safari = () => {
   const [isTabLoading, setIsTabLoading] = useState(false);
