@@ -79,22 +79,20 @@ const dockApps = [
     canOpen: true,
   },
   {
-    id: "spotify",
-    name: "spotify", // was "spotify"
-    icon: "spotify.png",
-    canOpen: true,
-  },
-  {
     id: "github",
     name: "github", // was "github"
     icon: "github.webp",
     canOpen: true,
+    type: "external",
+    url: "https://github.com/Rezaabdollahi7",
   },
   {
     id: "telegram",
     name: "telegram", // was "telegram"
     icon: "telegram.png",
     canOpen: true,
+    type: "external",
+    url: "https://t.me/rezaabdollahi7",
   },
   {
     id: "note",
@@ -107,6 +105,8 @@ const dockApps = [
     name: "mail", // was "mail"
     icon: "mail.webp",
     canOpen: true,
+    type: "external",
+    url: "mailto:srezaabdollahi7@gmail.com",
   },
   {
     id: "trash",

@@ -1,3 +1,5 @@
+// components/Dock.jsx
+
 import React from "react";
 import { useRef } from "react";
 import { dockApps } from "#constants";
@@ -60,25 +62,26 @@ const Dock = () => {
     };
   }, []);
 
-  const toggleApp = (app) => {
+  const handleAppClick = (app) => {
     if (!app.canOpen) return;
 
-    // دریافت وضعیت فعلی پنجره finder
-    const finderWindow = windows.finder;
+    if (app.type === "external") {
+      window.open(app.url, "_blank", "noopener,noreferrer");
+      return;
+    }
 
     if (app.id === "trash") {
-      // اگر finder باز است و location آن "trash" است → ببند
+      const finderWindow = windows.finder;
       if (finderWindow?.isOpen && finderWindow.data?.location === "trash") {
         closeWindow("finder");
       } else {
-        // در غیر این صورت، finder را با location="trash" باز کن
         openWindow("finder", { location: "trash" });
       }
       return;
     }
 
     if (app.id === "finder") {
-      if (finderWindow?.isOpen) {
+      if (windows.finder?.isOpen) {
         openWindow("finder", { location: "work" });
       } else {
         openWindow("finder", { location: "work" });
@@ -86,8 +89,8 @@ const Dock = () => {
       return;
     }
 
-    const window = windows[app.id];
-    if (window?.isOpen) {
+    const appWindow = windows[app.id];
+    if (appWindow?.isOpen) {
       closeWindow(app.id);
     } else {
       openWindow(app.id);
@@ -107,7 +110,9 @@ const Dock = () => {
               data-tooltip-content={name}
               data-tooltip-delay-show={150}
               disabled={!canOpen}
-              onClick={() => toggleApp({ id, canOpen })}
+              onClick={() =>
+                handleAppClick(dockApps.find((app) => app.id === id))
+              }
             >
               <img
                 src={`/images/${icon}`}
