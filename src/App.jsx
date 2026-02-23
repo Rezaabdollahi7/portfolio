@@ -13,6 +13,7 @@ import {
   Photos,
   Note,
   Setting,
+  Vscode,
 } from "#windows";
 import { ThemeProvider } from "./context/ThemeContext";
 
@@ -36,6 +37,7 @@ const App = () => {
         <Photos />
         <Note />
         <Setting />
+        <Vscode />
       </main>
     </ThemeProvider>
   );

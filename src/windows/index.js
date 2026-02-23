@@ -8,6 +8,7 @@ import Contact from "./Contact";
 import Photos from "./Photos";
 import Note from "./Note";
 import Setting from "./Setting";
+import Vscode from "./Vscode";
 export {
   Terminal,
   Safari,
@@ -19,4 +20,5 @@ export {
   Photos,
   Note,
   Setting,
+  Vscode,
 };

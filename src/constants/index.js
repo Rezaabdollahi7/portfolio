@@ -667,3 +667,464 @@ export const projects = [
     ],
   },
 ];
+
+// ─── Vscode Data ────────────────────────────────────────────────────────────────────
+
+const FILE_TREE = [
+  {
+    name: "portfolio",
+    type: "folder",
+    open: true,
+    children: [
+      {
+        name: "src",
+        type: "folder",
+        open: true,
+        children: [
+          { name: "about.tsx", type: "file", lang: "tsx" },
+          { name: "skills.ts", type: "file", lang: "ts" },
+          { name: "projects.ts", type: "file", lang: "ts" },
+          { name: "contact.tsx", type: "file", lang: "tsx" },
+        ],
+      },
+      { name: "README.md", type: "file", lang: "md" },
+      { name: "package.json", type: "file", lang: "json" },
+    ],
+  },
+];
+
+const FILE_CONTENTS = {
+  "about.tsx": {
+    lang: "tsx",
+    lines: [
+      {
+        tokens: [
+          { t: "keyword", v: "const" },
+          { t: "space", v: " " },
+          { t: "fn", v: "Developer" },
+          { t: "plain", v: " = () => ({" },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: "name" },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"Reza Abdollahi"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: "role" },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"Frontend Developer"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: "location" },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"Tehran, Iran 🇮🇷"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: "passion" },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"Building beautiful experiences"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: "available" },
+          { t: "plain", v: ": " },
+          { t: "keyword", v: "true" },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: "coffee" },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"required ☕"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      { tokens: [{ t: "plain", v: "});" }] },
+      { tokens: [] },
+      { tokens: [{ t: "comment", v: "// I turn coffee into code." }] },
+      { tokens: [{ t: "comment", v: "// And ideas into interfaces." }] },
+      { tokens: [] },
+      {
+        tokens: [
+          { t: "keyword", v: "export default" },
+          { t: "plain", v: " Developer;" },
+        ],
+      },
+    ],
+  },
+  "skills.ts": {
+    lang: "ts",
+    lines: [
+      {
+        tokens: [
+          { t: "keyword", v: "type" },
+          { t: "plain", v: " " },
+          { t: "fn", v: "SkillLevel" },
+          { t: "plain", v: " = " },
+          { t: "string", v: '"expert"' },
+          { t: "plain", v: " | " },
+          { t: "string", v: '"advanced"' },
+          { t: "plain", v: " | " },
+          { t: "string", v: '"intermediate"' },
+          { t: "plain", v: ";" },
+        ],
+      },
+      { tokens: [] },
+      {
+        tokens: [
+          { t: "keyword", v: "const" },
+          { t: "plain", v: " " },
+          { t: "prop", v: "skills" },
+          { t: "plain", v: ": Record<string, SkillLevel> = {" },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "comment", v: "// Frontend" },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "string", v: '"React"' },
+          { t: "plain", v: ":        " },
+          { t: "string", v: '"expert"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "string", v: '"TypeScript"' },
+          { t: "plain", v: ":   " },
+          { t: "string", v: '"advanced"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "string", v: '"TailwindCSS"' },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"expert"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "string", v: '"GSAP"' },
+          { t: "plain", v: ":        " },
+          { t: "string", v: '"advanced"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "comment", v: "// Backend" },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "string", v: '"Node.js"' },
+          { t: "plain", v: ":     " },
+          { t: "string", v: '"advanced"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "string", v: '"PostgreSQL"' },
+          { t: "plain", v: ":  " },
+          { t: "string", v: '"intermediate"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "comment", v: "// Tools" },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "string", v: '"Git"' },
+          { t: "plain", v: ":         " },
+          { t: "string", v: '"expert"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "string", v: '"Vite"' },
+          { t: "plain", v: ":        " },
+          { t: "string", v: '"expert"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      { tokens: [{ t: "plain", v: "};" }] },
+    ],
+  },
+  "projects.ts": {
+    lang: "ts",
+    lines: [
+      {
+        tokens: [
+          { t: "keyword", v: "interface" },
+          { t: "plain", v: " " },
+          { t: "fn", v: "Project" },
+          { t: "plain", v: " {" },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: "name" },
+          { t: "plain", v: ": string;" },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: "stack" },
+          { t: "plain", v: ": string[];" },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: "status" },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"live"' },
+          { t: "plain", v: " | " },
+          { t: "string", v: '"wip"' },
+          { t: "plain", v: ";" },
+        ],
+      },
+      { tokens: [{ t: "plain", v: "}" }] },
+      { tokens: [] },
+      {
+        tokens: [
+          { t: "keyword", v: "const" },
+          { t: "plain", v: " " },
+          { t: "prop", v: "projects" },
+          { t: "plain", v: ": Project[] = [" },
+        ],
+      },
+      { tokens: [{ t: "plain", v: "  {" }] },
+      {
+        tokens: [
+          { t: "plain", v: "    " },
+          { t: "prop", v: "name" },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"MacOS Portfolio"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "    " },
+          { t: "prop", v: "stack" },
+          { t: "plain", v: ": [" },
+          { t: "string", v: '"React"' },
+          { t: "plain", v: ", " },
+          { t: "string", v: '"GSAP"' },
+          { t: "plain", v: ", " },
+          { t: "string", v: '"Zustand"' },
+          { t: "plain", v: "]," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "    " },
+          { t: "prop", v: "status" },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"live"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      { tokens: [{ t: "plain", v: "  }," }] },
+      { tokens: [{ t: "plain", v: "];" }] },
+    ],
+  },
+  "contact.tsx": {
+    lang: "tsx",
+    lines: [
+      {
+        tokens: [
+          { t: "keyword", v: "const" },
+          { t: "plain", v: " " },
+          { t: "fn", v: "Contact" },
+          { t: "plain", v: " = () => ({" },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: "email" },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"srezadev.ir"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: "github" },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"github.com/Rezaabdollahi7"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: "openTo" },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"freelance & full-time"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      { tokens: [{ t: "plain", v: "});" }] },
+    ],
+  },
+  "README.md": {
+    lang: "md",
+    lines: [
+      { tokens: [{ t: "md-h1", v: "# 👋 Hey, I'm Reza Abdollahi" }] },
+      { tokens: [] },
+      { tokens: [{ t: "md-h2", v: "## About" }] },
+      { tokens: [{ t: "plain", v: "Frontend developer who loves crafting" }] },
+      {
+        tokens: [{ t: "plain", v: "pixel-perfect UIs and smooth animations." }],
+      },
+      { tokens: [] },
+      { tokens: [{ t: "md-h2", v: "## Tech Stack" }] },
+      { tokens: [{ t: "md-li", v: "- React / TypeScript / TailwindCSS" }] },
+      { tokens: [{ t: "md-li", v: "- GSAP / Framer Motion" }] },
+      { tokens: [{ t: "md-li", v: "- Node.js / PostgreSQL" }] },
+      { tokens: [] },
+      { tokens: [{ t: "md-h2", v: "## Get in touch" }] },
+      {
+        tokens: [
+          { t: "md-link", v: "[Email](mailto:Srezaabdollahi7@gmail.com)" },
+        ],
+      },
+    ],
+  },
+  "package.json": {
+    lang: "json",
+    lines: [
+      { tokens: [{ t: "plain", v: "{" }] },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: '"name"' },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"portfolio"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: '"version"' },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"1.0.0"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: '"author"' },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"Reza Abdollahi"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "  " },
+          { t: "prop", v: '"dependencies"' },
+          { t: "plain", v: ": {" },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "    " },
+          { t: "prop", v: '"react"' },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"^18.3.0"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "    " },
+          { t: "prop", v: '"gsap"' },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"^3.12.0"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      {
+        tokens: [
+          { t: "plain", v: "    " },
+          { t: "prop", v: '"zustand"' },
+          { t: "plain", v: ": " },
+          { t: "string", v: '"^5.0.0"' },
+          { t: "plain", v: "," },
+        ],
+      },
+      { tokens: [{ t: "plain", v: "  }" }] },
+      { tokens: [{ t: "plain", v: "}" }] },
+    ],
+  },
+};
+
+const TERMINAL_LINES = [
+  { type: "dir", text: "portfolio on  main [✓]" },
+  { type: "cmd", text: "npm run dev" },
+  { type: "info", text: "" },
+  { type: "info", text: "  VITE v5.4.0  ready in 312 ms" },
+  { type: "info", text: "" },
+  { type: "success", text: "  ➜  Local:   http://localhost:5173/" },
+  { type: "info", text: "  ➜  Network: use --host to expose" },
+  { type: "info", text: "" },
+  { type: "dir", text: "portfolio on  main [✓]" },
+  { type: "cmd", text: "git log --oneline -5" },
+  { type: "info", text: "a3f2c1d feat: add VSCode window" },
+  { type: "info", text: "9b1e4f2 feat: settings with theme & wallpaper" },
+  { type: "info", text: "c72a881 feat: safari with projects grid" },
+  { type: "info", text: "1d9e3b5 feat: terminal window" },
+  { type: "info", text: "08fca44 init: macOS portfolio" },
+];
+
+export { FILE_TREE, FILE_CONTENTS, TERMINAL_LINES };
