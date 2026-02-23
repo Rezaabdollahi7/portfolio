@@ -67,8 +67,8 @@ const dockApps = [
     canOpen: true,
   },
   {
-    id: "settings",
-    name: "settings", // was "Terminal"
+    id: "setting",
+    name: "setting", // was "setting"
     icon: "settings.png",
     canOpen: true,
   },
@@ -214,6 +214,32 @@ const gallery = [
   },
 ];
 
+const wallpapers = [
+  {
+    id: "default",
+    name: "Default",
+    lightPreview: "/images/wallpapers/wallpaper.webp",
+    darkPreview: "/images/wallpapers/dark-default.webp",
+  },
+  {
+    id: "nature",
+    name: "Nature",
+    lightPreview: "/images/wallpapers/light1.webp",
+    darkPreview: "/images/wallpapers/dark1.webp",
+  },
+  {
+    id: "tech",
+    name: "Tech",
+    lightPreview: "/images/wallpapers/light2.webp",
+    darkPreview: "/images/wallpapers/dark2.webp",
+  },
+  {
+    id: "abstract",
+    name: "Abstract",
+    lightPreview: "/images/wallpapers/light3.webp",
+    darkPreview: "/images/wallpapers/dark3.webp",
+  },
+];
 export {
   navLinks,
   navIcons,
@@ -222,6 +248,7 @@ export {
   socials,
   photosLinks,
   gallery,
+  wallpapers,
 };
 
 const WORK_LOCATION = {

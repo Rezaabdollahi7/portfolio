@@ -12,6 +12,7 @@ import {
   Contact,
   Photos,
   Note,
+  Setting,
 } from "#windows";
 import { ThemeProvider } from "./context/ThemeContext";
 
@@ -34,6 +35,7 @@ const App = () => {
         <Contact />
         <Photos />
         <Note />
+        <Setting />
       </main>
     </ThemeProvider>
   );

@@ -7,6 +7,7 @@ import ImageWindowContent from "./ImageWindowContent";
 import Contact from "./Contact";
 import Photos from "./Photos";
 import Note from "./Note";
+import Setting from "./Setting";
 export {
   Terminal,
   Safari,
@@ -17,4 +18,5 @@ export {
   Contact,
   Photos,
   Note,
+  Setting,
 };
