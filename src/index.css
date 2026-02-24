@@ -136,7 +136,7 @@ html.dark body {
   }
 
   #safari {
-    @apply w-5xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e1e];
+    @apply w-6xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden dark:bg-[#1e1e1e];
 
     .safari-navigation {
       @apply flex items-center gap-1 ml-5;
@@ -149,7 +149,7 @@ html.dark body {
         @apply flex items-center gap-3 w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2 dark:bg-[#323232] dark:border-none;
 
         input {
-          @apply placeholder:text-gray-400 dark:bg-[#323232] dark:text-gray-100 dark:placeholder:text-gray-500;
+          @apply placeholder:text-gray-400 dark:bg-[#323232] dark:text-gray-100 dark:placeholder:text-gray-500 w-full;
         }
       }
     }
@@ -158,7 +158,7 @@ html.dark body {
     }
 
     .safari-tab-content {
-      @apply min-h-[calc(30rem)] max-h-[40rem] overflow-y-auto;
+      @apply min-h-[calc(30rem)] max-h-[40rem] overflow-y-auto mt-12;
     }
 
     .safari-loading {
@@ -211,7 +211,7 @@ html.dark body {
       }
 
       .project-card-thumbnail {
-        @apply relative w-full h-52 overflow-hidden;
+        @apply relative w-full h-auto overflow-hidden;
 
         .project-card-overlay {
           @apply absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent z-10;
@@ -230,7 +230,7 @@ html.dark body {
         @apply p-5 relative z-10;
 
         .project-card-title {
-          @apply text-lg font-semibold text-[#515151] mb-2 transition-colors;
+          @apply text-lg font-semibold text-[#515151] mb-2 transition-colors dark:text-white;
 
           .group:hover & {
             @apply text-[#528abf];
@@ -245,14 +245,14 @@ html.dark body {
           @apply flex flex-wrap gap-2 mb-4;
 
           .project-card-tech-badge {
-            @apply flex items-center gap-1.5 text-gray-500 px-2.5 py-1 rounded-full border border-gray-300/50 transition-all;
+            @apply flex items-center gap-1.5 text-gray-500 px-2.5 py-2 rounded-full border border-gray-300/50 transition-all dark:text-white/70 ;
 
             &:hover {
               @apply border-[#528abf];
             }
 
             .project-card-tech-icon {
-              @apply w-4 h-4 object-contain;
+              @apply size-6 object-contain rounded-full;
             }
           }
         }
@@ -273,6 +273,179 @@ html.dark body {
           }
         }
       }
+    }
+  }
+
+  /* ─── Lightbox ──────────────────────────────────────────────────────────────── */
+
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: lb-fade-in 0.2s ease;
+  }
+
+  .lightbox-modal {
+    position: relative;
+    width: 90vw;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .lightbox-img-wrapper {
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    animation: lb-zoom-in 0.25s ease;
+  }
+
+  .lightbox-img {
+    width: 100%;
+    max-height: 65vh;
+    object-fit: contain;
+    display: block;
+    background: #111;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -44px;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  .lightbox-counter {
+    position: absolute;
+    top: -44px;
+    left: 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background 0.2s,
+      transform 0.2s;
+    z-index: 10;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    &.left {
+      left: -56px;
+    }
+    &.right {
+      right: -56px;
+    }
+  }
+
+  .lightbox-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .lightbox-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      transform 0.2s;
+
+    &.active {
+      background: white;
+      transform: scale(1.3);
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .lightbox-thumbs {
+    display: flex;
+    gap: 8px;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 4px;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+    }
+  }
+
+  .lightbox-thumb {
+    width: 70px;
+    height: 46px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+    border: 2px solid transparent;
+    opacity: 0.5;
+    transition:
+      opacity 0.2s,
+      border-color 0.2s;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &.active {
+      border-color: white;
+      opacity: 1;
+    }
+
+    &:hover {
+      opacity: 0.8;
     }
   }
 
@@ -1253,5 +1426,45 @@ html.dark body {
   }
   50% {
     opacity: 0;
+  }
+}
+
+@keyframes lb-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lb-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .lightbox-arrow {
+    &.left {
+      left: 8px;
+    }
+    &.right {
+      right: 8px;
+    }
+    width: 36px;
+    height: 36px;
+    top: auto;
+    bottom: 80px;
+    transform: none;
+  }
+
+  .lightbox-modal {
+    width: 95vw;
   }
 }

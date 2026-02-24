@@ -13,8 +13,8 @@ const SafariTabs = ({
   onNewTab,
 }) => {
   return (
-    <div className="safari-tabs  ">
-      <div className="flex items-center gap-2 px-4 py-2">
+    <div className="safari-tabs shrink-0 ">
+      <div className="flex items-center gap-2 px-4 py-2 border-b border-black/20">
         {/* Tab List */}
         <div className="flex-1 flex gap-1.5 overflow-x-auto scrollbar-hide">
           {tabs.map((tab) => (
@@ -33,7 +33,7 @@ const SafariTabs = ({
             >
               {/* Background Gradient for Active Tab */}
               {activeTabId === tab.id && (
-                <div className="absolute inset-0 bg-linear-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-linear-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity " />
               )}
 
               {/* Tab Content */}
@@ -45,7 +45,7 @@ const SafariTabs = ({
                 ) : (
                   <AppWindow className="w-4 h-4 flex-shrink-0 text-gray-400" />
                 )}
-                <span className="text-sm font-medium truncate max-w-[180px] text-black/60">
+                <span className="text-sm font-medium truncate max-w-[180px] text-black/60 dark:text-white">
                   {tab.title}
                 </span>
               </div>

@@ -166,7 +166,7 @@ const Safari = () => {
           <ShieldHalf className="icon" />
           <div className="search">
             <Search className="icon" />
-            <input type="text" value={getAddressBarUrl()} readOnly />
+            <input type="text" value={getAddressBarUrl()} readOnly id="address" />
           </div>
         </div>
 

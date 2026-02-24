@@ -21,12 +21,12 @@ const ProjectDetail = ({ project }) => {
   }
 
   return (
-    <div className="project-detail-container w-full h-full overflow-y-auto">
+    <div className="project-detail-container w-full h-full -z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Project Header */}
-        <div className="mb-12">
+        <div className="mb-12 z-100">
           <div className="relative inline-block mb-4">
-            <h1 className="text-5xl font-bold text-[#454545]">
+            <h1 className="text-5xl font-bold text-[#454545] dark:text-white">
               {project.title}
             </h1>
           </div>
@@ -39,12 +39,12 @@ const ProjectDetail = ({ project }) => {
             {project.techStack.map((tech, index) => (
               <span
                 key={index}
-                className="flex items-center  gap-1.5  text-gray-500 px-2.5 py-1 rounded-full border border-gray-300/50 hover:border-blue-500/50 transition-all"
+                className="flex items-center  gap-1.5  text-gray-500 dark:text-white px-2.5 py-1 rounded-full border border-gray-300/50 hover:border-blue-500/50 transition-all"
               >
                 <img
                   src={tech.icon}
                   alt={tech.name}
-                  className="w-5 h-5 object-contain"
+                  className="size-7 rounded-full object-contain my-1"
                   onError={(e) => {
                     e.target.style.display = "none";
                   }}
@@ -57,8 +57,8 @@ const ProjectDetail = ({ project }) => {
 
         {/* Hero Image */}
         <div className="mb-12">
-          <div className="relative w-full h-[500px] rounded-2xl overflow-hidden border-2 border-gray-500 shadow-2xl hover:shadow-3xl hover:shadow-blue-500/20 transition-shadow duration-300">
-            <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent z-10" />
+          <div className="relative w-full h-auto rounded-2xl overflow-hidden border-2 border-gray-500 shadow-2xl hover:shadow-3xl hover:shadow-blue-500/20 transition-shadow duration-300">
+            <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/10 to-transparent z-10" />
             <img
               src={project.thumbnail}
               alt={project.title}
