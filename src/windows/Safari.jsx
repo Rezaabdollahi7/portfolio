@@ -15,6 +15,7 @@ import ProjectsIndex from "../components/safari/ProjectsIndex";
 import ProjectDetail from "../components/safari/ProjectDetail";
 import { getProject } from "#constants";
 import useUiStore from "#store/ui";
+import { useBackLayer } from "../hooks/useBackLayer";
 
 const HOST = "srezadev.ir";
 const INDEX = { type: "index" };
@@ -29,7 +30,7 @@ let tabSeq = 0;
 const newTab = (page = INDEX) => ({ id: ++tabSeq, history: [page], index: 0 });
 
 const Safari = ({ data, openCount }) => {
-  const { isMobile } = useWindowContext();
+  const { isMobile, isVisible } = useWindowContext();
   const showToast = useUiStore((s) => s.showToast);
   const [tabs, setTabs] = useState(() => [
     newTab(data?.projectId ? { type: "project", id: data.projectId } : INDEX),
@@ -70,7 +71,7 @@ const Safari = ({ data, openCount }) => {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0 });
     const hash = `#${pagePath(page)}`;
-    if (window.location.hash !== hash) history.replaceState(null, "", hash);
+    if (window.location.hash !== hash) window.history.replaceState(window.history.state, "", hash);
   }, [page]);
 
   const go = (delta) =>
@@ -78,6 +79,12 @@ const Safari = ({ data, openCount }) => {
       ...t,
       index: Math.min(Math.max(t.index + delta, 0), t.history.length - 1),
     }));
+
+  // Phone back button walks back through Safari's own history first.
+  useBackLayer(active.index > 0, () => go(-1), {
+    enabled: isMobile && isVisible,
+    step: `${active.id}:${active.index}`,
+  });
 
   const closeTab = (id) => {
     if (tabs.length === 1) return;

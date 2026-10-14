@@ -5,6 +5,7 @@ import WindowHeader from "../components/window/WindowHeader";
 import { useWindowContext } from "../components/window/WindowContext";
 import RichText from "../components/RichText";
 import { notes } from "#constants";
+import { useBackLayer } from "../hooks/useBackLayer";
 
 const plain = (text) => text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
 
@@ -74,7 +75,7 @@ const Block = ({ block }) => {
 };
 
 const Notes = ({ data, openCount }) => {
-  const { isMobile } = useWindowContext();
+  const { isMobile, isVisible } = useWindowContext();
   const [activeId, setActiveId] = useState(data?.noteId ?? notes[0].id);
   // On phones the list is its own screen, like iOS Notes.
   const [showList, setShowList] = useState(!data?.noteId);
@@ -140,6 +141,7 @@ const Notes = ({ data, openCount }) => {
     );
 
   const listView = isMobile && showList;
+  useBackLayer(isMobile && !showList, () => setShowList(true), { enabled: isVisible });
 
   return (
     <>

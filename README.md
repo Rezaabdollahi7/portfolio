@@ -32,7 +32,7 @@ resume never drift apart.
 | --- | --- |
 | **Projects** (Safari) | Case studies for each project with tabs, back/forward history, filters, screenshots and a lightbox. Pages are deep-linkable: `srezadev.ir/#/projects/dofixo` |
 | **Notes** | The "about me", what I'm building, my stack and the site roadmap, in an Apple Notes layout with search |
-| **Terminal** | A working shell: `help`, `about`, `projects`, `open dofixo`, `theme dark`, `cat about.txt`, history and Tab completion |
+| **Terminal** | A zsh-like shell over a virtual filesystem built from the site's data: `ls -la`, `cd dofixo`, `cat README.md`, `tree`, `find`, `grep -rn`, `open .`, pipes, `&&`, `>` redirects, globs, Tab completion, history and `neofetch` |
 | **Finder** | Every project as a folder with its write-up, links and screenshots. Old experiments live in the Trash |
 | **Photos** | Albums of screenshots, one per project |
 | **VS Code** | The site's own data as code, with a small syntax highlighter, file search and source control panel |
@@ -72,6 +72,10 @@ music player, and live **Tehran weather** in a desktop widget.
 - **Code splitting.** Each app is a lazy chunk that loads the first time it opens
   or when you hover its dock icon. The shell (React, GSAP and the desktop) is about
   140 KB of gzipped JS, down from 270 KB before the redesign.
+- **Back button on phones.** `src/lib/backStack.js` keeps one guard history
+  entry while anything is open, so the browser or system back gesture closes
+  the top layer (image viewer, Spotlight, an in-app page, then the app) instead
+  of leaving the site. With nothing open, back leaves as usual.
 - **One content source.** `src/constants/` holds the profile, projects, notes,
   Finder tree and editor files. Everything else reads from there.
 - **Responsive by container.** Windows use container queries, so layouts adapt to

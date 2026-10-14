@@ -1,343 +1,279 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import WindowHeader from "../components/window/WindowHeader";
 import { useWindowContext } from "../components/window/WindowContext";
-import { profile, projects, skills, socials, wallpapers } from "#constants";
 import useWindowStore from "#store/window";
 import useSettingsStore from "#store/settings";
 import { openApp, openExternal, openProject } from "../lib/actions";
+import { complete, createSession, execute, promptPath } from "../lib/terminal/shell";
+import { line, span } from "../lib/terminal/output";
+import { safeStorage } from "../lib/storage";
+import { USER, HOSTNAME } from "../lib/terminal/fs";
 
-const PROMPT = "reza@portfolio ~ %";
+const HISTORY_KEY = "portfolio:terminal-history";
+const MAX_BLOCKS = 120;
+const QUICK = ["Tab", "↑", "ls", "cd ..", "projects", "help", "clear"];
 
-const APP_ALIASES = {
-  projects: "safari",
-  safari: "safari",
-  notes: "notes",
-  about: "notes",
-  photos: "photos",
-  finder: "finder",
-  code: "vscode",
-  vscode: "vscode",
-  contact: "contact",
-  resume: "resume",
-  settings: "settings",
-  github: "github",
-  telegram: "telegram",
-  mail: "mail",
-};
+let blockSeq = 0;
 
-const COMMANDS = {
-  help: "List available commands",
-  about: "Who I am",
-  skills: "My tech stack",
-  projects: "Things I've built",
-  open: "Open an app or project, e.g. open dofixo",
-  contact: "How to reach me",
-  resume: "Open my resume",
-  theme: "Switch appearance: theme light | dark | auto",
-  wallpaper: "Change wallpaper: wallpaper <name>",
-  date: "Show the date in Tehran",
-  echo: "Print text",
-  ls: "List files",
-  cat: "Print a file",
-  history: "Show command history",
-  clear: "Clear the screen (or press Ctrl+L)",
-  exit: "Close the terminal",
-};
-
-const FILES = {
-  "about.txt": () => profile.summary.join("\n\n"),
-  "contact.txt": () => socials.map((s) => `${s.label.padEnd(10)} ${s.handle}`).join("\n"),
-  "projects.txt": () => projects.map((p) => `${p.title}: ${p.tagline}`).join("\n"),
-};
-
-const pad = (s, n) => s.padEnd(n, " ");
-
-const run = (raw, ctx) => {
-  const [cmd = "", ...args] = raw.trim().split(/\s+/);
-  const arg = args.join(" ");
-
-  switch (cmd.toLowerCase()) {
-    case "":
-      return [];
-    case "help":
-      return [
-        { kind: "muted", text: "Available commands:" },
-        ...Object.entries(COMMANDS).map(([name, desc]) => ({
-          kind: "row",
-          label: name,
-          text: desc,
-        })),
-        { kind: "muted", text: "Tip: Tab completes, ↑/↓ walks history." },
-      ];
-    case "about":
-    case "whoami":
-      return [
-        { kind: "accent", text: `${profile.name} · ${profile.role}` },
-        { kind: "out", text: profile.location },
-        { kind: "out", text: "" },
-        ...profile.summary.map((text) => ({ kind: "out", text })),
-      ];
-    case "skills":
-    case "stack":
-      return [
-        ...skills.map((g) => ({ kind: "check", label: g.category, text: g.items.join(", ") })),
-        { kind: "success", text: `✓ ${skills.length} of ${skills.length} stacks loaded` },
-      ];
-    case "projects":
-    case "ls-projects":
-      return [
-        ...projects.map((p) => ({
-          kind: "row",
-          label: p.id,
-          text: `${p.title}: ${p.tagline} (${p.year})`,
-        })),
-        { kind: "muted", text: "Type: open <name> to read the case study." },
-      ];
-    case "open": {
-      const target = arg.toLowerCase();
-      if (!target) return [{ kind: "err", text: "usage: open <app|project>" }];
-      const project = projects.find(
-        (p) => p.id === target || p.title.toLowerCase() === target,
-      );
-      if (project) {
-        openProject(project.id);
-        return [{ kind: "success", text: `Opening ${project.title}…` }];
-      }
-      if (APP_ALIASES[target]) {
-        openApp(APP_ALIASES[target]);
-        return [{ kind: "success", text: `Opening ${target}…` }];
-      }
-      return [{ kind: "err", text: `open: ${target}: no such app or project` }];
-    }
-    case "contact":
-    case "socials":
-      return [
-        ...socials.map((s) => ({ kind: "link", label: s.label, text: s.handle, href: s.href })),
-        { kind: "muted", text: profile.availability + "." },
-      ];
-    case "resume":
-    case "cv":
-      openApp("resume");
-      return [{ kind: "success", text: "Opening Resume.pdf…" }];
-    case "github":
-    case "telegram":
-    case "linkedin": {
-      const s = socials.find((x) => x.id === cmd.toLowerCase());
-      openExternal(s.href);
-      return [{ kind: "success", text: `Opening ${s.label}…` }];
-    }
-    case "theme": {
-      const mode = arg.toLowerCase();
-      if (!["light", "dark", "auto"].includes(mode))
-        return [{ kind: "err", text: "usage: theme light | dark | auto" }];
-      useSettingsStore.getState().setAppearance(mode);
-      return [{ kind: "success", text: `Appearance set to ${mode}.` }];
-    }
-    case "wallpaper": {
-      const wp = wallpapers.find(
-        (w) => w.id === arg.toLowerCase() || w.name.toLowerCase() === arg.toLowerCase(),
-      );
-      if (!wp)
-        return [
-          {
-            kind: "err",
-            text: `usage: wallpaper ${wallpapers.map((w) => w.name.toLowerCase()).join(" | ")}`,
-          },
-        ];
-      useSettingsStore.getState().setWallpaper(wp.id);
-      return [{ kind: "success", text: `Wallpaper set to ${wp.name}.` }];
-    }
-    case "date":
-      return [
-        {
-          kind: "out",
-          text: new Intl.DateTimeFormat("en-US", {
-            dateStyle: "full",
-            timeStyle: "short",
-            timeZone: profile.timezone,
-          }).format(new Date()) + " (Tehran)",
-        },
-      ];
-    case "echo":
-      return [{ kind: "out", text: arg }];
-    case "pwd":
-      return [{ kind: "out", text: "/Users/reza/portfolio" }];
-    case "ls":
-      return [{ kind: "out", text: Object.keys(FILES).join("    ") }];
-    case "cat": {
-      const file = FILES[arg];
-      return file
-        ? file().split("\n").map((text) => ({ kind: "out", text }))
-        : [{ kind: "err", text: `cat: ${arg || "<file>"}: No such file. Try ls.` }];
-    }
-    case "history":
-      return ctx.history.map((h, i) => ({ kind: "out", text: `${pad(String(i + 1), 4)}${h}` }));
-    case "sudo":
-      return [{ kind: "err", text: "reza is not in the sudoers file. This incident will be reported." }];
-    case "rm":
-      return [{ kind: "err", text: "Nice try. Old projects go to the Trash, not /dev/null." }];
-    case "exit":
-      ctx.close();
-      return [];
-    case "clear":
-      ctx.clear();
-      return null;
-    default:
-      return [{ kind: "err", text: `zsh: command not found: ${cmd}. Type help.` }];
+const loadHistory = () => {
+  try {
+    const saved = JSON.parse(safeStorage.getItem(HISTORY_KEY) ?? "[]");
+    return Array.isArray(saved) ? saved.slice(-200) : [];
+  } catch {
+    return [];
   }
 };
 
-const complete = (value) => {
-  const [cmd, ...rest] = value.split(" ");
-  if (rest.length === 0) {
-    const match = Object.keys(COMMANDS).filter((c) => c.startsWith(cmd));
-    return match.length === 1 ? `${match[0]} ` : null;
-  }
-  const arg = rest.join(" ").toLowerCase();
-  const pool =
-    cmd === "open"
-      ? [...projects.map((p) => p.id), ...Object.keys(APP_ALIASES)]
-      : cmd === "cat"
-        ? Object.keys(FILES)
-        : cmd === "theme"
-          ? ["light", "dark", "auto"]
-          : cmd === "wallpaper"
-            ? wallpapers.map((w) => w.name.toLowerCase())
-            : [];
-  const match = [...new Set(pool)].filter((p) => p.startsWith(arg));
-  return match.length === 1 ? `${cmd} ${match[0]}` : null;
+// Plain text with clickable URLs and emails.
+const LINKS = /(https?:\/\/[^\s)]+|[\w.+-]+@[\w-]+\.[\w.]+)/g;
+const Linkified = ({ text }) => {
+  const parts = text.split(LINKS);
+  return parts.map((part, i) =>
+    i % 2 === 1 ? (
+      <a
+        key={i}
+        href={part.includes("@") && !part.startsWith("http") ? `mailto:${part}` : part}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="t-link"
+      >
+        {part}
+      </a>
+    ) : (
+      <Fragment key={i}>{part}</Fragment>
+    ),
+  );
 };
 
-const QUICK = ["help", "about", "projects", "skills", "contact"];
-
-const Line = ({ line }) => {
-  switch (line.kind) {
-    case "cmd":
-      return (
-        <p>
-          <span className="term-prompt">{PROMPT}</span> {line.text}
-        </p>
-      );
-    case "row":
-      return (
-        <p>
-          <span className="term-key">{pad(line.label, 12)}</span>
-          {line.text}
-        </p>
-      );
-    case "check":
-      return (
-        <p>
-          <span className="term-success">✓ </span>
-          <span className="term-key">{pad(line.label, 10)}</span>
-          {line.text}
-        </p>
-      );
-    case "link":
-      return (
-        <p>
-          <span className="term-key">{pad(line.label, 10)}</span>
-          <a href={line.href} target="_blank" rel="noopener noreferrer" className="term-link">
-            {line.text}
-          </a>
-        </p>
-      );
-    default:
-      return <p className={`term-${line.kind}`}>{line.text || " "}</p>;
-  }
+const Span = ({ s, onRun }) => {
+  if (s.run)
+    return (
+      <button type="button" className={`t-run ${s.cls ?? ""}`} onClick={() => onRun(s.run)}>
+        {s.text}
+      </button>
+    );
+  if (s.href)
+    return (
+      <a href={s.href} target="_blank" rel="noopener noreferrer" className={`t-link ${s.cls ?? ""}`}>
+        {s.text}
+      </a>
+    );
+  if (!s.cls) return <Linkified text={s.text} />;
+  return <span className={s.cls}>{s.text}</span>;
 };
 
-const initialLines = () => [
-  {
-    kind: "muted",
-    text: `Last login: ${new Date().toDateString()} on ttys000`,
-  },
-  { kind: "accent", text: `Welcome to Reza's terminal. Type help to see what I can do.` },
-  { kind: "cmd", text: "skills" },
-  ...run("skills", {}),
-];
+const Line = ({ l, onRun }) => {
+  if (l.grid)
+    return (
+      <div className="t-grid">
+        {l.grid.map((s, i) => (
+          <Span key={i} s={s} onRun={onRun} />
+        ))}
+      </div>
+    );
+  if (l.fetch)
+    return (
+      <div className="t-fetch">
+        <pre className="t-logo" aria-hidden="true">
+          {l.fetch.logo.map((s, i) => (
+            <span key={i} className={s.cls}>
+              {s.text}
+              {"\n"}
+            </span>
+          ))}
+        </pre>
+        <div className="t-fetch-info">
+          {l.fetch.info.map((info, i) => (
+            <Line key={i} l={info} onRun={onRun} />
+          ))}
+        </div>
+      </div>
+    );
+  return (
+    <p className="t-line">
+      {l.spans.length === 0 ? " " : l.spans.map((s, i) => <Span key={i} s={s} onRun={onRun} />)}
+    </p>
+  );
+};
+
+const Prompt = ({ cwd, ok }) => (
+  <>
+    <span className="t-path">{cwd}</span>
+    <span className={ok ? "t-arrow" : "t-arrow is-error"}> ❯ </span>
+  </>
+);
 
 const Terminal = () => {
   const { windowKey, isMobile } = useWindowContext();
   const closeWindow = useWindowStore((s) => s.closeWindow);
-  const [lines, setLines] = useState(initialLines);
+  const [session] = useState(() => {
+    const s = createSession();
+    s.history = loadHistory();
+    return s;
+  });
+  const [blocks, setBlocks] = useState(() => {
+    const welcome = {
+      id: ++blockSeq,
+      lines: [
+        line(span(`Last login: ${new Date().toString().slice(0, 21)} on ttys000`, "t-muted")),
+        line(span("Welcome to Reza's terminal: a tiny zsh running inside this portfolio.", "t-h1")),
+        line(
+          span("Try ", "t-muted"),
+          ...["help", "ls", "cd projects", "cat about.md", "open dofixo", "hire"].flatMap((c, i) => [
+            i ? span("  ", "t-muted") : null,
+            span(c, "t-cmd", { run: c }),
+          ]),
+        ),
+        line(""),
+      ],
+    };
+    const fetch = {
+      id: ++blockSeq,
+      prompt: { cwd: "~", cmd: "neofetch", ok: true },
+      lines: execute(session, stubIo, "neofetch"),
+    };
+    return [welcome, fetch];
+  });
   const [value, setValue] = useState("");
-  const [history, setHistory] = useState([]);
-  const [cursor, setCursor] = useState(-1);
+  const [historyIndex, setHistoryIndex] = useState(-1);
   const inputRef = useRef(null);
   const bodyRef = useRef(null);
 
+  const io = {
+    openWindow: (key, data) => useWindowStore.getState().openWindow(key, data),
+    openProject,
+    openApp,
+    openExternal,
+    setAppearance: (mode) => useSettingsStore.getState().setAppearance(mode),
+    getAppearance: () => useSettingsStore.getState().appearance,
+    setWallpaper: (id) => useSettingsStore.getState().setWallpaper(id),
+    isDark: () => document.documentElement.classList.contains("dark"),
+    clear: () => {
+      io.cleared = true;
+    },
+    close: () => closeWindow(windowKey),
+  };
+
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight });
-  }, [lines]);
+  }, [blocks]);
 
   // First open: the window may focus before this lazy chunk mounts.
   useEffect(() => {
     if (!isMobile) inputRef.current?.focus({ preventScroll: true });
   }, [isMobile]);
 
-  const execute = (raw) => {
-    const ctx = {
-      history: [...history, raw],
-      clear: () => setLines([]),
-      close: () => closeWindow(windowKey),
-    };
-    const output = run(raw, ctx);
-    if (raw.trim()) setHistory((h) => [...h, raw]);
-    setCursor(-1);
+  const append = (block) =>
+    setBlocks((prev) => [...prev, { id: ++blockSeq, ...block }].slice(-MAX_BLOCKS));
+
+  const run = (raw) => {
+    const cmd = raw.trim();
+    if (cmd && session.history[session.history.length - 1] !== cmd) {
+      session.history.push(cmd);
+      safeStorage.setItem(HISTORY_KEY, JSON.stringify(session.history.slice(-200)));
+    }
+    const prompt = { cwd: promptPath(session), cmd: raw, ok: session.lastCode === 0 };
+    io.cleared = false;
+    const lines = cmd ? execute(session, io, cmd) : [];
     setValue("");
-    if (output === null) return;
-    setLines((prev) => [...prev, { kind: "cmd", text: raw }, ...output]);
+    setHistoryIndex(-1);
+    if (io.cleared) setBlocks([]);
+    else append({ prompt, lines });
+    if (!isMobile) inputRef.current?.focus({ preventScroll: true });
+  };
+
+  const tabComplete = () => {
+    const result = complete(session, value);
+    if (result.value !== undefined) setValue(result.value);
+    else if (result.options)
+      append({
+        prompt: { cwd: promptPath(session), cmd: value, ok: session.lastCode === 0 },
+        lines: [{ grid: result.options.map((o) => span(o, o.endsWith("/") ? "t-dir" : undefined)) }],
+      });
+  };
+
+  const historyStep = (dir) => {
+    const h = session.history;
+    if (!h.length) return;
+    let next;
+    if (dir < 0) next = historyIndex === -1 ? h.length - 1 : Math.max(0, historyIndex - 1);
+    else {
+      if (historyIndex === -1) return;
+      next = historyIndex + 1;
+      if (next >= h.length) {
+        setHistoryIndex(-1);
+        setValue("");
+        return;
+      }
+    }
+    setHistoryIndex(next);
+    setValue(h[next]);
   };
 
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      execute(value);
+      run(value);
     } else if (e.key === "Tab") {
       e.preventDefault();
-      const done = complete(value);
-      if (done) setValue(done);
+      tabComplete();
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      if (!history.length) return;
-      const next = cursor === -1 ? history.length - 1 : Math.max(0, cursor - 1);
-      setCursor(next);
-      setValue(history[next]);
+      historyStep(-1);
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
-      if (cursor === -1) return;
-      const next = cursor + 1;
-      if (next >= history.length) {
-        setCursor(-1);
-        setValue("");
-      } else {
-        setCursor(next);
-        setValue(history[next]);
-      }
-    } else if (e.key === "l" && e.ctrlKey) {
+      historyStep(1);
+    } else if (e.ctrlKey && e.key.toLowerCase() === "c") {
+      if (window.getSelection()?.toString()) return; // let copy work
       e.preventDefault();
-      setLines([]);
+      append({ prompt: { cwd: promptPath(session), cmd: `${value}^C`, ok: session.lastCode === 0 }, lines: [] });
+      session.lastCode = 130;
+      setValue("");
+    } else if (e.ctrlKey && e.key.toLowerCase() === "l") {
+      e.preventDefault();
+      setBlocks([]);
+    } else if (e.ctrlKey && e.key.toLowerCase() === "u") {
+      e.preventDefault();
+      setValue("");
     }
   };
 
+  const onQuick = (q) => {
+    if (q === "Tab") tabComplete();
+    else if (q === "↑") historyStep(-1);
+    else run(q);
+  };
+
+  const cwd = promptPath(session);
+
   return (
     <>
-      <WindowHeader title="reza — zsh" backLabel="Home" />
+      <WindowHeader title={`${USER}@${HOSTNAME}: ${cwd}`} backLabel="Home" />
       <div
         ref={bodyRef}
         className="window-body terminal-body"
-        onClick={() => {
+        onClick={(e) => {
+          if (e.target.closest("button, a")) return;
           if (!window.getSelection()?.toString()) inputRef.current?.focus({ preventScroll: true });
         }}
       >
-        <div className="terminal-lines" aria-live="polite">
-          {lines.map((line, i) => (
-            <Line key={i} line={line} />
+        <div className="terminal-lines" role="log" aria-label="Terminal output">
+          {blocks.map((b) => (
+            <div key={b.id} className="t-block">
+              {b.prompt && (
+                <p className="t-line">
+                  <Prompt cwd={b.prompt.cwd} ok={b.prompt.ok} />
+                  <span className="t-typed">{b.prompt.cmd}</span>
+                </p>
+              )}
+              {b.lines.map((l, i) => (
+                <Line key={i} l={l} onRun={run} />
+              ))}
+            </div>
           ))}
         </div>
         <label className="terminal-input-row">
-          <span className="term-prompt">{PROMPT}</span>
+          <Prompt cwd={cwd} ok={session.lastCode === 0} />
           <span className="sr-only">Terminal command</span>
           <input
             ref={inputRef}
@@ -355,10 +291,16 @@ const Terminal = () => {
         </label>
       </div>
       {isMobile && (
-        <div className="terminal-quick" aria-label="Quick commands">
-          {QUICK.map((cmd) => (
-            <button key={cmd} type="button" onClick={() => execute(cmd)}>
-              {cmd}
+        <div className="terminal-quick" aria-label="Quick keys">
+          {QUICK.map((q) => (
+            <button
+              key={q}
+              type="button"
+              onPointerDown={(e) => e.preventDefault()}
+              onClick={() => onQuick(q)}
+              aria-label={q === "↑" ? "Previous command" : q === "Tab" ? "Complete" : undefined}
+            >
+              {q}
             </button>
           ))}
         </div>
@@ -366,5 +308,8 @@ const Terminal = () => {
     </>
   );
 };
+
+// The welcome neofetch only needs to know the theme.
+const stubIo = { isDark: () => document.documentElement.classList.contains("dark") };
 
 export default Terminal;

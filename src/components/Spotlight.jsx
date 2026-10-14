@@ -5,6 +5,8 @@ import { Copy, CornerDownLeft, Download, FileText, Moon, Search } from "lucide-r
 import { apps, notes, profile, projects } from "#constants";
 import useUiStore from "#store/ui";
 import useSettingsStore from "#store/settings";
+import { useIsMobile } from "../hooks/useMediaQuery";
+import { useBackLayer } from "../hooks/useBackLayer";
 import { copyEmail, openApp, openProject, openWindow } from "../lib/actions";
 
 const buildIndex = () => [
@@ -80,6 +82,7 @@ const SUGGESTED = ["project-dofixo", "project-finora", "app-notes", "app-resume"
 // Mounted only while open, so every open starts with a clean query.
 const SpotlightPanel = () => {
   const closeSpotlight = useUiStore((s) => s.closeSpotlight);
+  useBackLayer(true, closeSpotlight, { enabled: useIsMobile() });
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const inputRef = useRef(null);

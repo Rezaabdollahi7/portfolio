@@ -6,6 +6,7 @@ import { apps, mobileDockApps, mobileHomeApps, profile, getProject } from "#cons
 import useUiStore from "#store/ui";
 import useWindowStore, { selectFocusedKey } from "#store/window";
 import { useNow } from "../../hooks/useNow";
+import { useBackLayer } from "../../hooks/useBackLayer";
 import { openApp, openProject, openWindow } from "../../lib/actions";
 import { prefersReducedMotion } from "../../lib/motion";
 import { WeatherWidget } from "../desktop/Widgets";
@@ -37,6 +38,7 @@ const MobileHome = () => {
   const rootRef = useRef(null);
   const { controlCenterOpen, toggleControlCenter, closeControlCenter, openSpotlight } =
     useUiStore();
+  useBackLayer(controlCenterOpen, closeControlCenter);
 
   useEffect(() => {
     if (!controlCenterOpen) return;

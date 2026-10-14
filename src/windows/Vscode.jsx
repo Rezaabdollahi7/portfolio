@@ -12,6 +12,7 @@ import {
 import WindowHeader from "../components/window/WindowHeader";
 import { useWindowContext } from "../components/window/WindowContext";
 import { FILE_CONTENTS, FILE_TREE, TERMINAL_LINES } from "#constants";
+import { useBackLayer } from "../hooks/useBackLayer";
 
 // ── Tiny highlighter: good enough for the handful of files shown here ─────
 const KEYWORDS =
@@ -100,12 +101,13 @@ const ACTIVITY = [
 ];
 
 const Vscode = () => {
-  const { isMobile } = useWindowContext();
+  const { isMobile, isVisible } = useWindowContext();
   const [activeFile, setActiveFile] = useState("about.tsx");
   const [openFiles, setOpenFiles] = useState(["about.tsx", "README.md"]);
   const [panel, setPanel] = useState(isMobile ? null : "explorer");
   const [showTerminal, setShowTerminal] = useState(!isMobile);
   const [query, setQuery] = useState("");
+  useBackLayer(panel !== null, () => setPanel(null), { enabled: isMobile && isVisible });
 
   const file = activeFile ? FILE_CONTENTS[activeFile] : null;
   const lines = useMemo(

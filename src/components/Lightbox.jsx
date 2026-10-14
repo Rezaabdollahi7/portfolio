@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useIsMobile } from "../hooks/useMediaQuery";
+import { useBackLayer } from "../hooks/useBackLayer";
 
 // Full-screen image viewer. Portaled to <body> so window transforms
 // can't trap it. Arrow keys, Escape and swipe all work.
@@ -9,6 +11,7 @@ const Lightbox = ({ images, index, onClose, title }) => {
   const touchX = useRef(null);
   const closeRef = useRef(null);
   const count = images.length;
+  useBackLayer(true, onClose, { enabled: useIsMobile() });
 
   const prev = useCallback(() => setCurrent((i) => (i - 1 + count) % count), [count]);
   const next = useCallback(() => setCurrent((i) => (i + 1) % count), [count]);

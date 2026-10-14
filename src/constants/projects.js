@@ -352,7 +352,7 @@ export const projects = [
     highlights: [
       "Window manager with drag, focus, minimise, zoom and z-ordering in a Zustand store.",
       "Spotlight search (⌘K) across apps, projects, notes and actions.",
-      "An interactive terminal with history and tab completion.",
+      "A zsh-like terminal over a virtual filesystem: ls, cd, cat, grep, pipes, redirects and Tab completion.",
       "iOS-style experience on phones, with full-screen apps and a home screen.",
     ],
     stack: ["React 19", "Vite", "Tailwind CSS 4", "GSAP", "Zustand"],
