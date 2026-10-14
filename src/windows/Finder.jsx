@@ -1,89 +1,144 @@
-import React, { useEffect } from "react";
-import { WindowControlls } from "#components";
-import { Search } from "lucide-react";
-import WindowWrapper from "#hoc/WindowWrapper";
-import { locations } from "#constants";
-import useLocationStore from "#store/location";
+import { useState } from "react";
 import clsx from "clsx";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import WindowHeader from "../components/window/WindowHeader";
+import { useWindowContext } from "../components/window/WindowContext";
+import { locations } from "#constants";
 import useWindowStore from "#store/window";
+import { openExternal } from "../lib/actions";
 
-const Finder = () => {
-  const finderData = useWindowStore((state) => state.windows.finder.data);
-  const { activeLocation, setActiveLocation } = useLocationStore();
-  const { openWindow } = useWindowStore();
+const ROOTS = Object.values(locations);
 
-  useEffect(() => {
-    const locationKey = finderData?.location || "work"; // default to work
-    const targetLocation = locations[locationKey];
-    if (targetLocation) {
-      setActiveLocation(targetLocation);
-    }
-  }, [finderData?.location, setActiveLocation]);
+// Find the path (root → … → folder) to a folder id.
+const findPath = (id, nodes = ROOTS, trail = []) => {
+  for (const node of nodes) {
+    if (node.kind !== "folder") continue;
+    const path = [...trail, node];
+    if (node.id === id) return path;
+    const found = findPath(id, node.children ?? [], path);
+    if (found) return found;
+  }
+  return null;
+};
 
-  const openItem = (item) => {
-    if (item.fileType === "pdf") return openWindow("resume");
-    if (item.kind === "folder") return setActiveLocation(item);
-    if (item.fileType === "fig" && item.href)
-      return window.open(item.href, "_blank");
-    if (item.fileType === "demo" && item.href) {
-      return openWindow("safari", { demoUrl: item.href });
-    }
-    if (item.fileType === "url" && item.href) {
-      return window.open(item.href, "_blank");
-    }
+const Finder = ({ data, openCount }) => {
+  const { isMobile } = useWindowContext();
+  const openWindow = useWindowStore((s) => s.openWindow);
+  const [path, setPath] = useState(() => findPath(data?.location ?? "work"));
+  const [selected, setSelected] = useState(null);
+  // Re-opened from elsewhere (dock, Trash, a link): jump to that folder.
+  const [handled, setHandled] = useState(openCount);
+  if (openCount !== handled) {
+    setHandled(openCount);
+    setPath(findPath(data?.location ?? "work"));
+    setSelected(null);
+  }
 
-    openWindow(`${item.fileType}${item.kind}`, item);
+  const folder = path[path.length - 1];
+
+  const goTo = (id) => {
+    setPath(findPath(id));
+    setSelected(null);
   };
 
-  const renderList = (name, items) => (
-    <div>
-      <h3>{name}</h3>
-      <ul>
-        {items.map((item) => (
-          <li
-            key={item.id}
-            onClick={() => setActiveLocation(item)}
-            className={clsx(
-              item.id === activeLocation.id ? "active" : "not-active"
-            )}
-          >
-            <img src={item.icon} alt={item.name} className="w-4" />
-            <p className="text-sm font-medium truncate">{item.name}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+  const open = (item) => {
+    if (item.kind === "folder") return goTo(item.id);
+    if (item.fileType === "url") return openExternal(item.href);
+    if (item.fileType === "app") return openWindow(item.target.window, item.target.data);
+    if (item.fileType === "txt") return openWindow("txtfile", item);
+    if (item.fileType === "img") return openWindow("imgfile", item);
+  };
+
+  const projectFolders = locations.work.children;
+
+  const renderLink = (node) => (
+    <li key={node.id}>
+      <button
+        type="button"
+        className={clsx("sidebar-item", path.some((p) => p.id === node.id) && "is-active")}
+        aria-current={folder.id === node.id ? "page" : undefined}
+        onClick={() => goTo(node.id)}
+      >
+        <img src={node.icon} alt="" aria-hidden="true" />
+        <span className="truncate">{node.name}</span>
+      </button>
+    </li>
   );
 
   return (
-    <section id="finder">
-      <div id="window-header">
-        <WindowControlls target="finder" />
-        <Search className="icon" />
-      </div>
-
-      <div className="flex bg-white h-full">
-        <div className="sidebar">
-          {renderList("Favorites", Object.values(locations))}
-          {renderList("My Projecrs", Object.values(locations.work.children))}
+    <>
+      <WindowHeader className="finder-toolbar" backLabel="Home">
+        <div className="finder-nav" data-no-drag>
+          <button
+            type="button"
+            className="toolbar-btn"
+            onClick={() => path.length > 1 && setPath(path.slice(0, -1))}
+            disabled={path.length < 2}
+            aria-label="Up one folder"
+          >
+            <ChevronLeft aria-hidden="true" />
+          </button>
         </div>
+        <nav className="finder-breadcrumb" aria-label="Folder path">
+          {path.map((node, i) => (
+            <span key={node.id} className="flex items-center gap-1 min-w-0">
+              {i > 0 && <ChevronRight aria-hidden="true" className="crumb-sep" />}
+              <button
+                type="button"
+                className={clsx("crumb", i === path.length - 1 && "is-current")}
+                onClick={() => setPath(path.slice(0, i + 1))}
+              >
+                {node.name}
+              </button>
+            </span>
+          ))}
+        </nav>
+      </WindowHeader>
 
-        <ul className="content">
-          {activeLocation?.children.map((item) => (
-            <li
-              key={item.id}
-              className={item.position}
-              onClick={() => openItem(item)}
-            >
-              <img src={item.icon} alt={item.name} />
-              <p>{item.name}</p>
+      <div className="window-body finder-layout @container">
+        <aside className="finder-sidebar" aria-label="Locations">
+          <p className="sidebar-heading">Favorites</p>
+          <ul>
+            {ROOTS.map(renderLink)}
+          </ul>
+          {!isMobile && (
+            <>
+              <p className="sidebar-heading">Projects</p>
+              <ul>
+                {projectFolders.map(renderLink)}
+              </ul>
+            </>
+          )}
+        </aside>
+
+        <ul
+          className="finder-grid"
+          aria-label={`${folder.name} contents`}
+          onClick={(e) => e.target === e.currentTarget && setSelected(null)}
+        >
+          {folder.children.map((item) => (
+            <li key={item.id}>
+              <button
+                type="button"
+                className={clsx("finder-item", selected === item.id && "is-selected")}
+                onClick={() => (isMobile ? open(item) : setSelected(item.id))}
+                onDoubleClick={() => open(item)}
+                onKeyDown={(e) => e.key === "Enter" && open(item)}
+                title={isMobile ? undefined : "Double-click to open"}
+              >
+                <img src={item.icon} alt="" aria-hidden="true" loading="lazy" />
+                <span className="finder-item-name">{item.name}</span>
+              </button>
             </li>
           ))}
         </ul>
       </div>
-    </section>
+      <div className="finder-status">
+        {folder.children.length} items
+        {!isMobile && <span className="max-sm:hidden"> · Double-click to open</span>}
+      </div>
+    </>
   );
 };
 
-const FinderWindow = WindowWrapper(Finder, "finder");
-export default FinderWindow;
+export default Finder;

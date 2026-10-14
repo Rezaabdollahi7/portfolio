@@ -2,12 +2,96 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/macbook.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reza's Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Reza Abdollahi · Frontend Developer</title>
+    <meta
+      name="description"
+      content="Reza Abdollahi is a frontend developer in Tehran building fast, Persian-first web products with React, Next.js and Node.js. Explore projects like Dofixo and Finora in a macOS-style portfolio."
+    />
+    <meta name="author" content="Reza Abdollahi" />
+    <meta name="theme-color" content="#e9ecf2" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="https://srezadev.ir/" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Reza Abdollahi" />
+    <meta property="og:title" content="Reza Abdollahi · Frontend Developer" />
+    <meta
+      property="og:description"
+      content="A portfolio you can explore like a Mac. Projects, notes, a terminal and more."
+    />
+    <meta property="og:url" content="https://srezadev.ir/" />
+    <meta property="og:image" content="https://srezadev.ir/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Reza Abdollahi · Frontend Developer" />
+    <meta
+      name="twitter:description"
+      content="A portfolio you can explore like a Mac. Projects, notes, a terminal and more."
+    />
+    <meta name="twitter:image" content="https://srezadev.ir/og-image.png" />
+
+    <link rel="preconnect" href="https://api.open-meteo.com" crossorigin />
+
+    <script>
+      // Apply the saved (or system) theme before first paint to avoid a flash.
+      (function () {
+        try {
+          var s = JSON.parse(localStorage.getItem("portfolio:settings") || "{}").state || {};
+          var legacy = localStorage.getItem("theme");
+          var a = s.appearance || (legacy === "dark" || legacy === "light" ? legacy : "auto");
+          var dark = a === "dark" || (a === "auto" && matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Reza Abdollahi",
+        "jobTitle": "Frontend Developer",
+        "url": "https://srezadev.ir",
+        "email": "mailto:srezaabdollahi7@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Tehran", "addressCountry": "IR" },
+        "knowsAbout": ["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "Tailwind CSS", "GSAP"],
+        "sameAs": [
+          "https://github.com/Rezaabdollahi7",
+          "https://www.linkedin.com/in/seyedreza-abdollahi",
+          "https://t.me/rezaabdollahi7"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <main style="font-family: system-ui, sans-serif; max-width: 640px; margin: 48px auto; padding: 0 20px; line-height: 1.6; background: #fff; color: #1d1d1f; border-radius: 12px">
+        <h1>Reza Abdollahi</h1>
+        <p>Frontend developer in Tehran building Persian-first web products with React, Next.js and Node.js.</p>
+        <h2>Projects</h2>
+        <ul>
+          <li><a href="https://dofixo.ir">Dofixo</a>: multi-tenant SaaS for repair workshops</li>
+          <li><a href="https://github.com/Rezaabdollahi7/Finora">Finora</a>: self-hosted household finance manager</li>
+          <li><a href="https://nextapps.ir">NextApps</a>: digital product studio website</li>
+          <li><a href="https://siemanage.com">SieManage</a>: real-time task management for teams</li>
+          <li><a href="https://github.com/Rezaabdollahi7/DashStack">DashStack</a>: open-source admin dashboard</li>
+        </ul>
+        <p>
+          <a href="mailto:srezaabdollahi7@gmail.com">Email</a> ·
+          <a href="https://github.com/Rezaabdollahi7">GitHub</a> ·
+          <a href="https://www.linkedin.com/in/seyedreza-abdollahi">LinkedIn</a> ·
+          <a href="/files/reza-abdollahi-resume.pdf">Resume (PDF)</a>
+        </p>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -1,0 +1,14 @@
+{
+  "name": "Reza Abdollahi · Portfolio",
+  "short_name": "Reza",
+  "description": "Frontend developer portfolio, built like macOS.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1c1c1e",
+  "theme_color": "#0a6cff",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
