@@ -1,38 +1,114 @@
-import { WindowControlls } from "#components";
-import { socials } from "#constants";
-import WindowWrapper from "#hoc/WindowWrapper";
+import { Copy, Github, Linkedin, Mail, MessageCircle, Phone, Send } from "lucide-react";
+import WindowHeader from "../components/window/WindowHeader";
+import { profile, socials } from "#constants";
+import { useNow } from "../hooks/useNow";
+import { copyEmail } from "../lib/actions";
+
+const tehranTime = (date) =>
+  new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: profile.timezone,
+  }).format(date);
+
+const ICONS = { github: Github, linkedin: Linkedin, telegram: Send, email: Mail };
 
 const Contact = () => {
-  return (
-    <section id="contact">
-      <div id="window-header">
-        <WindowControlls target="contact" />
-        <h2>Contact Me</h2>
-      </div>
+  const now = useNow();
+  const telegram = socials.find((s) => s.id === "telegram");
 
-      <div className="p-5 space-y-5">
-        <img
-          src="/images/adrian.jpg"
-          alt="Reza"
-          className="w-20 rounded-full"
-        />
-        <h3>Lets Connect</h3>
-        <p>Got an idea ? A bug to fix ? or just wanna talk tech ? Im in</p>
-        <p>Srezaabdollahi7@gmail.com</p>
-        <p>+98 921 981 1980</p>
-        <ul>
-          {socials.map(({ id, bg, link, icon, text }) => (
-            <li key={id} style={{ background: bg }}>
-              <a href={link} target="_blank" rel="noopener noreferrer">
-                <img src={icon} alt={text} className="size-5" />
-                <p>{text}</p>
-              </a>
-            </li>
+  const actions = [
+    { label: "message", icon: MessageCircle, href: telegram.href },
+    { label: "call", icon: Phone, href: profile.phoneHref },
+    { label: "mail", icon: Mail, href: `mailto:${profile.email}` },
+  ];
+
+  return (
+    <>
+      <WindowHeader title="Contacts" backLabel="Home" />
+      <div className="window-body contact-card">
+        <div className="contact-hero">
+          <div className="contact-avatar" aria-hidden="true">
+            {profile.initials}
+          </div>
+          <h1 className="contact-name">{profile.name}</h1>
+          <p className="contact-role">
+            {profile.role} · {profile.location}
+          </p>
+          <p className="contact-time">
+            <span className="tabular-nums">{tehranTime(now)}</span> local time in Tehran
+          </p>
+          <p className="availability">
+            <span className="availability-dot" aria-hidden="true" />
+            {profile.availability}
+          </p>
+        </div>
+
+        <div className="contact-actions">
+          {actions.map(({ label, icon: Icon, href }) => (
+            <a
+              key={label}
+              href={href}
+              className="contact-action"
+              target={href.startsWith("http") ? "_blank" : undefined}
+              rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+            >
+              <Icon aria-hidden="true" />
+              <span>{label}</span>
+            </a>
           ))}
-        </ul>
+          <button type="button" className="contact-action" onClick={copyEmail}>
+            <Copy aria-hidden="true" />
+            <span>copy email</span>
+          </button>
+        </div>
+
+        <dl className="contact-rows">
+          <div className="contact-row">
+            <dt>email</dt>
+            <dd>
+              <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            </dd>
+          </div>
+          <div className="contact-row">
+            <dt>phone</dt>
+            <dd>
+              <a href={profile.phoneHref} className="tabular-nums">
+                {profile.phone}
+              </a>
+            </dd>
+          </div>
+          <div className="contact-row">
+            <dt>website</dt>
+            <dd>
+              <a href={profile.website}>srezadev.ir</a>
+            </dd>
+          </div>
+          {socials
+            .filter((s) => s.id !== "email")
+            .map((s) => {
+              const Icon = ICONS[s.id];
+              return (
+                <div key={s.id} className="contact-row">
+                  <dt>{s.label.toLowerCase()}</dt>
+                  <dd>
+                    <a href={s.href} target="_blank" rel="noopener noreferrer">
+                      <Icon aria-hidden="true" className="contact-row-icon" />
+                      {s.handle}
+                    </a>
+                  </dd>
+                </div>
+              );
+            })}
+        </dl>
+
+        <p className="contact-note">
+          Got an idea, a bug to fix, or just want to talk tech? Email or Telegram
+          is the fastest way to reach me.
+        </p>
       </div>
-    </section>
+    </>
   );
 };
-const ContactWindow = WindowWrapper(Contact, "contact");
-export default ContactWindow;
+
+export default Contact;

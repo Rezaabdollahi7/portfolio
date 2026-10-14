@@ -1,87 +1,78 @@
-import { useState } from "react";
-import WindowWrapper from "#hoc/WindowWrapper";
-import { WindowControlls } from "#components";
-import { FILE_TREE, FILE_CONTENTS, TERMINAL_LINES } from "#constants";
-import { FolderOpen, Search, GitCompare, Settings } from "lucide-react";
+import { useMemo, useState } from "react";
+import clsx from "clsx";
+import {
+  ChevronDown,
+  ChevronRight,
+  Files,
+  GitBranch,
+  Search,
+  SquareTerminal,
+  X,
+} from "lucide-react";
+import WindowHeader from "../components/window/WindowHeader";
+import { useWindowContext } from "../components/window/WindowContext";
+import { FILE_CONTENTS, FILE_TREE, TERMINAL_LINES } from "#constants";
 
-// ─── File Icon ────────────────────────────────────────────────────────────────
+// ── Tiny highlighter: good enough for the handful of files shown here ─────
+const KEYWORDS =
+  /^(const|let|var|export|default|import|from|return|interface|type|true|false|null|function|new)$/;
+const TOKEN =
+  /(\/\/.*$)|("(?:[^"\\]|\\.)*")|(\b[A-Za-z_$][\w$]*\b)(?=\s*:)|(\b[A-Za-z_$][\w$]*\b)|(\d+)|(\s+)|([^\w\s"]+)/g;
 
-const FileIcon = ({ lang, size = 14 }) => {
-  const colors = {
-    tsx: "#61dafb",
-    ts: "#3178c6",
-    md: "#519aba",
-    json: "#f5de19",
-    folder: "#e8c07d",
-  };
-  const labels = { tsx: "T", ts: "T", md: "M", json: "{}", folder: "📁" };
-  const color = colors[lang] || "#888";
-  const label = labels[lang] ?? "•";
-
-  return (
-    <span
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: size,
-        height: size,
-        fontSize: size * 0.9,
-        color,
-        fontWeight: 700,
-        fontFamily: "monospace",
-        flexShrink: 0,
-      }}
-    >
-      {label}
-    </span>
-  );
+const highlightLine = (line, lang) => {
+  if (lang === "md") {
+    if (line.startsWith("#")) return [{ c: "tk-heading", v: line }];
+    if (line.startsWith("- ")) return [{ c: "tk-punct", v: "- " }, { c: "tk-plain", v: line.slice(2) }];
+    if (line.startsWith("[")) return [{ c: "tk-link", v: line }];
+    return [{ c: "tk-plain", v: line }];
+  }
+  const out = [];
+  for (const m of line.matchAll(TOKEN)) {
+    const [v, comment, str, prop, word, num] = m;
+    if (comment) out.push({ c: "tk-comment", v });
+    else if (str) out.push({ c: lang === "json" && /^\s*:/.test(line.slice(m.index + v.length)) ? "tk-prop" : "tk-string", v });
+    else if (prop) out.push({ c: "tk-prop", v });
+    else if (word) out.push({ c: KEYWORDS.test(v) ? "tk-keyword" : /^[A-Z]/.test(v) ? "tk-type" : "tk-plain", v });
+    else if (num) out.push({ c: "tk-number", v });
+    else out.push({ c: "tk-punct", v });
+  }
+  return out;
 };
 
-// ─── Token Renderer ───────────────────────────────────────────────────────────
+const LANG_LABEL = { tsx: "TypeScript JSX", ts: "TypeScript", md: "Markdown", json: "JSON" };
+const LANG_COLOR = { tsx: "#4fc1ff", ts: "#6cb6ff", md: "#7cc0dd", json: "#cbcb41" };
 
-const Token = ({ type, value }) => {
-  const styles = {
-    keyword: { color: "#c586c0" },
-    fn: { color: "#dcdcaa" },
-    string: { color: "#ce9178" },
-    prop: { color: "#9cdcfe" },
-    comment: { color: "#6a9955", fontStyle: "italic" },
-    plain: { color: "#d4d4d4" },
-    space: { color: "#d4d4d4" },
-    "md-h1": { color: "#569cd6", fontWeight: 700, fontSize: 15 },
-    "md-h2": { color: "#569cd6", fontWeight: 600 },
-    "md-li": { color: "#d4d4d4" },
-    "md-link": { color: "#4ec9b0" },
-  };
-  return <span style={styles[type] || { color: "#d4d4d4" }}>{value}</span>;
-};
+const FileIcon = ({ lang }) => (
+  <span className="vsc-file-icon" style={{ color: LANG_COLOR[lang] }} aria-hidden="true">
+    {lang === "json" ? "{}" : lang === "md" ? "M↓" : "TS"}
+  </span>
+);
 
-// ─── File Tree Node ───────────────────────────────────────────────────────────
-
-const TreeNode = ({ node, depth = 0, activeFile, onFileClick }) => {
+const TreeNode = ({ node, depth = 0, activeFile, onOpen }) => {
   const [open, setOpen] = useState(node.open ?? true);
+  const indent = { paddingLeft: depth * 12 + 8 };
 
   if (node.type === "folder") {
     return (
       <div>
-        <div
+        <button
+          type="button"
           className="vsc-tree-row"
-          style={{ paddingLeft: depth * 12 + 8 }}
+          style={indent}
           onClick={() => setOpen(!open)}
+          aria-expanded={open}
         >
-          <span className="vsc-arrow">{open ? "▾" : "▸"}</span>
-          <FileIcon lang="folder" />
-          <span className="vsc-tree-name folder">{node.name}</span>
-        </div>
+          {open ? <ChevronDown aria-hidden="true" /> : <ChevronRight aria-hidden="true" />}
+          <span className="font-semibold">{node.name}</span>
+        </button>
         {open &&
-          node.children?.map((child) => (
+          node.children.map((child) => (
             <TreeNode
               key={child.name}
               node={child}
               depth={depth + 1}
               activeFile={activeFile}
-              onFileClick={onFileClick}
+              onOpen={onOpen}
             />
           ))}
       </div>
@@ -89,263 +80,244 @@ const TreeNode = ({ node, depth = 0, activeFile, onFileClick }) => {
   }
 
   return (
-    <div
-      className={`vsc-tree-row file ${activeFile === node.name ? "active" : ""}`}
-      style={{ paddingLeft: depth * 12 + 8 }}
-      onClick={() => onFileClick(node.name)}
+    <button
+      type="button"
+      className={clsx("vsc-tree-row", activeFile === node.name && "is-active")}
+      style={indent}
+      onClick={() => onOpen(node.name)}
     >
-      <span className="vsc-arrow" />
+      <span className="w-3.5" />
       <FileIcon lang={node.lang} />
-      <span className="vsc-tree-name">{node.name}</span>
-    </div>
+      <span>{node.name}</span>
+    </button>
   );
 };
 
-// ─── Main Component ───────────────────────────────────────────────────────────
+const ACTIVITY = [
+  { id: "explorer", icon: Files, label: "Explorer" },
+  { id: "search", icon: Search, label: "Search" },
+  { id: "git", icon: GitBranch, label: "Source Control" },
+];
 
 const Vscode = () => {
+  const { isMobile } = useWindowContext();
   const [activeFile, setActiveFile] = useState("about.tsx");
-  const [openFiles, setOpenFiles] = useState(["about.tsx"]);
-  const [activePanel, setActivePanel] = useState("explorer"); // explorer | search | git
-  const [showTerminal, setShowTerminal] = useState(true);
-  const [terminalInput, setTerminalInput] = useState("");
+  const [openFiles, setOpenFiles] = useState(["about.tsx", "README.md"]);
+  const [panel, setPanel] = useState(isMobile ? null : "explorer");
+  const [showTerminal, setShowTerminal] = useState(!isMobile);
+  const [query, setQuery] = useState("");
 
-  const handleFileClick = (fileName) => {
-    if (!FILE_CONTENTS[fileName]) return;
-    setActiveFile(fileName);
-    if (!openFiles.includes(fileName)) {
-      setOpenFiles((prev) => [...prev, fileName]);
-    }
+  const file = activeFile ? FILE_CONTENTS[activeFile] : null;
+  const lines = useMemo(
+    () => (file ? file.code.split("\n").map((l) => highlightLine(l, file.lang)) : []),
+    [file],
+  );
+
+  const searchResults = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return Object.entries(FILE_CONTENTS).flatMap(([name, f]) =>
+      f.code
+        .split("\n")
+        .map((text, i) => ({ name, line: i + 1, text: text.trim() }))
+        .filter((r) => r.text.toLowerCase().includes(q)),
+    );
+  }, [query]);
+
+  const openFile = (name) => {
+    if (!FILE_CONTENTS[name]) return;
+    setActiveFile(name);
+    setOpenFiles((prev) => (prev.includes(name) ? prev : [...prev, name]));
+    if (isMobile) setPanel(null);
   };
 
-  const handleCloseTab = (fileName, e) => {
-    e.stopPropagation();
-    const next = openFiles.filter((f) => f !== fileName);
+  const closeFile = (name) => {
+    const next = openFiles.filter((f) => f !== name);
     setOpenFiles(next);
-    if (activeFile === fileName) {
-      setActiveFile(next[next.length - 1] || null);
-    }
+    if (activeFile === name) setActiveFile(next[next.length - 1] ?? null);
   };
-
-  const content = activeFile ? FILE_CONTENTS[activeFile] : null;
 
   return (
-    <section id="vscode">
-      {/* Title Bar */}
-      <div className="vsc-titlebar">
-        <WindowControlls target="vscode" />
-        <span className="vsc-title">
-          {activeFile ? `${activeFile} — portfolio` : "portfolio"}
-        </span>
-        <div className="vsc-titlebar-actions">
-          <span
-            onClick={() => setShowTerminal(!showTerminal)}
-            title="Toggle Terminal"
-          >
-            ⌃`
-          </span>
-        </div>
-      </div>
+    <>
+      <WindowHeader
+        className="vsc-titlebar"
+        title={activeFile ? `${activeFile} — portfolio` : "portfolio"}
+        backLabel="Home"
+        hideTitleOnMobile
+      >
+        <button
+          type="button"
+          className="toolbar-btn vsc-toggle-term"
+          onClick={() => setShowTerminal((v) => !v)}
+          aria-label="Toggle terminal panel"
+          aria-pressed={showTerminal}
+        >
+          <SquareTerminal aria-hidden="true" />
+        </button>
+      </WindowHeader>
 
-      <div className="vsc-body">
-        {/* Activity Bar */}
-        <div className="vsc-activity-bar">
-          {[
-            {
-              id: "explorer",
-              icon: <FolderOpen size={20} />,
-              label: "Explorer",
-            },
-            { id: "search", icon: <Search size={20} />, label: "Search" },
-            {
-              id: "git",
-              icon: <GitCompare size={20} />,
-              label: "Source Control",
-            },
-          ].map(({ id, icon, label }) => (
+      <div className="window-body vsc-body">
+        <nav className="vsc-activity" aria-label="Side bar views">
+          {ACTIVITY.map(({ id, icon: Icon, label }) => (
             <button
               key={id}
+              type="button"
               title={label}
-              className={`vsc-activity-btn ${activePanel === id ? "active" : ""}`}
-              onClick={() => setActivePanel(activePanel === id ? null : id)}
+              aria-label={label}
+              aria-pressed={panel === id}
+              className={clsx("vsc-activity-btn", panel === id && "is-active")}
+              onClick={() => setPanel(panel === id ? null : id)}
             >
-              {icon}
+              <Icon aria-hidden="true" />
             </button>
           ))}
-          <div className="vsc-activity-spacer" />
-          <button className="vsc-activity-btn" title="Settings">
-            <Settings size={20} />
-          </button>
-        </div>
+        </nav>
 
-        {/* Sidebar */}
-        {activePanel && (
-          <div className="vsc-sidebar">
-            {activePanel === "explorer" && (
+        {panel && (
+          <aside className="vsc-sidebar">
+            {panel === "explorer" && (
               <>
-                <div className="vsc-sidebar-title">EXPLORER</div>
-                <div className="vsc-tree">
-                  {FILE_TREE.map((node) => (
-                    <TreeNode
-                      key={node.name}
-                      node={node}
-                      activeFile={activeFile}
-                      onFileClick={handleFileClick}
-                    />
+                <p className="vsc-sidebar-title">Explorer</p>
+                {FILE_TREE.map((node) => (
+                  <TreeNode key={node.name} node={node} activeFile={activeFile} onOpen={openFile} />
+                ))}
+              </>
+            )}
+            {panel === "search" && (
+              <>
+                <p className="vsc-sidebar-title">Search</p>
+                <input
+                  className="vsc-search"
+                  placeholder="Search files"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  aria-label="Search in files"
+                />
+                <ul className="vsc-results">
+                  {searchResults.map((r) => (
+                    <li key={`${r.name}:${r.line}`}>
+                      <button type="button" onClick={() => openFile(r.name)}>
+                        <span className="vsc-result-file">
+                          {r.name}:{r.line}
+                        </span>
+                        <span className="vsc-result-text">{r.text}</span>
+                      </button>
+                    </li>
                   ))}
-                </div>
+                  {query && searchResults.length === 0 && (
+                    <li className="vsc-hint">No results for “{query}”.</li>
+                  )}
+                </ul>
               </>
             )}
-
-            {activePanel === "search" && (
+            {panel === "git" && (
               <>
-                <div className="vsc-sidebar-title">SEARCH</div>
-                <div className="vsc-search-box">
-                  <input placeholder="Search..." className="vsc-search-input" />
-                </div>
-                <div className="vsc-search-hint">
-                  Type to search across files
-                </div>
+                <p className="vsc-sidebar-title">Source Control</p>
+                <p className="vsc-hint">
+                  <GitBranch aria-hidden="true" className="inline size-3.5" /> main · no pending
+                  changes
+                </p>
+                <ul className="vsc-results">
+                  {TERMINAL_LINES.filter((l) => /^[0-9a-f]{7} /.test(l.text)).map((l) => (
+                    <li key={l.text} className="vsc-commit">
+                      {l.text}
+                    </li>
+                  ))}
+                </ul>
               </>
             )}
-
-            {activePanel === "git" && (
-              <>
-                <div className="vsc-sidebar-title">SOURCE CONTROL</div>
-                <div className="vsc-git-section">
-                  <div className="vsc-git-branch">⎇ main</div>
-                  <div className="vsc-git-clean">✓ No pending changes</div>
-                  <div className="vsc-git-log">
-                    {TERMINAL_LINES.filter(
-                      (l) => l.type === "info" && l.text.includes("feat"),
-                    ).map((l, i) => (
-                      <div key={i} className="vsc-git-commit">
-                        {l.text}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
+          </aside>
         )}
 
-        {/* Editor + Terminal */}
         <div className="vsc-main">
-          {/* Tabs */}
-          <div className="vsc-tabs">
-            {openFiles.map((f) => (
-              <div
-                key={f}
-                className={`vsc-tab ${activeFile === f ? "active" : ""}`}
-                onClick={() => setActiveFile(f)}
-              >
-                <FileIcon lang={FILE_CONTENTS[f]?.lang} size={12} />
-                <span>{f}</span>
+          <div className="vsc-tabs" aria-label="Open editors">
+            {openFiles.map((name) => (
+              <div key={name} className={clsx("vsc-tab", activeFile === name && "is-active")}>
                 <button
-                  className="vsc-tab-close"
-                  onClick={(e) => handleCloseTab(f, e)}
+                  type="button"
+                  aria-current={activeFile === name ? "page" : undefined}
+                  onClick={() => setActiveFile(name)}
                 >
-                  ×
+                  <FileIcon lang={FILE_CONTENTS[name].lang} />
+                  {name}
+                </button>
+                <button
+                  type="button"
+                  className="vsc-tab-close"
+                  onClick={() => closeFile(name)}
+                  aria-label={`Close ${name}`}
+                >
+                  <X aria-hidden="true" />
                 </button>
               </div>
             ))}
           </div>
 
-          {/* Editor */}
           <div className="vsc-editor">
-            {content ? (
-              <div className="vsc-code">
-                {content.lines.map((line, i) => (
+            {file ? (
+              <pre className="vsc-code" aria-label={`${activeFile} contents`}>
+                {lines.map((tokens, i) => (
                   <div key={i} className="vsc-line">
-                    <span className="vsc-ln">{i + 1}</span>
-                    <span className="vsc-line-content">
-                      {line.tokens.length === 0 ? (
-                        <span>&nbsp;</span>
-                      ) : (
-                        line.tokens.map((tok, j) => (
-                          <Token key={j} type={tok.t} value={tok.v} />
-                        ))
-                      )}
+                    <span className="vsc-ln" aria-hidden="true">
+                      {i + 1}
                     </span>
+                    <code>
+                      {tokens.length === 0
+                        ? " "
+                        : tokens.map((t, j) => (
+                            <span key={j} className={t.c}>
+                              {t.v}
+                            </span>
+                          ))}
+                    </code>
                   </div>
                 ))}
-              </div>
+              </pre>
             ) : (
-              <div className="vsc-empty-editor">
-                <div className="vsc-logo">{}</div>
-                <p>Select a file to view</p>
-              </div>
+              <div className="vsc-empty">Open a file from the Explorer.</div>
             )}
           </div>
 
-          {/* Terminal */}
           {showTerminal && (
             <div className="vsc-terminal">
-              <div className="vsc-terminal-header">
-                <span className="vsc-terminal-tab active">TERMINAL</span>
+              <div className="vsc-terminal-head">
+                <span>Terminal</span>
                 <button
-                  className="vsc-terminal-close"
+                  type="button"
                   onClick={() => setShowTerminal(false)}
+                  aria-label="Close terminal panel"
                 >
-                  ×
+                  <X aria-hidden="true" />
                 </button>
               </div>
-              <div className="vsc-terminal-body">
+              <div className="vsc-terminal-body" tabIndex={0} aria-label="Terminal output">
                 {TERMINAL_LINES.map((line, i) => (
-                  <div key={i} className={`vsc-term-line ${line.type}`}>
-                    {line.type === "dir" && (
-                      <span className="term-dir">{line.text} </span>
-                    )}
-                    {line.type === "cmd" && (
-                      <>
-                        <span className="term-prompt">❯ </span>
-                        <span className="term-cmd">{line.text}</span>
-                      </>
-                    )}
-                    {line.type === "info" && (
-                      <span className="term-info">{line.text}</span>
-                    )}
-                    {line.type === "success" && (
-                      <span className="term-success">{line.text}</span>
-                    )}
-                  </div>
+                  <p key={i} className={`vt-${line.type}`}>
+                    {line.type === "cmd" ? <span className="vt-prompt">❯ </span> : null}
+                    {line.text || " "}
+                  </p>
                 ))}
-                <div className="vsc-term-line dir">
-                  <span className="term-dir">portfolio on main </span>
-                  <span className="term-prompt">❯ </span>
-                  <span className="term-cursor">█</span>
-                </div>
+                <p className="vt-dir">
+                  portfolio on  main <span className="vt-prompt">❯</span>{" "}
+                  <span className="vt-cursor">▋</span>
+                </p>
               </div>
             </div>
           )}
         </div>
       </div>
 
-      {/* Status Bar */}
-      <div className="vsc-statusbar">
-        <span className="vsc-status-left">⎇ main</span>
-        <span className="vsc-status-left">✓ 0 errors</span>
-        <div className="vsc-status-spacer" />
-        <span className="vsc-status-right">
-          {content?.lang === "tsx" || content?.lang === "ts"
-            ? "TypeScript React"
-            : content?.lang === "ts"
-              ? "TypeScript"
-              : content?.lang === "md"
-                ? "Markdown"
-                : content?.lang === "json"
-                  ? "JSON"
-                  : ""}
+      <div className="vsc-status">
+        <span>
+          <GitBranch aria-hidden="true" /> main
         </span>
-        <span className="vsc-status-right">UTF-8</span>
-        <span className="vsc-status-right">
-          Ln {content?.lines.length ?? 0}
-        </span>
+        <span>0 problems</span>
+        <span className="ml-auto">{file ? LANG_LABEL[file.lang] : ""}</span>
+        <span className="max-sm:hidden">UTF-8</span>
+        <span className="tabular-nums">Ln {lines.length}</span>
       </div>
-    </section>
+    </>
   );
 };
 
-const VscodeWindow = WindowWrapper(Vscode, "vscode");
-export default VscodeWindow;
+export default Vscode;

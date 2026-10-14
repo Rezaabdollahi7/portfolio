@@ -1,196 +1,213 @@
-// windows/Safari.jsx
-
-import { WindowControlls } from "#components";
-import WindowWrapper from "#hoc/WindowWrapper";
+import { useEffect, useRef, useState } from "react";
+import clsx from "clsx";
 import {
-  Search,
-  Plus,
-  Copy,
-  Share,
-  ShieldHalf,
   ChevronLeft,
   ChevronRight,
-  PanelLeft,
+  Lock,
+  Plus,
+  RotateCw,
+  Share,
+  X,
 } from "lucide-react";
-import { projects } from "#constants";
-import { useState } from "react";
-import ProjectsGrid from "#components/Safari/ProjectsGrid";
-import ProjectDetail from "#components/Safari/ProjectDetail";
-import SafariTabs from "#components/Safari/SafariTabs";
+import WindowHeader from "../components/window/WindowHeader";
+import { useWindowContext } from "../components/window/WindowContext";
+import ProjectsIndex from "../components/safari/ProjectsIndex";
+import ProjectDetail from "../components/safari/ProjectDetail";
+import { getProject } from "#constants";
+import useUiStore from "#store/ui";
 
-const Safari = () => {
-  const [isTabLoading, setIsTabLoading] = useState(false);
+const HOST = "srezadev.ir";
+const INDEX = { type: "index" };
 
-  // Tab state management
-  const [tabs, setTabs] = useState([
-    { id: "projects", title: "Projects", type: "projects" },
+const pagePath = (page) =>
+  page.type === "project" ? `/projects/${getProject(page.id)?.slug}` : "/projects";
+
+const pageTitle = (page) =>
+  page.type === "project" ? getProject(page.id)?.title ?? "Project" : "Projects";
+
+let tabSeq = 0;
+const newTab = (page = INDEX) => ({ id: ++tabSeq, history: [page], index: 0 });
+
+const Safari = ({ data, openCount }) => {
+  const { isMobile } = useWindowContext();
+  const showToast = useUiStore((s) => s.showToast);
+  const [tabs, setTabs] = useState(() => [
+    newTab(data?.projectId ? { type: "project", id: data.projectId } : INDEX),
   ]);
-  const [activeTabId, setActiveTabId] = useState("projects");
+  const [activeId, setActiveId] = useState(() => tabs[0].id);
+  const scrollRef = useRef(null);
 
-  // Tab handlers
-  const handleTabClick = (tabId) => {
-    setActiveTabId(tabId);
+  const active = tabs.find((t) => t.id === activeId) ?? tabs[0];
+  const page = active.history[active.index];
+
+  const updateTab = (id, fn) =>
+    setTabs((prev) => prev.map((t) => (t.id === id ? fn(t) : t)));
+
+  const navigate = (next, { newTabToo = false } = {}) => {
+    if (newTabToo) {
+      const tab = newTab(next);
+      setTabs((prev) => [...prev, tab]);
+      setActiveId(tab.id);
+      return;
+    }
+    updateTab(active.id, (t) => {
+      const current = t.history[t.index];
+      if (current.type === next.type && current.id === next.id) return t;
+      const history = [...t.history.slice(0, t.index + 1), next];
+      return { ...t, history, index: history.length - 1 };
+    });
   };
 
-  const handleCloseTab = (tabId) => {
+  // Opened from elsewhere (Notes link, Finder, Spotlight, deep link).
+  const [handled, setHandled] = useState(openCount);
+  if (openCount !== handled) {
+    setHandled(openCount);
+    if (data?.projectId) navigate({ type: "project", id: data.projectId });
+    else if (data?.home) navigate(INDEX);
+  }
+
+  // Scroll to top on navigation, and mirror the page in the URL hash.
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 });
+    const hash = `#${pagePath(page)}`;
+    if (window.location.hash !== hash) history.replaceState(null, "", hash);
+  }, [page]);
+
+  const go = (delta) =>
+    updateTab(active.id, (t) => ({
+      ...t,
+      index: Math.min(Math.max(t.index + delta, 0), t.history.length - 1),
+    }));
+
+  const closeTab = (id) => {
     if (tabs.length === 1) return;
+    const i = tabs.findIndex((t) => t.id === id);
+    const rest = tabs.filter((t) => t.id !== id);
+    setTabs(rest);
+    if (id === activeId) setActiveId(rest[Math.max(0, i - 1)].id);
+  };
 
-    setTabs((prev) => prev.filter((tab) => tab.id !== tabId));
-
-    if (activeTabId === tabId) {
-      setActiveTabId(tabs[0].id);
+  const share = async () => {
+    const url = `https://${HOST}/#${pagePath(page)}`;
+    try {
+      if (isMobile && navigator.share) {
+        await navigator.share({ title: pageTitle(page), url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        showToast("Link copied");
+      }
+    } catch {
+      /* dismissed */
     }
   };
 
-  const handleNewTab = () => {
-    const newTabId = `projects-${Date.now()}`;
-    const newTab = { id: newTabId, title: "Projects", type: "projects" };
-    setTabs((prev) => [...prev, newTab]);
-    setActiveTabId(newTabId);
-  };
+  const openProject = (project, inNewTab) =>
+    navigate({ type: "project", id: project.id }, { newTabToo: inNewTab && !isMobile });
 
-  const handleProjectClick = (project) => {
-    setIsTabLoading(true);
-
-    const projectTabId = `project-${project.id}`;
-    const existingTab = tabs.find((tab) => tab.id === projectTabId);
-
-    if (existingTab) {
-      setActiveTabId(projectTabId);
-    } else {
-      const newTab = {
-        id: projectTabId,
-        title: project.title,
-        type: "project-detail",
-        projectId: project.id,
-      };
-      setTabs((prev) => [...prev, newTab]);
-      setActiveTabId(projectTabId);
-    }
-
-    // Simulate loading
-    setTimeout(() => {
-      setIsTabLoading(false);
-    }, 100);
-  };
-
-  const handleBackToProjects = () => {
-    setIsTabLoading(true);
-
-    const projectsTab = tabs.find((tab) => tab.id === "projects");
-
-    if (projectsTab) {
-      setActiveTabId("projects");
-    } else {
-      const newTab = { id: "projects", title: "Projects", type: "projects" };
-      setTabs((prev) => [...prev, newTab]);
-      setActiveTabId("projects");
-    }
-
-    setTimeout(() => {
-      setIsTabLoading(false);
-    }, 100);
-  };
-
-  // Get active tab content
-  const getTabContent = () => {
-    const activeTab = tabs.find((tab) => tab.id === activeTabId);
-
-    if (!activeTab) return null;
-
-    // Show loading skeleton when switching tabs
-    if (isTabLoading && activeTab.type === "project-detail") {
-      return (
-        <div className="safari-loading">
-          <div className="loading-spinner"></div>
-          <p>Loading project...</p>
-        </div>
-      );
-    }
-
-    switch (activeTab.type) {
-      case "projects":
-        return (
-          <ProjectsGrid
-            projects={projects}
-            onProjectClick={handleProjectClick}
-          />
-        );
-
-      case "project-detail":
-        const project = projects.find((p) => p.id === activeTab.projectId);
-        return project ? (
-          <ProjectDetail project={project} onBack={handleBackToProjects} />
-        ) : null;
-
-      default:
-        return null;
-    }
-  };
-
-  // Get URL for address bar
-  const getAddressBarUrl = () => {
-    const activeTab = tabs.find((tab) => tab.id === activeTabId);
-
-    if (!activeTab) return "https://portfolio.com";
-
-    switch (activeTab.type) {
-      case "projects":
-        return "https://portfolio.com/projects";
-
-      case "project-detail":
-        const project = projects.find((p) => p.id === activeTab.projectId);
-        return project
-          ? `https://portfolio.com/projects/${project.title
-              .toLowerCase()
-              .replace(/\s+/g, "-")}`
-          : "";
-
-      default:
-        return "https://portfolio.com";
-    }
-  };
+  const project = page.type === "project" ? getProject(page.id) : null;
 
   return (
-    <section id="safari">
-      {/* Window Header */}
-      <div id="window-header" className="safari-window-header">
-        <WindowControlls target="safari" />
-
-        <div className="safari-navigation ml-[14%]">
-          <ChevronLeft className="icon" />
-          <ChevronRight className="icon" />
+    <>
+      <WindowHeader
+        className="safari-toolbar"
+        backLabel="Home"
+        hideTitleOnMobile
+      >
+        <div className="safari-nav" data-no-drag>
+          <button
+            type="button"
+            className="toolbar-btn"
+            onClick={() => go(-1)}
+            disabled={active.index === 0}
+            aria-label="Go back"
+          >
+            <ChevronLeft aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="toolbar-btn max-sm:hidden"
+            onClick={() => go(1)}
+            disabled={active.index >= active.history.length - 1}
+            aria-label="Go forward"
+          >
+            <ChevronRight aria-hidden="true" />
+          </button>
         </div>
 
-        <div className="safari-address-bar">
-          <ShieldHalf className="icon" />
-          <div className="search">
-            <Search className="icon" />
-            <input type="text" value={getAddressBarUrl()} readOnly id="address" />
-          </div>
+        <div className="safari-address">
+          <Lock aria-hidden="true" className="safari-lock" />
+          <span className="truncate">
+            <span className="safari-host">{HOST}</span>
+            <span className="safari-path">{pagePath(page)}</span>
+          </span>
+          <RotateCw aria-hidden="true" className="safari-reload max-sm:hidden" />
         </div>
 
-        <div className="safari-actions">
-          <Share className="icon" />
-          <Plus className="icon" />
-          <Copy className="icon" />
+        <div className="safari-actions" data-no-drag>
+          <button
+            type="button"
+            className="toolbar-btn"
+            onClick={share}
+            aria-label="Share link to this page"
+          >
+            <Share aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="toolbar-btn max-md:hidden"
+            onClick={() => navigate(INDEX, { newTabToo: true })}
+            aria-label="New tab"
+          >
+            <Plus aria-hidden="true" />
+          </button>
         </div>
+      </WindowHeader>
+
+      {tabs.length > 1 && (
+        <div className="safari-tabs" aria-label="Open tabs">
+          {tabs.map((tab) => {
+            const p = tab.history[tab.index];
+            return (
+              <div
+                key={tab.id}
+                className={clsx("safari-tab", tab.id === activeId && "is-active")}
+              >
+                <button
+                  type="button"
+                  aria-current={tab.id === activeId ? "page" : undefined}
+                  className="safari-tab-label"
+                  onClick={() => setActiveId(tab.id)}
+                >
+                  {pageTitle(p)}
+                </button>
+                <button
+                  type="button"
+                  className="safari-tab-close"
+                  onClick={() => closeTab(tab.id)}
+                  aria-label={`Close ${pageTitle(p)} tab`}
+                >
+                  <X aria-hidden="true" />
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      <div ref={scrollRef} className="window-body safari-page @container">
+        {project ? (
+          <ProjectDetail
+            key={project.id}
+            project={project}
+            onBack={() => navigate(INDEX)}
+            onOpen={(p) => openProject(p, false)}
+          />
+        ) : (
+          <ProjectsIndex onOpen={openProject} />
+        )}
       </div>
-
-      {/* Tabs */}
-      <SafariTabs
-        tabs={tabs}
-        activeTabId={activeTabId}
-        onTabClick={handleTabClick}
-        onCloseTab={handleCloseTab}
-        onNewTab={handleNewTab}
-      />
-
-      {/* Tab Content */}
-      <div className="safari-tab-content">{getTabContent()}</div>
-    </section>
+    </>
   );
 };
 
-const SafariWindow = WindowWrapper(Safari, "safari");
-export default SafariWindow;
+export default Safari;
