@@ -32,7 +32,7 @@ resume never drift apart.
 | --- | --- |
 | **Projects** (Safari) | Case studies for each project with tabs, back/forward history, filters, screenshots and a lightbox. Pages are deep-linkable: `srezadev.ir/#/projects/dofixo` |
 | **Notes** | The "about me", what I'm building, my stack and the site roadmap, in an Apple Notes layout with search |
-| **Terminal** | A working shell: `help`, `about`, `projects`, `open dofixo`, `theme dark`, `cat about.txt`, history and Tab completion |
+| **Terminal** | A zsh-like shell over a virtual filesystem built from the site's data: `ls -la`, `cd dofixo`, `cat README.md`, `tree`, `find`, `grep -rn`, `open .`, pipes, `&&`, `>` redirects, globs, Tab completion, history and `neofetch` |
 | **Finder** | Every project as a folder with its write-up, links and screenshots. Old experiments live in the Trash |
 | **Photos** | Albums of screenshots, one per project |
 | **VS Code** | The site's own data as code, with a small syntax highlighter, file search and source control panel |
