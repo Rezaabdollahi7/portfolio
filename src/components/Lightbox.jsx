@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useIsMobile } from "../hooks/useMediaQuery";
 import { useBackLayer } from "../hooks/useBackLayer";
+import { localizeDigits, useT } from "../i18n";
 
 // Full-screen image viewer. Portaled to <body> so window transforms
 // can't trap it. Arrow keys, Escape and swipe all work.
@@ -11,6 +12,7 @@ const Lightbox = ({ images, index, onClose, title }) => {
   const touchX = useRef(null);
   const closeRef = useRef(null);
   const count = images.length;
+  const t = useT();
   useBackLayer(true, onClose, { enabled: useIsMobile() });
 
   const prev = useCallback(() => setCurrent((i) => (i - 1 + count) % count), [count]);
@@ -31,11 +33,14 @@ const Lightbox = ({ images, index, onClose, title }) => {
   }, [prev, next, onClose]);
 
   return createPortal(
+    // Physical layout on purpose: arrows and swipes match the screen, not the
+    // reading direction.
     <div
       className="lightbox"
+      dir="ltr"
       role="dialog"
       aria-modal="true"
-      aria-label={title ? `${title} screenshots` : "Image viewer"}
+      aria-label={title ? t("lightbox.aria", { title }) : t("lightbox.viewer")}
       onClick={onClose}
       onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
       onTouchEnd={(e) => {
@@ -46,16 +51,16 @@ const Lightbox = ({ images, index, onClose, title }) => {
       }}
     >
       <div className="lightbox-top" onClick={(e) => e.stopPropagation()}>
-        <span className="lightbox-counter">
+        <span className="lightbox-counter" dir="auto">
           {title ? `${title} · ` : ""}
-          {current + 1} / {count}
+          {localizeDigits(current + 1)} / {localizeDigits(count)}
         </span>
         <button
           ref={closeRef}
           type="button"
           className="lightbox-btn"
           onClick={onClose}
-          aria-label="Close viewer"
+          aria-label={t("lightbox.close")}
         >
           <X aria-hidden="true" />
         </button>
@@ -65,7 +70,7 @@ const Lightbox = ({ images, index, onClose, title }) => {
         <img
           key={current}
           src={images[current]}
-          alt={`${title ?? "Screenshot"} ${current + 1} of ${count}`}
+          alt={t("lightbox.alt", { title: title ?? t("lightbox.screenshot"), n: current + 1, count })}
           className="lightbox-img"
           decoding="async"
         />
@@ -80,7 +85,7 @@ const Lightbox = ({ images, index, onClose, title }) => {
               e.stopPropagation();
               prev();
             }}
-            aria-label="Previous image"
+            aria-label={t("lightbox.prev")}
           >
             <ChevronLeft aria-hidden="true" />
           </button>
@@ -91,7 +96,7 @@ const Lightbox = ({ images, index, onClose, title }) => {
               e.stopPropagation();
               next();
             }}
-            aria-label="Next image"
+            aria-label={t("lightbox.next")}
           >
             <ChevronRight aria-hidden="true" />
           </button>
@@ -103,7 +108,7 @@ const Lightbox = ({ images, index, onClose, title }) => {
                 className="lightbox-thumb"
                 data-active={i === current}
                 onClick={() => setCurrent(i)}
-                aria-label={`Show image ${i + 1}`}
+                aria-label={t("lightbox.show", { n: i + 1 })}
               >
                 <img src={src} alt="" loading="lazy" decoding="async" />
               </button>

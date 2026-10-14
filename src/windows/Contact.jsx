@@ -1,31 +1,28 @@
 import { Copy, Github, Linkedin, Mail, MessageCircle, Phone, Send } from "lucide-react";
 import WindowHeader from "../components/window/WindowHeader";
-import { profile, socials } from "#constants";
 import { useNow } from "../hooks/useNow";
-import { copyEmail } from "../lib/actions";
-
-const tehranTime = (date) =>
-  new Intl.DateTimeFormat("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: profile.timezone,
-  }).format(date);
+import { copyEmail, openWindow } from "../lib/actions";
+import { useContent } from "../i18n/content";
+import { formatDate, useLocale, useT } from "../i18n";
 
 const ICONS = { github: Github, linkedin: Linkedin, telegram: Send, email: Mail };
 
 const Contact = () => {
   const now = useNow();
+  const t = useT();
+  const locale = useLocale();
+  const { profile, socials } = useContent();
   const telegram = socials.find((s) => s.id === "telegram");
+  const time = formatDate(now, { hour: "numeric", minute: "2-digit", timeZone: profile.timezone }, locale);
 
   const actions = [
-    { label: "message", icon: MessageCircle, href: telegram.href },
-    { label: "call", icon: Phone, href: profile.phoneHref },
-    { label: "mail", icon: Mail, href: `mailto:${profile.email}` },
+    { key: "message", icon: MessageCircle, href: telegram.href },
+    { key: "call", icon: Phone, href: profile.phoneHref },
   ];
 
   return (
     <>
-      <WindowHeader title="Contacts" backLabel="Home" />
+      <WindowHeader title={t("contact.title")} />
       <div className="window-body contact-card">
         <div className="contact-hero">
           <div className="contact-avatar" aria-hidden="true">
@@ -35,9 +32,7 @@ const Contact = () => {
           <p className="contact-role">
             {profile.role} · {profile.location}
           </p>
-          <p className="contact-time">
-            <span className="tabular-nums">{tehranTime(now)}</span> local time in Tehran
-          </p>
+          <p className="contact-time tabular-nums">{t("contact.localTime", { time })}</p>
           <p className="availability">
             <span className="availability-dot" aria-hidden="true" />
             {profile.availability}
@@ -45,43 +40,51 @@ const Contact = () => {
         </div>
 
         <div className="contact-actions">
-          {actions.map(({ label, icon: Icon, href }) => (
+          {actions.map(({ key, icon: Icon, href }) => (
             <a
-              key={label}
+              key={key}
               href={href}
               className="contact-action"
               target={href.startsWith("http") ? "_blank" : undefined}
               rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
             >
               <Icon aria-hidden="true" />
-              <span>{label}</span>
+              <span>{t(`contact.${key}`)}</span>
             </a>
           ))}
+          <button type="button" className="contact-action" onClick={() => openWindow("mail")}>
+            <Mail aria-hidden="true" />
+            <span>{t("contact.mail")}</span>
+          </button>
           <button type="button" className="contact-action" onClick={copyEmail}>
             <Copy aria-hidden="true" />
-            <span>copy email</span>
+            <span>{t("contact.copy")}</span>
           </button>
         </div>
 
         <dl className="contact-rows">
           <div className="contact-row">
-            <dt>email</dt>
+            <dt>{t("contact.email")}</dt>
             <dd>
-              <a href={`mailto:${profile.email}`}>{profile.email}</a>
+              <a href={`mailto:${profile.email}`} className="ltr">
+                {profile.email}
+              </a>
             </dd>
           </div>
           <div className="contact-row">
-            <dt>phone</dt>
+            <dt>{t("contact.phone")}</dt>
             <dd>
-              <a href={profile.phoneHref} className="tabular-nums">
+              <a href={profile.phoneHref} className="ltr tabular-nums">
                 {profile.phone}
               </a>
             </dd>
           </div>
           <div className="contact-row">
-            <dt>website</dt>
+            <dt>{t("contact.website")}</dt>
             <dd>
-              <a href={profile.website}>srezadev.ir</a>
+              <a href={profile.website} className="ltr">
+                srezadev.ir
+              </a>
             </dd>
           </div>
           {socials
@@ -90,11 +93,11 @@ const Contact = () => {
               const Icon = ICONS[s.id];
               return (
                 <div key={s.id} className="contact-row">
-                  <dt>{s.label.toLowerCase()}</dt>
+                  <dt>{t(`contact.${s.id}`)}</dt>
                   <dd>
                     <a href={s.href} target="_blank" rel="noopener noreferrer">
                       <Icon aria-hidden="true" className="contact-row-icon" />
-                      {s.handle}
+                      <span className="ltr">{s.handle}</span>
                     </a>
                   </dd>
                 </div>
@@ -102,10 +105,7 @@ const Contact = () => {
             })}
         </dl>
 
-        <p className="contact-note">
-          Got an idea, a bug to fix, or just want to talk tech? Email or Telegram
-          is the fastest way to reach me.
-        </p>
+        <p className="contact-note">{t("contact.note")}</p>
       </div>
     </>
   );

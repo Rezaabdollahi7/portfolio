@@ -4,7 +4,8 @@ import { Check, Circle, Pin, Search, SquarePen } from "lucide-react";
 import WindowHeader from "../components/window/WindowHeader";
 import { useWindowContext } from "../components/window/WindowContext";
 import RichText from "../components/RichText";
-import { notes } from "#constants";
+import { useContent } from "../i18n/content";
+import { useT } from "../i18n";
 import { useBackLayer } from "../hooks/useBackLayer";
 
 const plain = (text) => text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
@@ -26,6 +27,7 @@ const searchable = (note) =>
     .toLowerCase();
 
 const Block = ({ block }) => {
+  const t = useT();
   switch (block.type) {
     case "h1":
       return <h1 className="note-h1">{block.text}</h1>;
@@ -60,9 +62,9 @@ const Block = ({ block }) => {
           {block.items.map((item) => (
             <li key={item.text} data-done={item.done}>
               {item.done ? (
-                <Check aria-label="Done" className="note-check" />
+                <Check aria-label={t("notes.done")} className="note-check" />
               ) : (
-                <Circle aria-label="To do" className="note-circle" />
+                <Circle aria-label={t("notes.todo")} className="note-circle" />
               )}
               <span>{item.text}</span>
             </li>
@@ -76,6 +78,8 @@ const Block = ({ block }) => {
 
 const Notes = ({ data, openCount }) => {
   const { isMobile, isVisible } = useWindowContext();
+  const { notes } = useContent();
+  const t = useT();
   const [activeId, setActiveId] = useState(data?.noteId ?? notes[0].id);
   // On phones the list is its own screen, like iOS Notes.
   const [showList, setShowList] = useState(!data?.noteId);
@@ -99,7 +103,7 @@ const Notes = ({ data, openCount }) => {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return q ? notes.filter((n) => searchable(n).includes(q)) : notes;
-  }, [query]);
+  }, [query, notes]);
 
   const active = notes.find((n) => n.id === activeId) ?? notes[0];
   const pinned = filtered.filter((n) => n.pinned);
@@ -146,8 +150,8 @@ const Notes = ({ data, openCount }) => {
   return (
     <>
       <WindowHeader
-        title={isMobile ? (listView ? "Notes" : "") : "Notes"}
-        backLabel={isMobile && !listView ? "Notes" : "Home"}
+        title={isMobile ? (listView ? t("notes.title") : "") : t("notes.title")}
+        backLabel={isMobile && !listView ? t("notes.title") : undefined}
         onBack={isMobile && !listView ? () => setShowList(true) : undefined}
         className="notes-header"
       >
@@ -156,21 +160,21 @@ const Notes = ({ data, openCount }) => {
 
       <div className="window-body notes-layout @container">
         {(!isMobile || listView) && (
-          <aside className="notes-sidebar" aria-label="All notes">
+          <aside className="notes-sidebar" aria-label={t("notes.all")}>
             <label className="search-field">
               <Search aria-hidden="true" />
-              <span className="sr-only">Search notes</span>
+              <span className="sr-only">{t("notes.searchLabel")}</span>
               <input
                 type="search"
-                placeholder="Search"
+                placeholder={t("notes.search")}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
             </label>
-            {renderGroup("Pinned", pinned, <Pin aria-hidden="true" />)}
-            {renderGroup("Notes", others)}
+            {renderGroup(t("notes.pinned"), pinned, <Pin aria-hidden="true" />)}
+            {renderGroup(t("notes.notes"), others)}
             {filtered.length === 0 && (
-              <p className="notes-empty">No notes match “{query}”.</p>
+              <p className="notes-empty">{t("notes.none", { q: query })}</p>
             )}
           </aside>
         )}

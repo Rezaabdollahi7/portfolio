@@ -8,6 +8,8 @@ const createWindow = () => ({
   isOpen: false,
   isMinimized: false,
   isMaximized: false,
+  // "left" | "right" when tiled to half the screen.
+  snap: null,
   data: null,
   // Bumped on every open so content can react to "open again with new data".
   openCount: 0,
@@ -23,6 +25,8 @@ const useWindowStore = create(
     windows: Object.fromEntries(WINDOW_KEYS.map((key) => [key, createWindow()])),
     // Stacking order, bottom → top. Only open windows are listed.
     order: [],
+    // Windows hidden by "Show Desktop", restored by the next toggle.
+    desktopHidden: [],
 
     openWindow: (key, data) =>
       set((state) => {
@@ -64,7 +68,40 @@ const useWindowStore = create(
         const win = state.windows[key];
         if (!win?.isOpen) return;
         win.isMaximized = !win.isMaximized;
+        win.snap = null;
         bringToFront(state, key);
+      }),
+
+    snapWindow: (key, side) =>
+      set((state) => {
+        const win = state.windows[key];
+        if (!win?.isOpen) return;
+        win.snap = side;
+        win.isMaximized = false;
+        bringToFront(state, key);
+      }),
+
+    // ⌥` : send the front window to the back, so the next one comes forward.
+    cycleWindows: () =>
+      set((state) => {
+        const visible = state.order.filter((k) => !state.windows[k].isMinimized);
+        if (visible.length < 2) return;
+        const front = visible[visible.length - 1];
+        state.order = [front, ...state.order.filter((k) => k !== front)];
+      }),
+
+    toggleShowDesktop: () =>
+      set((state) => {
+        const visible = state.order.filter((k) => !state.windows[k].isMinimized);
+        if (visible.length) {
+          visible.forEach((k) => (state.windows[k].isMinimized = true));
+          state.desktopHidden = visible;
+        } else {
+          state.desktopHidden.forEach((k) => {
+            if (state.windows[k].isOpen) state.windows[k].isMinimized = false;
+          });
+          state.desktopHidden = [];
+        }
       }),
 
     closeAll: () =>
@@ -75,6 +112,7 @@ const useWindowStore = create(
           });
         }
         state.order = [];
+        state.desktopHidden = [];
       }),
   })),
 );

@@ -2,7 +2,7 @@
 // Inline syntax: [label](https://…) opens a link, [label](app:safari/dofixo)
 // opens a window (app:<window>/<optional data id>).
 
-import { profile, skills, funFacts } from "./profile";
+import { profile, profileFa, skills, skillCategoriesFa, funFacts, funFactsFa } from "./profile";
 
 export const notes = [
   {
@@ -25,9 +25,9 @@ export const notes = [
       {
         type: "ul",
         items: [
+          "Founded and run [NextApps](app:safari/nextapps), a small digital product studio.",
           "Running [Dofixo](app:safari/dofixo), a multi-tenant SaaS for repair workshops.",
           "Building [Finora](app:safari/finora), an open-source, self-hosted finance manager.",
-          "Working with [NextApps](app:safari/nextapps), a small product studio.",
         ],
       },
       { type: "h2", text: "elsewhere" },
@@ -42,7 +42,7 @@ export const notes = [
       },
       {
         type: "p",
-        text: `${profile.availability}. [Get in touch](app:contact) or [read my resume](app:resume).`,
+        text: `${profile.availability}. [Send me a message](app:mail) or [read my resume](app:resume).`,
       },
     ],
   },
@@ -118,11 +118,141 @@ export const notes = [
           { text: "Spotlight search and an interactive terminal", done: true },
           { text: "iOS home screen on phones", done: true },
           { text: "Projects curated from GitHub", done: true },
+          { text: "Persian (RTL) version of this site", done: true },
+          { text: "Contact form, live GitHub activity", done: true },
+          { text: "Mission Control, window tiling and shortcuts", done: true },
           { text: "Personal dev blog", done: false },
-          { text: "Persian (RTL) version of this site", done: false },
           { text: "More color themes", done: false },
         ],
       },
     ],
   },
 ];
+
+// ── Persian ────────────────────────────────────────────────────────────────
+
+export const notesFa = [
+  {
+    id: "about",
+    title: "درباره من",
+    emoji: "👋",
+    pinned: true,
+    date: "مهر ۱۴۰۵",
+    blocks: [
+      { type: "h1", text: `سلام، من ${profileFa.firstName} هستم` },
+      {
+        type: "p",
+        text: "توسعه‌دهنده فرانت‌اند هستم، ساکن تهران. با React، Next.js و TypeScript وب‌اپ‌های سریع و واکنش‌گرا می‌سازم و هر وقت محصول لازم داشته باشد، فول‌استک (Node.js، PostgreSQL و Docker) کار می‌کنم.",
+      },
+      {
+        type: "p",
+        text: "به جزئیاتی اهمیت می‌دهم که آدم‌ها حسشان می‌کنند ولی کمتر به چشمشان می‌آید: اینکه پنجره بعد از رها کردن چطور سر جایش می‌نشیند، اینکه عددها درست زیر هم قرار می‌گیرند یا نه، و اینکه چیدمان راست‌به‌چپ با تاریخ شمسی چطور کنار می‌آید.",
+      },
+      { type: "h2", text: "این روزها" },
+      {
+        type: "ul",
+        items: [
+          "بنیان‌گذار [NextApps](app:safari/nextapps) هستم؛ یک استودیوی کوچک توسعه محصولات دیجیتال.",
+          "[دوفیکسو](app:safari/dofixo) را اداره می‌کنم؛ یک SaaS چندمستاجره برای تعمیرگاه‌ها.",
+          "[Finora](app:safari/finora) را می‌سازم؛ برنامه متن‌باز مدیریت مالی که روی سرور خودتان اجرا می‌شود.",
+        ],
+      },
+      { type: "h2", text: "جاهای دیگر" },
+      {
+        type: "ul",
+        items: [
+          "[گیت‌هاب](https://github.com/Rezaabdollahi7)",
+          "[لینکدین](https://www.linkedin.com/in/seyedreza-abdollahi)",
+          "[تلگرام](https://t.me/rezaabdollahi7)",
+          `[${profile.email}](mailto:${profile.email})`,
+        ],
+      },
+      {
+        type: "p",
+        text: `${profileFa.availability}. [برایم پیام بفرستید](app:mail) یا [رزومه‌ام را بخوانید](app:resume).`,
+      },
+    ],
+  },
+  {
+    id: "building",
+    title: "چه می‌سازم",
+    emoji: "🛠️",
+    pinned: true,
+    date: "مهر ۱۴۰۵",
+    blocks: [
+      { type: "h1", text: "چه می‌سازم" },
+      {
+        type: "p",
+        text: "بیشتر کارهای اخیرم نرم‌افزارهای فارسی‌محور است: از اول راست‌به‌چپ، با تاریخ شمسی و اعداد فارسی. نه ترجمه برنامه‌های خارجی.",
+      },
+      { type: "h2", text: "دوفیکسو" },
+      {
+        type: "p",
+        text: "تعمیرگاه‌ها کل کارشان را با آن انجام می‌دهند: پذیرش دستگاه، وضعیت تعمیر، مشتریان، انبار، فاکتورها و گزارش سود. هر تعمیرگاه دو بار ایزوله می‌شود: یک بار در خود برنامه و یک بار با Row-Level Security در PostgreSQL. [مطالعه موردی](app:safari/dofixo) · [dofixo.ir](https://dofixo.ir)",
+      },
+      { type: "h2", text: "Finora" },
+      {
+        type: "p",
+        text: "برنامه مدیریت مالی خانواده که با یک docker compose up روی سرور خودتان بالا می‌آید. موجودی‌ها از روی تراکنش‌ها محاسبه می‌شوند، نه دستی. [مطالعه موردی](app:safari/finora) · [سورس کد](https://github.com/Rezaabdollahi7/Finora)",
+      },
+      { type: "h2", text: "بقیه کارها" },
+      {
+        type: "p",
+        text: "سایت مشتری‌ها، داشبوردها و گاهی هم یک آزمایش. [همه پروژه‌ها را ببینید](app:safari).",
+      },
+    ],
+  },
+  {
+    id: "stack",
+    title: "ابزارها و تکنولوژی‌ها",
+    emoji: "🧰",
+    date: "مهر ۱۴۰۵",
+    blocks: [
+      { type: "h1", text: "ابزارها و تکنولوژی‌ها" },
+      ...skills.map((group) => ({
+        type: "row",
+        label: skillCategoriesFa[group.category] ?? group.category,
+        text: group.items.join("، "),
+      })),
+      {
+        type: "p",
+        text: "نسخه تعاملی‌اش را می‌خواهید؟ [ترمینال](app:terminal) را باز کنید و help را بزنید.",
+      },
+    ],
+  },
+  {
+    id: "facts",
+    title: "چند واقعیت جالب",
+    emoji: "⌨️",
+    date: "شهریور ۱۴۰۵",
+    blocks: [
+      { type: "h1", text: "چند واقعیت جالب" },
+      { type: "ul", items: funFactsFa },
+    ],
+  },
+  {
+    id: "roadmap",
+    title: "نقشه راه پورتفولیو",
+    emoji: "🗺️",
+    date: "مهر ۱۴۰۵",
+    blocks: [
+      { type: "h1", text: "نقشه راه پورتفولیو" },
+      {
+        type: "todo",
+        items: [
+          { text: "دسکتاپ macOS با پنجره‌های قابل جابه‌جایی", done: true },
+          { text: "پروژه‌ها در سافاری و تصاویر در عکس‌ها", done: true },
+          { text: "جستجوی Spotlight و ترمینال تعاملی", done: true },
+          { text: "صفحه اصلی شبیه iOS روی گوشی", done: true },
+          { text: "پروژه‌ها از روی گیت‌هاب", done: true },
+          { text: "نسخه فارسی (راست‌به‌چپ) این سایت", done: true },
+          { text: "فرم تماس و فعالیت زنده گیت‌هاب", done: true },
+          { text: "Mission Control، چیدمان پنجره‌ها و میان‌برها", done: true },
+          { text: "وبلاگ شخصی", done: false },
+          { text: "پوسته‌های رنگی بیشتر", done: false },
+        ],
+      },
+    ],
+  },
+];
+

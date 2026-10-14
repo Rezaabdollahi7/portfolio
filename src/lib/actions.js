@@ -2,6 +2,7 @@ import useWindowStore from "#store/window";
 import useUiStore from "#store/ui";
 import { getApp } from "#constants/apps.js";
 import { profile } from "#constants/profile.js";
+import { t } from "../i18n";
 
 export const openExternal = (href) => {
   if (href.startsWith("mailto:") || href.startsWith("tel:")) {
@@ -43,7 +44,7 @@ export const openInternalLink = (href) => {
 export const copyEmail = async () => {
   try {
     await navigator.clipboard.writeText(profile.email);
-    useUiStore.getState().showToast("Email copied to clipboard");
+    useUiStore.getState().showToast(t("toast.emailCopied"));
   } catch {
     window.location.href = `mailto:${profile.email}`;
   }

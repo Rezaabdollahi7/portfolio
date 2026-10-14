@@ -11,20 +11,25 @@ import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { Flip } from "gsap/Flip";
 import useWindowStore, { selectFocusedKey, selectZIndex } from "#store/window";
-import { windowTitles } from "#constants/apps.js";
+import { useT } from "../i18n";
 import { useIsMobile } from "../hooks/useMediaQuery";
 import { prefersReducedMotion } from "../lib/motion";
 import { WindowContext } from "../components/window/WindowContext";
 import WindowFallback from "../components/window/WindowFallback";
+import {
+  MENUBAR_H,
+  RESIZE_DIRS,
+  showSnapPreview,
+  snapZone,
+  startResize,
+} from "../lib/windowGeometry";
 
 gsap.registerPlugin(Draggable, Flip);
 
-const MENUBAR_H = 28;
-
 const WindowWrapper = (Component, windowKey) => {
-  const title = windowTitles[windowKey] ?? windowKey;
-
   const Wrapped = (props) => {
+    const t = useT();
+    const title = t(`window.${windowKey}`);
     const win = useWindowStore((s) => s.windows[windowKey]);
     const zIndex = useWindowStore(selectZIndex(windowKey));
     const isFocused = useWindowStore((s) => selectFocusedKey(s) === windowKey);
@@ -103,26 +108,78 @@ const WindowWrapper = (Component, windowKey) => {
     useEffect(() => {
       const el = ref.current;
       if (!el || !handle || isMobile) return;
+      let zone = null;
+
+      // Keep at least part of the window reachable on screen.
+      // (Read the live transform: Draggable's own x/y can lag behind a set.)
+      const applyBounds = (draggable) => {
+        const r = el.getBoundingClientRect();
+        const x = gsap.getProperty(el, "x");
+        const y = gsap.getProperty(el, "y");
+        draggable.applyBounds({
+          minX: x - (r.right - 96),
+          maxX: x + (window.innerWidth - 96 - r.left),
+          minY: y - (r.top - MENUBAR_H),
+          maxY: y + (window.innerHeight - 64 - r.top),
+        });
+      };
 
       const [draggable] = Draggable.create(el, {
         trigger: handle,
         zIndexBoost: false,
         cursor: "default",
         activeCursor: "default",
+        minimumMovement: 3,
         onPress() {
-          // Keep at least part of the window reachable on screen.
+          applyBounds(this);
+        },
+        onDragStart() {
+          // Dragging a tiled window restores its own size under the pointer.
+          if (!el.dataset.snap) return;
+          const before = el.getBoundingClientRect();
+          const ratio = (this.pointerX - before.left) / before.width;
+          const grabY = this.pointerY - before.top;
+          // The tiled bounds would clamp the restored position; lift them.
+          this.applyBounds({ minX: -1e5, maxX: 1e5, minY: -1e5, maxY: 1e5 });
+          delete el.dataset.snap;
+          gsap.set(el, { x: 0, y: 0 });
           const r = el.getBoundingClientRect();
-          this.applyBounds({
-            minX: this.x - (r.right - 96),
-            maxX: this.x + (window.innerWidth - 96 - r.left),
-            minY: this.y - (r.top - MENUBAR_H),
-            maxY: this.y + (window.innerHeight - 64 - r.top),
+          gsap.set(el, {
+            x: this.pointerX - r.left - r.width * ratio,
+            y: Math.max(this.pointerY - grabY, MENUBAR_H) - r.top,
           });
+          useWindowStore.getState().snapWindow(windowKey, null);
+          // Restart the drag from the restored geometry.
+          const e = this.pointerEvent;
+          this.endDrag(e);
+          this.startDrag(e);
+        },
+        onDrag() {
+          const next = snapZone(this.pointerX, this.pointerY);
+          if (next !== zone) {
+            zone = next;
+            showSnapPreview(zone);
+          }
+        },
+        onDragEnd() {
+          showSnapPreview(null);
+          const target = zone;
+          zone = null;
+          if (!target) return;
+          const store = useWindowStore.getState();
+          if (target === "top") {
+            if (!store.windows[windowKey].isMaximized) store.toggleMaximize(windowKey);
+          } else {
+            store.snapWindow(windowKey, target);
+          }
         },
       });
 
       if (el.dataset.maximized === "true") draggable.disable();
-      return () => draggable.kill();
+      return () => {
+        draggable.kill();
+        showSnapPreview(null);
+      };
     }, [handle, isMobile]);
 
     // Mobile: windows are full-screen sheets, so drop any desktop offset.
@@ -139,6 +196,8 @@ const WindowWrapper = (Component, windowKey) => {
 
       const state = Flip.getState(el);
       const draggable = Draggable.get(el);
+      // Zooming a tiled window replaces the tiling.
+      delete el.dataset.snap;
       if (shouldMax) {
         savedOffset.current = {
           x: gsap.getProperty(el, "x"),
@@ -156,6 +215,26 @@ const WindowWrapper = (Component, windowKey) => {
       }
     }, [win.isMaximized, isMobile, hasMounted]);
 
+    // ── Tiling (left / right half) with the same FLIP transition ──────────
+    useLayoutEffect(() => {
+      const el = ref.current;
+      if (!el || isMobile) return;
+      const target = win.snap ?? "";
+      if ((el.dataset.snap ?? "") === target) return;
+
+      const state = Flip.getState(el);
+      if (target) {
+        gsap.set(el, { x: 0, y: 0 });
+        el.dataset.snap = target;
+      } else {
+        delete el.dataset.snap;
+      }
+      Draggable.get(el)?.update();
+      if (visible && el.style.display !== "none" && !prefersReducedMotion()) {
+        Flip.from(state, { duration: 0.3, ease: "power3.inOut" });
+      }
+    }, [win.snap, isMobile, hasMounted, visible]);
+
     const onPointerDownCapture = useCallback(() => {
       if (!isFocused) focusWindow(windowKey);
     }, [focusWindow, isFocused]);
@@ -170,7 +249,7 @@ const WindowWrapper = (Component, windowKey) => {
         isVisible: visible,
         setHandle,
       }),
-      [isMobile, isFocused, win.isMaximized, visible],
+      [isMobile, isFocused, win.isMaximized, visible, title],
     );
 
     if (!hasMounted) return null;
@@ -192,6 +271,16 @@ const WindowWrapper = (Component, windowKey) => {
           <Suspense fallback={<WindowFallback title={title} />}>
             <Component {...props} data={data} openCount={win.openCount} />
           </Suspense>
+          {!isMobile &&
+            RESIZE_DIRS.map((dir) => (
+              <div
+                key={dir}
+                className="win-resize"
+                data-dir={dir}
+                aria-hidden="true"
+                onPointerDown={(e) => startResize(e, ref.current, dir)}
+              />
+            ))}
         </section>
       </WindowContext.Provider>
     );

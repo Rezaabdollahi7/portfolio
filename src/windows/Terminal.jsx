@@ -248,10 +248,11 @@ const Terminal = () => {
 
   return (
     <>
-      <WindowHeader title={`${USER}@${HOSTNAME}: ${cwd}`} backLabel="Home" />
+      <WindowHeader title={`${USER}@${HOSTNAME}: ${cwd}`} />
       <div
         ref={bodyRef}
         className="window-body terminal-body"
+        dir="ltr"
         onClick={(e) => {
           if (e.target.closest("button, a")) return;
           if (!window.getSelection()?.toString()) inputRef.current?.focus({ preventScroll: true });

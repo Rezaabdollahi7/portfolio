@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import { Search, SlidersHorizontal, Wifi } from "lucide-react";
 import AppleLogo from "./AppleLogo";
 import ControlCenter from "./ControlCenter";
-import { menuLinks, windowTitles } from "#constants";
+import { menuLinks } from "#constants";
 import useWindowStore, { selectFocusedKey } from "#store/window";
 import useUiStore from "#store/ui";
 import { useNow } from "../../hooks/useNow";
@@ -10,14 +10,10 @@ import { useDismiss } from "../../hooks/useDismiss";
 import { useToggleDark, useIsDark } from "../../hooks/useTheme";
 import { openApp, openWindow } from "../../lib/actions";
 import { prefetchWindow } from "../../windows";
+import { formatDate, toggleLocale, useLocale, useT } from "../../i18n";
+import { useContent } from "../../i18n/content";
 
-const clockFormat = new Intl.DateTimeFormat("en-US", {
-  weekday: "short",
-  month: "short",
-  day: "numeric",
-  hour: "numeric",
-  minute: "2-digit",
-});
+const CLOCK = { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" };
 
 const AppleMenu = () => {
   const [open, setOpen] = useState(false);
@@ -28,17 +24,21 @@ const AppleMenu = () => {
   const toggleDark = useToggleDark();
   const isDark = useIsDark();
   const closeAll = useWindowStore((s) => s.closeAll);
+  const t = useT();
+  const ui = useUiStore.getState;
 
   const items = [
-    { label: "About Reza", run: () => openApp("notes") },
-    { label: "Projects", run: () => openApp("safari") },
-    { label: "Resume", run: () => openApp("resume") },
+    { id: "about", label: t("menu.aboutReza"), run: () => openApp("notes") },
+    { id: "projects", label: t("menu.projects"), run: () => openApp("safari") },
+    { id: "resume", label: t("menu.resume"), run: () => openApp("resume") },
     "-",
-    { label: "System Settings…", run: () => openApp("settings") },
-    { label: isDark ? "Light Mode" : "Dark Mode", run: toggleDark },
-    { label: "Spotlight Search", hint: "⌘K", run: () => useUiStore.getState().openSpotlight() },
+    { id: "settings", label: t("menu.settings"), run: () => openApp("settings") },
+    { id: "dark", label: t(isDark ? "menu.lightMode" : "menu.darkMode"), run: toggleDark },
+    { id: "spotlight", label: t("menu.spotlight"), hint: "⌘K", run: () => ui().openSpotlight() },
+    { id: "mc", label: t("menu.missionControl"), hint: "F3", run: () => ui().toggleMissionControl() },
+    { id: "kb", label: t("menu.shortcuts"), hint: "?", run: () => ui().openShortcuts() },
     "-",
-    { label: "Close All Windows", run: closeAll },
+    { id: "closeAll", label: t("menu.closeAll"), run: closeAll },
   ];
 
   return (
@@ -47,7 +47,7 @@ const AppleMenu = () => {
         ref={btnRef}
         type="button"
         className="menubar-item menubar-apple"
-        aria-label="Apple menu"
+        aria-label={t("menu.appleMenu")}
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
@@ -61,7 +61,7 @@ const AppleMenu = () => {
               <div key={i} className="menu-sep" role="separator" />
             ) : (
               <button
-                key={item.label}
+                key={item.id}
                 type="button"
                 role="menuitem"
                 className="menu-item"
@@ -71,7 +71,7 @@ const AppleMenu = () => {
                 }}
               >
                 <span>{item.label}</span>
-                {item.hint && <kbd>{item.hint}</kbd>}
+                {item.hint && <kbd className="ltr">{item.hint}</kbd>}
               </button>
             ),
           )}
@@ -83,6 +83,9 @@ const AppleMenu = () => {
 
 const MenuBar = () => {
   const now = useNow();
+  const t = useT();
+  const locale = useLocale();
+  const { profile } = useContent();
   const focused = useWindowStore(selectFocusedKey);
   const { controlCenterOpen, toggleControlCenter, closeControlCenter, openSpotlight } =
     useUiStore();
@@ -90,22 +93,24 @@ const MenuBar = () => {
   const ccRef = useRef(null);
   useDismiss(controlCenterOpen, [ccBtnRef, ccRef], closeControlCenter);
 
+  const clock = formatDate(now, CLOCK, locale);
+
   return (
     <header className="menubar">
-      <nav className="menubar-left" aria-label="Menu bar">
+      <nav className="menubar-left" aria-label={t("menu.menuBar")}>
         <AppleMenu />
         <span className="menubar-item menubar-app">
-          {focused ? windowTitles[focused] : "Reza Abdollahi"}
+          {focused ? t(`window.${focused}`) : profile.name}
         </span>
         {menuLinks.map((link) => (
           <button
-            key={link.label}
+            key={link.id}
             type="button"
             className="menubar-item"
             onPointerEnter={() => prefetchWindow(link.window)}
             onClick={() => openWindow(link.window)}
           >
-            {link.label}
+            {t(`menu.${link.id}`)}
           </button>
         ))}
       </nav>
@@ -113,6 +118,15 @@ const MenuBar = () => {
       <div className="notch" aria-hidden="true" />
 
       <div className="menubar-right">
+        <button
+          type="button"
+          className="menubar-item menubar-lang"
+          onClick={toggleLocale}
+          aria-label={t("menu.languageAria")}
+          lang={locale === "fa" ? "en" : "fa"}
+        >
+          {t("menu.language")}
+        </button>
         <span className="menubar-item max-lg:hidden" aria-hidden="true">
           <Wifi className="size-4" />
         </span>
@@ -120,7 +134,7 @@ const MenuBar = () => {
           type="button"
           className="menubar-item"
           onClick={openSpotlight}
-          aria-label="Spotlight search (Command K)"
+          aria-label={t("menu.spotlightAria")}
         >
           <Search className="size-4" aria-hidden="true" />
         </button>
@@ -129,13 +143,13 @@ const MenuBar = () => {
           type="button"
           className="menubar-item"
           onClick={toggleControlCenter}
-          aria-label="Control Center"
+          aria-label={t("menu.controlCenter")}
           aria-expanded={controlCenterOpen}
         >
           <SlidersHorizontal className="size-4" aria-hidden="true" />
         </button>
         <time className="menubar-item menubar-clock tabular-nums" dateTime={now.toISOString()}>
-          {clockFormat.format(now).replace(",", "").replace(" at", "")}
+          {locale === "fa" ? clock.replace("،", "") : clock.replace(",", "").replace(" at", "")}
         </time>
       </div>
 

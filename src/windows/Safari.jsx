@@ -15,6 +15,8 @@ import ProjectsIndex from "../components/safari/ProjectsIndex";
 import ProjectDetail from "../components/safari/ProjectDetail";
 import { getProject } from "#constants";
 import useUiStore from "#store/ui";
+import { useContent } from "../i18n/content";
+import { useLocale, useT } from "../i18n";
 import { useBackLayer } from "../hooks/useBackLayer";
 
 const HOST = "srezadev.ir";
@@ -23,14 +25,19 @@ const INDEX = { type: "index" };
 const pagePath = (page) =>
   page.type === "project" ? `/projects/${getProject(page.id)?.slug}` : "/projects";
 
-const pageTitle = (page) =>
-  page.type === "project" ? getProject(page.id)?.title ?? "Project" : "Projects";
 
 let tabSeq = 0;
 const newTab = (page = INDEX) => ({ id: ++tabSeq, history: [page], index: 0 });
 
 const Safari = ({ data, openCount }) => {
   const { isMobile, isVisible } = useWindowContext();
+  const tr = useT();
+  const locale = useLocale();
+  const { projects } = useContent();
+  const pageTitle = (p) =>
+    p.type === "project"
+      ? (projects.find((x) => x.id === p.id)?.title ?? tr("safari.project"))
+      : tr("safari.projects");
   const showToast = useUiStore((s) => s.showToast);
   const [tabs, setTabs] = useState(() => [
     newTab(data?.projectId ? { type: "project", id: data.projectId } : INDEX),
@@ -95,13 +102,13 @@ const Safari = ({ data, openCount }) => {
   };
 
   const share = async () => {
-    const url = `https://${HOST}/#${pagePath(page)}`;
+    const url = `https://${HOST}${locale === "fa" ? "/fa/" : "/"}#${pagePath(page)}`;
     try {
       if (isMobile && navigator.share) {
         await navigator.share({ title: pageTitle(page), url });
       } else {
         await navigator.clipboard.writeText(url);
-        showToast("Link copied");
+        showToast(tr("toast.linkCopied"));
       }
     } catch {
       /* dismissed */
@@ -111,39 +118,35 @@ const Safari = ({ data, openCount }) => {
   const openProject = (project, inNewTab) =>
     navigate({ type: "project", id: project.id }, { newTabToo: inNewTab && !isMobile });
 
-  const project = page.type === "project" ? getProject(page.id) : null;
+  const project = page.type === "project" ? projects.find((p) => p.id === page.id) : null;
 
   return (
     <>
-      <WindowHeader
-        className="safari-toolbar"
-        backLabel="Home"
-        hideTitleOnMobile
-      >
+      <WindowHeader className="safari-toolbar" hideTitleOnMobile>
         <div className="safari-nav" data-no-drag>
           <button
             type="button"
             className="toolbar-btn"
             onClick={() => go(-1)}
             disabled={active.index === 0}
-            aria-label="Go back"
+            aria-label={tr("safari.back")}
           >
-            <ChevronLeft aria-hidden="true" />
+            <ChevronLeft aria-hidden="true" className="rtl-flip" />
           </button>
           <button
             type="button"
             className="toolbar-btn max-sm:hidden"
             onClick={() => go(1)}
             disabled={active.index >= active.history.length - 1}
-            aria-label="Go forward"
+            aria-label={tr("safari.forward")}
           >
-            <ChevronRight aria-hidden="true" />
+            <ChevronRight aria-hidden="true" className="rtl-flip" />
           </button>
         </div>
 
         <div className="safari-address">
           <Lock aria-hidden="true" className="safari-lock" />
-          <span className="truncate">
+          <span className="truncate ltr">
             <span className="safari-host">{HOST}</span>
             <span className="safari-path">{pagePath(page)}</span>
           </span>
@@ -155,7 +158,7 @@ const Safari = ({ data, openCount }) => {
             type="button"
             className="toolbar-btn"
             onClick={share}
-            aria-label="Share link to this page"
+            aria-label={tr("safari.share")}
           >
             <Share aria-hidden="true" />
           </button>
@@ -163,7 +166,7 @@ const Safari = ({ data, openCount }) => {
             type="button"
             className="toolbar-btn max-md:hidden"
             onClick={() => navigate(INDEX, { newTabToo: true })}
-            aria-label="New tab"
+            aria-label={tr("safari.newTab")}
           >
             <Plus aria-hidden="true" />
           </button>
@@ -171,7 +174,7 @@ const Safari = ({ data, openCount }) => {
       </WindowHeader>
 
       {tabs.length > 1 && (
-        <div className="safari-tabs" aria-label="Open tabs">
+        <div className="safari-tabs" aria-label={tr("safari.tabs")}>
           {tabs.map((tab) => {
             const p = tab.history[tab.index];
             return (
@@ -191,7 +194,7 @@ const Safari = ({ data, openCount }) => {
                   type="button"
                   className="safari-tab-close"
                   onClick={() => closeTab(tab.id)}
-                  aria-label={`Close ${pageTitle(p)} tab`}
+                  aria-label={tr("safari.closeTab", { title: pageTitle(p) })}
                 >
                   <X aria-hidden="true" />
                 </button>

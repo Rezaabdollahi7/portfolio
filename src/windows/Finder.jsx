@@ -3,46 +3,64 @@ import clsx from "clsx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import WindowHeader from "../components/window/WindowHeader";
 import { useWindowContext } from "../components/window/WindowContext";
-import { locations } from "#constants";
 import useWindowStore from "#store/window";
 import { openExternal } from "../lib/actions";
 import { useBackLayer } from "../hooks/useBackLayer";
+import { getContent, useContent } from "../i18n/content";
+import { useT } from "../i18n";
 
-const ROOTS = Object.values(locations);
-
-// Find the path (root → … → folder) to a folder id.
-const findPath = (id, nodes = ROOTS, trail = []) => {
+// Folder ids from the root to `id`. Ids are the same in every language.
+const findPathIds = (id, nodes, trail = []) => {
   for (const node of nodes) {
     if (node.kind !== "folder") continue;
-    const path = [...trail, node];
+    const path = [...trail, node.id];
     if (node.id === id) return path;
-    const found = findPath(id, node.children ?? [], path);
+    const found = findPathIds(id, node.children ?? [], path);
     if (found) return found;
   }
   return null;
 };
 
+const rootsOf = (locations) => Object.values(locations);
+const pathTo = (id, roots) => findPathIds(id, roots) ?? ["work"];
+
 const Finder = ({ data, openCount }) => {
   const { isMobile, isVisible } = useWindowContext();
+  const { locations } = useContent();
+  const t = useT();
+  const roots = rootsOf(locations);
   const openWindow = useWindowStore((s) => s.openWindow);
-  const [path, setPath] = useState(() => findPath(data?.location ?? "work"));
+  const [pathIds, setPathIds] = useState(() =>
+    pathTo(data?.location ?? "work", rootsOf(getContent().locations)),
+  );
   const [selected, setSelected] = useState(null);
   // Re-opened from elsewhere (dock, Trash, a link): jump to that folder.
   const [handled, setHandled] = useState(openCount);
   if (openCount !== handled) {
     setHandled(openCount);
-    setPath(findPath(data?.location ?? "work"));
+    setPathIds(pathTo(data?.location ?? "work", roots));
     setSelected(null);
   }
 
+  // Resolve ids to folders in the current language.
+  const path = [];
+  let level = roots;
+  for (const id of pathIds) {
+    const node = level.find((n) => n.id === id);
+    if (!node) break;
+    path.push(node);
+    level = node.children ?? [];
+  }
+  const setPath = (nodes) => setPathIds(nodes.map((n) => n.id));
+
   const folder = path[path.length - 1];
-  useBackLayer(path.length > 1, () => setPath((p) => p.slice(0, -1)), {
+  useBackLayer(path.length > 1, () => setPathIds((p) => p.slice(0, -1)), {
     enabled: isMobile && isVisible,
     step: path.length,
   });
 
   const goTo = (id) => {
-    setPath(findPath(id));
+    setPathIds(pathTo(id, roots));
     setSelected(null);
   };
 
@@ -72,22 +90,22 @@ const Finder = ({ data, openCount }) => {
 
   return (
     <>
-      <WindowHeader className="finder-toolbar" backLabel="Home">
+      <WindowHeader className="finder-toolbar">
         <div className="finder-nav" data-no-drag>
           <button
             type="button"
             className="toolbar-btn"
             onClick={() => path.length > 1 && setPath(path.slice(0, -1))}
             disabled={path.length < 2}
-            aria-label="Up one folder"
+            aria-label={t("finder.up")}
           >
-            <ChevronLeft aria-hidden="true" />
+            <ChevronLeft aria-hidden="true" className="rtl-flip" />
           </button>
         </div>
-        <nav className="finder-breadcrumb" aria-label="Folder path">
+        <nav className="finder-breadcrumb" aria-label={t("finder.path")}>
           {path.map((node, i) => (
             <span key={node.id} className="flex items-center gap-1 min-w-0">
-              {i > 0 && <ChevronRight aria-hidden="true" className="crumb-sep" />}
+              {i > 0 && <ChevronRight aria-hidden="true" className="crumb-sep rtl-flip" />}
               <button
                 type="button"
                 className={clsx("crumb", i === path.length - 1 && "is-current")}
@@ -101,14 +119,14 @@ const Finder = ({ data, openCount }) => {
       </WindowHeader>
 
       <div className="window-body finder-layout @container">
-        <aside className="finder-sidebar" aria-label="Locations">
-          <p className="sidebar-heading">Favorites</p>
+        <aside className="finder-sidebar" aria-label={t("finder.locations")}>
+          <p className="sidebar-heading">{t("finder.favorites")}</p>
           <ul>
-            {ROOTS.map(renderLink)}
+            {roots.map(renderLink)}
           </ul>
           {!isMobile && (
             <>
-              <p className="sidebar-heading">Projects</p>
+              <p className="sidebar-heading">{t("finder.projects")}</p>
               <ul>
                 {projectFolders.map(renderLink)}
               </ul>
@@ -118,7 +136,7 @@ const Finder = ({ data, openCount }) => {
 
         <ul
           className="finder-grid"
-          aria-label={`${folder.name} contents`}
+          aria-label={t("finder.contents", { name: folder.name })}
           onClick={(e) => e.target === e.currentTarget && setSelected(null)}
         >
           {folder.children.map((item) => (
@@ -129,7 +147,7 @@ const Finder = ({ data, openCount }) => {
                 onClick={() => (isMobile ? open(item) : setSelected(item.id))}
                 onDoubleClick={() => open(item)}
                 onKeyDown={(e) => e.key === "Enter" && open(item)}
-                title={isMobile ? undefined : "Double-click to open"}
+                title={isMobile ? undefined : t("finder.doubleClick")}
               >
                 <img src={item.icon} alt="" aria-hidden="true" loading="lazy" />
                 <span className="finder-item-name">{item.name}</span>
@@ -139,8 +157,8 @@ const Finder = ({ data, openCount }) => {
         </ul>
       </div>
       <div className="finder-status">
-        {folder.children.length} items
-        {!isMobile && <span className="max-sm:hidden"> · Double-click to open</span>}
+        {t("finder.items", { count: folder.children.length })}
+        {!isMobile && <span className="max-sm:hidden"> · {t("finder.doubleClick")}</span>}
       </div>
     </>
   );

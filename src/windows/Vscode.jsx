@@ -144,7 +144,6 @@ const Vscode = () => {
       <WindowHeader
         className="vsc-titlebar"
         title={activeFile ? `${activeFile} — portfolio` : "portfolio"}
-        backLabel="Home"
         hideTitleOnMobile
       >
         <button
@@ -158,7 +157,7 @@ const Vscode = () => {
         </button>
       </WindowHeader>
 
-      <div className="window-body vsc-body">
+      <div className="window-body vsc-body" dir="ltr">
         <nav className="vsc-activity" aria-label="Side bar views">
           {ACTIVITY.map(({ id, icon: Icon, label }) => (
             <button

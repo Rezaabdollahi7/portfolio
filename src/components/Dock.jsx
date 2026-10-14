@@ -6,12 +6,14 @@ import useWindowStore from "#store/window";
 import { openApp } from "../lib/actions";
 import { prefetchWindow } from "../windows";
 import { prefersReducedMotion } from "../lib/motion";
+import { useT } from "../i18n";
 
 const byId = Object.fromEntries(apps.map((a) => [a.id, a]));
 
 const Dock = () => {
   const dockRef = useRef(null);
   const windows = useWindowStore((s) => s.windows);
+  const t = useT();
 
   // macOS magnification: icons near the cursor grow and lift.
   useGSAP(
@@ -55,19 +57,20 @@ const Dock = () => {
   );
 
   return (
-    <nav className="dock" aria-label="Dock">
+    <nav className="dock" aria-label={t("dock")}>
       <ul ref={dockRef} className="dock-container">
         {dockLayout.map((id, i) => {
           if (id === "|") return <li key={`sep-${i}`} className="dock-sep" aria-hidden="true" />;
           const app = byId[id];
           const running =
             app.window && !app.data && windows[app.window]?.isOpen === true;
+          const name = t(`app.${app.id}`);
           return (
             <li key={id} className="dock-item">
               <button
                 type="button"
                 className="dock-icon"
-                aria-label={app.href ? `${app.name} (opens in new tab)` : app.name}
+                aria-label={app.href ? t("app.newTab", { name }) : name}
                 onPointerEnter={() => app.window && prefetchWindow(app.window)}
                 onFocus={() => app.window && prefetchWindow(app.window)}
                 onClick={() => openApp(app.id)}
@@ -75,7 +78,7 @@ const Dock = () => {
                 <img src={app.icon} alt="" width="64" height="64" draggable="false" />
               </button>
               <span className="dock-tooltip" aria-hidden="true">
-                {app.name}
+                {name}
               </span>
               {running && <span className="dock-dot" aria-hidden="true" />}
             </li>
