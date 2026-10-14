@@ -12,13 +12,15 @@ import { useIsMobile } from "./hooks/useMediaQuery";
 import { useApplyTheme } from "./hooks/useTheme";
 import { useGlobalShortcuts } from "./hooks/useGlobalShortcuts";
 import { useDeepLink } from "./hooks/useDeepLink";
+import { useMobileBackNavigation } from "./hooks/useMobileBackNavigation";
 import { openApp } from "./lib/actions";
 
 const App = () => {
   useApplyTheme();
   useGlobalShortcuts();
-  useDeepLink();
   const isMobile = useIsMobile();
+  useMobileBackNavigation(isMobile);
+  useDeepLink();
   const brightness = useUiStore((s) => s.brightness);
 
   return (

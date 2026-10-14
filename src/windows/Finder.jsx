@@ -6,6 +6,7 @@ import { useWindowContext } from "../components/window/WindowContext";
 import { locations } from "#constants";
 import useWindowStore from "#store/window";
 import { openExternal } from "../lib/actions";
+import { useBackLayer } from "../hooks/useBackLayer";
 
 const ROOTS = Object.values(locations);
 
@@ -22,7 +23,7 @@ const findPath = (id, nodes = ROOTS, trail = []) => {
 };
 
 const Finder = ({ data, openCount }) => {
-  const { isMobile } = useWindowContext();
+  const { isMobile, isVisible } = useWindowContext();
   const openWindow = useWindowStore((s) => s.openWindow);
   const [path, setPath] = useState(() => findPath(data?.location ?? "work"));
   const [selected, setSelected] = useState(null);
@@ -35,6 +36,10 @@ const Finder = ({ data, openCount }) => {
   }
 
   const folder = path[path.length - 1];
+  useBackLayer(path.length > 1, () => setPath((p) => p.slice(0, -1)), {
+    enabled: isMobile && isVisible,
+    step: path.length,
+  });
 
   const goTo = (id) => {
     setPath(findPath(id));

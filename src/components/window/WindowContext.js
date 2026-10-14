@@ -6,6 +6,7 @@ export const WindowContext = createContext({
   isMobile: false,
   isFocused: true,
   isMaximized: false,
+  isVisible: false,
   setHandle: () => {},
 });
 

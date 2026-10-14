@@ -167,9 +167,10 @@ const WindowWrapper = (Component, windowKey) => {
         isMobile,
         isFocused,
         isMaximized: win.isMaximized,
+        isVisible: visible,
         setHandle,
       }),
-      [isMobile, isFocused, win.isMaximized],
+      [isMobile, isFocused, win.isMaximized, visible],
     );
 
     if (!hasMounted) return null;

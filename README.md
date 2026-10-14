@@ -72,6 +72,10 @@ music player, and live **Tehran weather** in a desktop widget.
 - **Code splitting.** Each app is a lazy chunk that loads the first time it opens
   or when you hover its dock icon. The shell (React, GSAP and the desktop) is about
   140 KB of gzipped JS, down from 270 KB before the redesign.
+- **Back button on phones.** `src/lib/backStack.js` keeps one guard history
+  entry while anything is open, so the browser or system back gesture closes
+  the top layer (image viewer, Spotlight, an in-app page, then the app) instead
+  of leaving the site. With nothing open, back leaves as usual.
 - **One content source.** `src/constants/` holds the profile, projects, notes,
   Finder tree and editor files. Everything else reads from there.
 - **Responsive by container.** Windows use container queries, so layouts adapt to

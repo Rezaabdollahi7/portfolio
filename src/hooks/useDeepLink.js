@@ -27,9 +27,9 @@ const openFromHash = (hash) => {
 
 export const useDeepLink = () => {
   useEffect(() => {
+    // Only on load: later hash changes come from our own history entries
+    // (Safari's URL, back navigation) and must not reopen anything.
     if (window.location.hash) openFromHash(window.location.hash);
-    const onHash = () => openFromHash(window.location.hash);
-    window.addEventListener("hashchange", onHash);
 
     // Closing Safari clears its #/projects URL.
     const unsub = useWindowStore.subscribe((state, prev) => {
@@ -38,13 +38,14 @@ export const useDeepLink = () => {
         !state.windows.safari.isOpen &&
         window.location.hash.startsWith("#/projects")
       ) {
-        history.replaceState(null, "", window.location.pathname + window.location.search);
+        window.history.replaceState(
+          window.history.state,
+          "",
+          window.location.pathname + window.location.search,
+        );
       }
     });
 
-    return () => {
-      window.removeEventListener("hashchange", onHash);
-      unsub();
-    };
+    return unsub;
   }, []);
 };
