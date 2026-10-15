@@ -1,8 +1,9 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { profile } from "#constants";
 import { prefersReducedMotion } from "../../lib/motion";
+import { useLocale, useT } from "../../i18n";
+import { useContent } from "../../i18n/content";
 
 const WEIGHTS = {
   subtitle: { min: 100, max: 400, base: 100 },
@@ -21,7 +22,8 @@ const renderText = (text, className, weight) =>
     </span>
   ));
 
-// Letters swell toward the cursor (variable font weight).
+// Letters swell toward the cursor (variable font weight). Latin only: split
+// into spans, Persian letters would lose their joining forms.
 const setupHover = (container, type) => {
   if (!container) return () => {};
   const letters = [...container.querySelectorAll("span[aria-hidden]")];
@@ -50,6 +52,12 @@ const Welcome = () => {
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
   const rootRef = useRef(null);
+  const t = useT();
+  const locale = useLocale();
+  const { profile } = useContent();
+  const sub = t("welcome.sub", { name: profile.firstName });
+  const title = t("welcome.title");
+  const split = locale !== "fa";
 
   useGSAP(() => {
     if (!prefersReducedMotion()) {
@@ -62,23 +70,36 @@ const Welcome = () => {
         delay: 0.15,
       });
     }
+    if (!split) return;
     const a = setupHover(titleRef.current, "title");
     const b = setupHover(subtitleRef.current, "subtitle");
     return () => {
       a();
       b();
     };
-  }, []);
+  }, [split]);
 
   return (
     <section ref={rootRef} className="welcome" aria-labelledby="welcome-title">
       <p ref={subtitleRef} className="welcome-sub">
-        <span className="sr-only">Hey, I'm {profile.firstName}! Welcome to my</span>
-        {renderText(`Hey, I'm ${profile.firstName}! Welcome to my`, "", 100)}
+        {split ? (
+          <>
+            <span className="sr-only">{sub}</span>
+            {renderText(sub, "", 100)}
+          </>
+        ) : (
+          sub
+        )}
       </p>
       <h1 id="welcome-title" ref={titleRef} className="welcome-title">
-        <span className="sr-only">portfolio</span>
-        {renderText("portfolio", "", 400)}
+        {split ? (
+          <>
+            <span className="sr-only">{title}</span>
+            {renderText(title, "", 400)}
+          </>
+        ) : (
+          title
+        )}
       </h1>
       <p className="welcome-role">
         {profile.role} · {profile.location}

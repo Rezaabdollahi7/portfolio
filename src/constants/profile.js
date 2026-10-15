@@ -18,7 +18,22 @@ export const profile = {
   education: "Software Engineering graduate",
   summary: [
     "I'm a frontend developer from Tehran who takes UI a little too seriously. I build fast, responsive, user-centric web apps with React, Next.js and TypeScript, and I go full-stack when the product needs it.",
-    "Lately that means shipping Persian-first products end to end: Dofixo, a multi-tenant SaaS for repair workshops, and Finora, a self-hosted finance manager on the Jalali calendar.",
+    "I founded NextApps, a small digital product studio. Lately we ship Persian-first products end to end: Dofixo, a multi-tenant SaaS for repair workshops, and Finora, a self-hosted finance manager on the Jalali calendar.",
+  ],
+};
+
+// Persian overrides, merged over `profile` when the site is in Persian.
+export const profileFa = {
+  name: "رضا عبداللهی",
+  firstName: "رضا",
+  role: "توسعه‌دهنده فرانت‌اند",
+  headline: "توسعه‌دهنده فرانت‌اند؛ محصولات فول‌استک با React، Next.js و Node.js می‌سازم",
+  location: "تهران، ایران",
+  availability: "آماده همکاری فریلنس و تمام‌وقت در نقش فرانت‌اند",
+  education: "دانش‌آموخته مهندسی نرم‌افزار",
+  summary: [
+    "توسعه‌دهنده فرانت‌اند هستم، ساکن تهران، و رابط کاربری را کمی بیش از حد جدی می‌گیرم. با React، Next.js و TypeScript وب‌اپ‌های سریع، واکنش‌گرا و کاربرمحور می‌سازم و هر وقت محصول لازم داشته باشد، فول‌استک کار می‌کنم.",
+    "بنیان‌گذار NextApps هستم؛ یک استودیوی کوچک توسعه محصولات دیجیتال. این روزها محصولات فارسی‌محور را از صفر تا انتشار می‌سازیم: دوفیکسو، یک SaaS چندمستاجره برای تعمیرگاه‌ها، و Finora، برنامه مدیریت مالی‌ای که روی سرور خودتان اجرا می‌شود.",
   ],
 };
 
@@ -49,6 +64,17 @@ export const socials = [
   },
 ];
 
+export const skillCategoriesFa = {
+  Frontend: "فرانت‌اند",
+  Mobile: "موبایل",
+  Styling: "استایل‌دهی",
+  Motion: "انیمیشن",
+  Backend: "بک‌اند",
+  Database: "پایگاه داده",
+  DevOps: "DevOps",
+  Also: "سایر",
+};
+
 export const skills = [
   {
     category: "Frontend",
@@ -78,4 +104,11 @@ export const funFacts = [
   "I believe the right mechanical keyboard switch can boost productivity by 200%.",
   "Most of my design inspiration happens in a rabbit hole at midnight.",
   "I'm always one VS Code extension away from the perfect setup.",
+];
+
+export const funFactsFa = [
+  "کد را فقط به خاطر یک تورفتگی نامرتب ری‌فکتور می‌کنم و آخرش کل کامپوننت را از نو می‌نویسم. می‌ارزد.",
+  "معتقدم سوییچ درست کیبورد مکانیکی می‌تواند بهره‌وری را ۲۰۰٪ بالا ببرد.",
+  "بیشتر الهام‌های طراحی‌ام نیمه‌شب و وسط گشت‌وگذار بی‌پایان در اینترنت پیدا می‌شوند.",
+  "همیشه فقط یک افزونه VS Code با ستاپ ایده‌آل فاصله دارم.",
 ];

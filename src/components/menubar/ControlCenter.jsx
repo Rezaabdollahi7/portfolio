@@ -1,13 +1,14 @@
 import clsx from "clsx";
-import { Moon, Pause, Play, SkipBack, SkipForward, Sun, Volume2, Wifi } from "lucide-react";
+import { Languages, Moon, Pause, Play, SkipBack, SkipForward, Sun, Volume2, Wifi } from "lucide-react";
 import useUiStore from "#store/ui";
 import useMusicStore, { tracks } from "#store/music";
 import { useIsDark, useToggleDark } from "../../hooks/useTheme";
+import { toggleLocale, useLocale, useT } from "../../i18n";
 
 const Slider = ({ label, icon: Icon, value, min = 0, onChange }) => (
   <div className="cc-tile cc-slider">
     <p className="cc-label">{label}</p>
-    <label className="cc-range">
+    <label className="cc-range" dir="ltr">
       <Icon aria-hidden="true" />
       <input
         type="range"
@@ -30,9 +31,11 @@ const ControlCenter = ({ className }) => {
   const { brightness, setBrightness } = useUiStore();
   const { index, isPlaying, toggle, next, prev, volume, setVolume } = useMusicStore();
   const track = tracks[index];
+  const t = useT();
+  const locale = useLocale();
 
   return (
-    <div className={clsx("control-center", className)} role="dialog" aria-label="Control Center">
+    <div className={clsx("control-center", className)} role="dialog" aria-label={t("menu.controlCenter")}>
       <div className="cc-grid">
         <div className="cc-tile cc-toggles">
           <div className="cc-toggle">
@@ -40,8 +43,8 @@ const ControlCenter = ({ className }) => {
               <Wifi />
             </span>
             <span>
-              <span className="cc-toggle-title">Wi-Fi</span>
-              <span className="cc-toggle-sub">Home</span>
+              <span className="cc-toggle-title">{t("cc.wifi")}</span>
+              <span className="cc-toggle-sub">{t("cc.home")}</span>
             </span>
           </div>
           <button
@@ -54,8 +57,22 @@ const ControlCenter = ({ className }) => {
               {isDark ? <Moon /> : <Sun />}
             </span>
             <span>
-              <span className="cc-toggle-title">Dark Mode</span>
-              <span className="cc-toggle-sub">{isDark ? "On" : "Off"}</span>
+              <span className="cc-toggle-title">{t("cc.darkMode")}</span>
+              <span className="cc-toggle-sub">{t(isDark ? "cc.on" : "cc.off")}</span>
+            </span>
+          </button>
+          <button
+            type="button"
+            className="cc-toggle"
+            onClick={toggleLocale}
+            aria-label={t("menu.languageAria")}
+          >
+            <span className="cc-icon is-on" aria-hidden="true">
+              <Languages />
+            </span>
+            <span>
+              <span className="cc-toggle-title">{t("cc.language")}</span>
+              <span className="cc-toggle-sub">{locale === "fa" ? "فارسی" : "English"}</span>
             </span>
           </button>
         </div>
@@ -66,27 +83,27 @@ const ControlCenter = ({ className }) => {
             <p className="cc-track truncate">{track.title}</p>
             <p className="cc-artist truncate">{track.artist}</p>
           </div>
-          <div className="cc-music-controls">
-            <button type="button" onClick={prev} aria-label="Previous track">
+          <div className="cc-music-controls" dir="ltr">
+            <button type="button" onClick={prev} aria-label={t("cc.prev")}>
               <SkipBack aria-hidden="true" />
             </button>
             <button
               type="button"
               onClick={toggle}
-              aria-label={isPlaying ? "Pause" : "Play"}
+              aria-label={t(isPlaying ? "cc.pause" : "cc.play")}
               className="cc-play"
             >
               {isPlaying ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
             </button>
-            <button type="button" onClick={next} aria-label="Next track">
+            <button type="button" onClick={next} aria-label={t("cc.next")}>
               <SkipForward aria-hidden="true" />
             </button>
           </div>
         </div>
       </div>
 
-      <Slider label="Display" icon={Sun} value={brightness} min={30} onChange={setBrightness} />
-      <Slider label="Sound" icon={Volume2} value={volume} onChange={setVolume} />
+      <Slider label={t("cc.display")} icon={Sun} value={brightness} min={30} onChange={setBrightness} />
+      <Slider label={t("cc.sound")} icon={Volume2} value={volume} onChange={setVolume} />
     </div>
   );
 };

@@ -39,10 +39,11 @@ const ResumeDocument = () => {
       <section>
         <h2>Profile</h2>
         <p>
-          Frontend developer who builds fast, responsive, user-centric web apps
-          with React, Next.js and TypeScript, and goes full-stack with Node.js,
-          PostgreSQL and Docker when the product needs it. Focused on
-          Persian-first, right-to-left products with careful interaction detail.
+          Frontend developer and founder of NextApps, a small digital product
+          studio. Builds fast, responsive, user-centric web apps with React,
+          Next.js and TypeScript, and goes full-stack with Node.js, PostgreSQL
+          and Docker when the product needs it. Focused on Persian-first,
+          right-to-left products with careful interaction detail.
         </p>
       </section>
 

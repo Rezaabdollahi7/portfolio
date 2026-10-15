@@ -15,6 +15,7 @@ export const loaders = {
   settings: () => import("./Settings"),
   txtfile: () => import("./Text"),
   imgfile: () => import("./ImageViewer"),
+  mail: () => import("./Mail"),
 };
 
 export const prefetchWindow = (key) => {

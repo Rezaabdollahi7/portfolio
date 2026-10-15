@@ -3,8 +3,12 @@ import Dock from "./components/Dock";
 import Welcome from "./components/desktop/Welcome";
 import DesktopIcons from "./components/desktop/DesktopIcons";
 import { CalendarWidget, WeatherWidget } from "./components/desktop/Widgets";
+import GitHubWidget from "./components/desktop/GitHubWidget";
 import MobileHome from "./components/mobile/MobileHome";
 import Spotlight from "./components/Spotlight";
+import MissionControl from "./components/MissionControl";
+import KeyboardShortcuts from "./components/KeyboardShortcuts";
+import ContextMenu from "./components/desktop/ContextMenu";
 import Toast from "./components/Toast";
 import { windows } from "./windows";
 import useUiStore from "#store/ui";
@@ -14,11 +18,22 @@ import { useGlobalShortcuts } from "./hooks/useGlobalShortcuts";
 import { useDeepLink } from "./hooks/useDeepLink";
 import { useMobileBackNavigation } from "./hooks/useMobileBackNavigation";
 import { openApp } from "./lib/actions";
+import { useApplyLocale } from "./i18n/useApplyLocale";
+import { useT } from "./i18n";
+
+// Right-click on the bare desktop (not on icons or widgets) opens its menu.
+const onDesktopContextMenu = (e) => {
+  if (e.target.closest("button, a, .widget")) return;
+  e.preventDefault();
+  useUiStore.getState().openContextMenu(e.clientX, e.clientY);
+};
 
 const App = () => {
   useApplyTheme();
-  useGlobalShortcuts();
+  useApplyLocale();
+  const t = useT();
   const isMobile = useIsMobile();
+  useGlobalShortcuts(isMobile);
   useMobileBackNavigation(isMobile);
   useDeepLink();
   const brightness = useUiStore((s) => s.brightness);
@@ -26,7 +41,7 @@ const App = () => {
   return (
     <>
       <button type="button" className="skip-link" onClick={() => openApp("safari")}>
-        Skip to projects
+        {t("skip")}
       </button>
 
       {isMobile ? (
@@ -34,15 +49,18 @@ const App = () => {
       ) : (
         <>
           <MenuBar />
-          <main className="desktop" aria-label="Desktop">
+          <main className="desktop" aria-label={t("menu.desktop")} onContextMenu={onDesktopContextMenu}>
             <div className="widgets">
               <CalendarWidget />
               <WeatherWidget />
             </div>
             <Welcome />
+            <GitHubWidget className="is-desktop" />
             <DesktopIcons />
           </main>
           <Dock />
+          <MissionControl />
+          <ContextMenu />
         </>
       )}
 
@@ -51,6 +69,7 @@ const App = () => {
       ))}
 
       <Spotlight />
+      <KeyboardShortcuts />
       <Toast />
       <div
         className="brightness-overlay"

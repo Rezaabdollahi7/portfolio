@@ -3,13 +3,14 @@ import clsx from "clsx";
 import { Images } from "lucide-react";
 import WindowHeader from "../components/window/WindowHeader";
 import Lightbox from "../components/Lightbox";
-import { projects } from "#constants";
+import { useContent } from "../i18n/content";
+import { useT, localizeDigits } from "../i18n";
 
 // Albums = projects. "Library" = every screenshot.
-const albums = [
+const buildAlbums = (projects, libraryName) => [
   {
     id: "library",
-    name: "Library",
+    name: libraryName,
     cover: projects[0].thumbnail,
     photos: projects.flatMap((p) => p.screenshots.map((src) => ({ src, project: p.title }))),
   },
@@ -22,6 +23,9 @@ const albums = [
 ];
 
 const Photos = () => {
+  const { projects } = useContent();
+  const t = useT();
+  const albums = useMemo(() => buildAlbums(projects, t("photos.library")), [projects, t]);
   const [albumId, setAlbumId] = useState("library");
   const [lightbox, setLightbox] = useState(null);
   const album = albums.find((a) => a.id === albumId);
@@ -29,13 +33,13 @@ const Photos = () => {
 
   return (
     <>
-      <WindowHeader title="Photos" backLabel="Home">
-        <span className="header-count">{album.photos.length} photos</span>
+      <WindowHeader title={t("photos.title")}>
+        <span className="header-count">{t("photos.count", { count: album.photos.length })}</span>
       </WindowHeader>
 
       <div className="window-body photos-layout @container">
-        <aside className="photos-sidebar" aria-label="Albums">
-          <p className="sidebar-heading">Albums</p>
+        <aside className="photos-sidebar" aria-label={t("photos.albums")}>
+          <p className="sidebar-heading">{t("photos.albums")}</p>
           <ul>
             {albums.map((a) => (
               <li key={a.id}>
@@ -51,7 +55,7 @@ const Photos = () => {
                     <img src={a.cover} alt="" aria-hidden="true" className="album-thumb" />
                   )}
                   <span className="truncate">{a.name}</span>
-                  <span className="sidebar-count">{a.photos.length}</span>
+                  <span className="sidebar-count">{localizeDigits(a.photos.length)}</span>
                 </button>
               </li>
             ))}
@@ -65,7 +69,7 @@ const Photos = () => {
               type="button"
               className="photo-tile"
               onClick={() => setLightbox(i)}
-              aria-label={`Open ${photo.project} screenshot`}
+              aria-label={t("photos.open", { title: photo.project })}
             >
               <img src={photo.src} alt="" loading="lazy" decoding="async" />
             </button>

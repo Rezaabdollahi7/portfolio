@@ -69,8 +69,8 @@ export const apps = [
     id: "mail",
     name: "Mail",
     icon: "/images/mail.webp",
-    href: "mailto:srezaabdollahi7@gmail.com",
-    keywords: "email write",
+    window: "mail",
+    keywords: "email write message contact form",
   },
   {
     id: "github",
@@ -133,11 +133,12 @@ export const mobileHomeApps = [
 ];
 export const mobileDockApps = ["safari", "notes", "contact", "mail"];
 
+// Labels come from ui.js (menu.<id>).
 export const menuLinks = [
-  { label: "About", window: "notes" },
-  { label: "Projects", window: "safari" },
-  { label: "Resume", window: "resume" },
-  { label: "Contact", window: "contact" },
+  { id: "about", window: "notes" },
+  { id: "projects", window: "safari" },
+  { id: "resume", window: "resume" },
+  { id: "contact", window: "contact" },
 ];
 
 // Window titles shown in the menu bar when the window is focused.
@@ -153,6 +154,7 @@ export const windowTitles = {
   settings: "System Settings",
   txtfile: "TextEdit",
   imgfile: "Preview",
+  mail: "Mail",
 };
 
 // Which dock app a window belongs to (for running indicators).
@@ -166,6 +168,7 @@ export const windowToApp = {
   contact: "contact",
   resume: "resume",
   settings: "settings",
+  mail: "mail",
 };
 
 export const WINDOW_KEYS = Object.keys(windowTitles);

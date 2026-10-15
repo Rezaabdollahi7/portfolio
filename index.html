@@ -6,12 +6,15 @@
     <title>Reza Abdollahi · Frontend Developer</title>
     <meta
       name="description"
-      content="Reza Abdollahi is a frontend developer in Tehran building fast, Persian-first web products with React, Next.js and Node.js. Explore projects like Dofixo and Finora in a macOS-style portfolio."
+      content="Reza Abdollahi is a frontend developer in Tehran and founder of NextApps, building fast, Persian-first web products with React, Next.js and Node.js. Explore projects like Dofixo and Finora in a macOS-style portfolio."
     />
     <meta name="author" content="Reza Abdollahi" />
     <meta name="theme-color" content="#e9ecf2" />
     <meta name="color-scheme" content="light dark" />
     <link rel="canonical" href="https://srezadev.ir/" />
+    <link rel="alternate" hreflang="en" href="https://srezadev.ir/" />
+    <link rel="alternate" hreflang="fa" href="https://srezadev.ir/fa/" />
+    <link rel="alternate" hreflang="x-default" href="https://srezadev.ir/" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -26,6 +29,8 @@
       content="A portfolio you can explore like a Mac. Projects, notes, a terminal and more."
     />
     <meta property="og:url" content="https://srezadev.ir/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="fa_IR" />
     <meta property="og:image" content="https://srezadev.ir/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -49,6 +54,14 @@
           var dark = a === "dark" || (a === "auto" && matchMedia("(prefers-color-scheme: dark)").matches);
           if (dark) document.documentElement.classList.add("dark");
         } catch (e) {}
+        // A visitor who picked Persian before gets it from the first paint.
+        try {
+          var l = localStorage.getItem("portfolio:locale");
+          if (l === "fa" || (!l && /^fa/i.test(navigator.language || ""))) {
+            document.documentElement.lang = "fa";
+            document.documentElement.dir = "rtl";
+          }
+        } catch (e) {}
       })();
     </script>
 
@@ -58,6 +71,7 @@
         "@type": "Person",
         "name": "Reza Abdollahi",
         "jobTitle": "Frontend Developer",
+        "worksFor": { "@type": "Organization", "name": "NextApps", "url": "https://nextapps.ir" },
         "url": "https://srezadev.ir",
         "email": "mailto:srezaabdollahi7@gmail.com",
         "address": { "@type": "PostalAddress", "addressLocality": "Tehran", "addressCountry": "IR" },
@@ -75,12 +89,12 @@
     <noscript>
       <main style="font-family: system-ui, sans-serif; max-width: 640px; margin: 48px auto; padding: 0 20px; line-height: 1.6; background: #fff; color: #1d1d1f; border-radius: 12px">
         <h1>Reza Abdollahi</h1>
-        <p>Frontend developer in Tehran building Persian-first web products with React, Next.js and Node.js.</p>
+        <p>Frontend developer in Tehran and founder of NextApps, building Persian-first web products with React, Next.js and Node.js.</p>
         <h2>Projects</h2>
         <ul>
           <li><a href="https://dofixo.ir">Dofixo</a>: multi-tenant SaaS for repair workshops</li>
           <li><a href="https://github.com/Rezaabdollahi7/Finora">Finora</a>: self-hosted household finance manager</li>
-          <li><a href="https://nextapps.ir">NextApps</a>: digital product studio website</li>
+          <li><a href="https://nextapps.ir">NextApps</a>: the digital product studio I founded</li>
           <li><a href="https://siemanage.com">SieManage</a>: real-time task management for teams</li>
           <li><a href="https://github.com/Rezaabdollahi7/DashStack">DashStack</a>: open-source admin dashboard</li>
         </ul>
@@ -88,7 +102,8 @@
           <a href="mailto:srezaabdollahi7@gmail.com">Email</a> ·
           <a href="https://github.com/Rezaabdollahi7">GitHub</a> ·
           <a href="https://www.linkedin.com/in/seyedreza-abdollahi">LinkedIn</a> ·
-          <a href="/files/reza-abdollahi-resume.pdf">Resume (PDF)</a>
+          <a href="/files/reza-abdollahi-resume.pdf">Resume (PDF)</a> ·
+          <a href="/fa/" hreflang="fa" lang="fa">فارسی</a>
         </p>
       </main>
     </noscript>

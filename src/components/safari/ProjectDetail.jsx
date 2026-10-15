@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Code2, Lock } from "lucide-react";
-import { projects } from "#constants";
+import { useContent } from "../../i18n/content";
+import { localizeDigits, useT } from "../../i18n";
 import Lightbox from "../Lightbox";
 
 const ProjectDetail = ({ project, onBack, onOpen }) => {
+  const t = useT();
+  const { projects } = useContent();
   const [lightbox, setLightbox] = useState(null);
   const index = projects.findIndex((p) => p.id === project.id);
   const nextProject = projects[(index + 1) % projects.length];
@@ -12,14 +15,14 @@ const ProjectDetail = ({ project, onBack, onOpen }) => {
   return (
     <article className="page project-detail">
       <button type="button" className="back-link" onClick={onBack}>
-        <ArrowLeft aria-hidden="true" /> All projects
+        <ArrowLeft aria-hidden="true" className="rtl-flip" /> {t("projects.allProjects")}
       </button>
 
       <div className="detail-hero">
         <p className="eyebrow">
-          {project.kind} · {project.year}
+          {project.kind} · {localizeDigits(project.year)}
           <span className="status-pill" data-status={project.status}>
-            {project.status}
+            {t(`status.${project.status}`)}
           </span>
         </p>
         <h1 className="page-title">{project.title}</h1>
@@ -37,7 +40,7 @@ const ProjectDetail = ({ project, onBack, onOpen }) => {
                 <Code2 aria-hidden="true" />
               ) : null}
               {primary.label}
-              <ArrowUpRight aria-hidden="true" />
+              <ArrowUpRight aria-hidden="true" className="rtl-flip" />
             </a>
           )}
           {secondary.map((link) => (
@@ -50,12 +53,12 @@ const ProjectDetail = ({ project, onBack, onOpen }) => {
             >
               {link.kind === "source" ? <Code2 aria-hidden="true" /> : null}
               {link.label}
-              <ArrowUpRight aria-hidden="true" />
+              <ArrowUpRight aria-hidden="true" className="rtl-flip" />
             </a>
           ))}
           {project.privateSource && (
             <span className="private-note">
-              <Lock aria-hidden="true" /> Private repository
+              <Lock aria-hidden="true" /> {t("projects.private")}
             </span>
           )}
         </div>
@@ -65,7 +68,7 @@ const ProjectDetail = ({ project, onBack, onOpen }) => {
         type="button"
         className="detail-cover"
         onClick={() => setLightbox(0)}
-        aria-label={`View ${project.title} screenshots`}
+        aria-label={t("projects.viewShots", { title: project.title })}
       >
         <img
           src={project.thumbnail}
@@ -80,7 +83,7 @@ const ProjectDetail = ({ project, onBack, onOpen }) => {
         <div className="detail-main">
           <section aria-labelledby="overview">
             <h2 id="overview" className="section-title">
-              Overview
+              {t("projects.overview")}
             </h2>
             {project.description.map((para) => (
               <p key={para.slice(0, 24)} className="prose-p">
@@ -91,7 +94,7 @@ const ProjectDetail = ({ project, onBack, onOpen }) => {
 
           <section aria-labelledby="highlights">
             <h2 id="highlights" className="section-title">
-              Highlights
+              {t("projects.highlights")}
             </h2>
             <ul className="highlights">
               {project.highlights.map((item) => (
@@ -101,28 +104,28 @@ const ProjectDetail = ({ project, onBack, onOpen }) => {
           </section>
         </div>
 
-        <aside className="detail-aside" aria-label="Project facts">
+        <aside className="detail-aside" aria-label={t("projects.facts")}>
           <dl>
             <div>
-              <dt>Type</dt>
+              <dt>{t("projects.type")}</dt>
               <dd>{project.kind}</dd>
             </div>
             <div>
-              <dt>Year</dt>
-              <dd className="tabular-nums">{project.year}</dd>
+              <dt>{t("projects.year")}</dt>
+              <dd className="tabular-nums">{localizeDigits(project.year)}</dd>
             </div>
             <div>
-              <dt>Status</dt>
-              <dd>{project.status}</dd>
+              <dt>{t("projects.status")}</dt>
+              <dd>{t(`status.${project.status}`)}</dd>
             </div>
             {project.rtl && (
               <div>
-                <dt>Language</dt>
-                <dd>Persian · RTL</dd>
+                <dt>{t("projects.language")}</dt>
+                <dd>{t("projects.rtl")}</dd>
               </div>
             )}
           </dl>
-          <p className="aside-label">Stack</p>
+          <p className="aside-label">{t("projects.stack")}</p>
           <ul className="chips">
             {project.stack.map((tech) => (
               <li key={tech} className="chip">
@@ -135,7 +138,7 @@ const ProjectDetail = ({ project, onBack, onOpen }) => {
 
       <section aria-labelledby="screens">
         <h2 id="screens" className="section-title">
-          Screens
+          {t("projects.screens")}
         </h2>
         <div className="shots">
           {project.screenshots.map((src, i) => (
@@ -144,7 +147,7 @@ const ProjectDetail = ({ project, onBack, onOpen }) => {
               type="button"
               className="shot"
               onClick={() => setLightbox(i)}
-              aria-label={`Open screenshot ${i + 1}`}
+              aria-label={t("projects.openShot", { n: i + 1 })}
             >
               <img src={src} alt="" loading="lazy" decoding="async" />
             </button>
@@ -157,10 +160,10 @@ const ProjectDetail = ({ project, onBack, onOpen }) => {
         className="next-project"
         onClick={() => onOpen(nextProject)}
       >
-        <span className="eyebrow">Next project</span>
+        <span className="eyebrow">{t("projects.next")}</span>
         <span className="next-project-title">
           {nextProject.title}
-          <ArrowRight aria-hidden="true" />
+          <ArrowRight aria-hidden="true" className="rtl-flip" />
         </span>
         <span className="next-project-tagline">{nextProject.tagline}</span>
       </button>

@@ -20,6 +20,11 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
+      // The Persian page is its own HTML entry so /fa/ has Persian meta tags.
+      input: {
+        main: resolve(root, "index.html"),
+        fa: resolve(root, "fa/index.html"),
+      },
       output: {
         manualChunks: {
           react: ["react", "react-dom"],

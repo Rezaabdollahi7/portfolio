@@ -121,8 +121,8 @@ export const projects = [
     id: "nextapps",
     slug: "nextapps",
     title: "NextApps",
-    tagline: "Website for a digital product studio",
-    kind: "Studio website",
+    tagline: "The digital product studio I founded",
+    kind: "Founder · Studio website",
     category: "client",
     year: "2026",
     status: "Live",
@@ -130,9 +130,9 @@ export const projects = [
     rtl: true,
     thumbnail: "/images/projects/NextApps/home.webp",
     summary:
-      "The website of NextApps, a small studio that builds websites, online stores, web apps and SaaS products. Dofixo and Finora are part of its work.",
+      "NextApps is the small product studio I founded. We build websites, online stores, web apps and SaaS products; Dofixo and Finora are part of our work.",
     description: [
-      "NextApps is a small digital product studio: websites, online stores, web applications and SaaS. The site presents the studio's services, case studies, pricing and blog, in Persian and right-to-left.",
+      "I founded NextApps, a small digital product studio that builds websites, online stores, web applications and SaaS. Its site presents our services, case studies, pricing and blog, in Persian and right-to-left.",
       "The case studies section features products like Dofixo and Finora, each with its own write-up.",
     ],
     highlights: [
@@ -350,10 +350,10 @@ export const projects = [
       "Every window is a real React component. A small window manager handles focus order, minimise, zoom and close, and heavier apps load only when you open them.",
     ],
     highlights: [
-      "Window manager with drag, focus, minimise, zoom and z-ordering in a Zustand store.",
+      "Window manager with drag, resize, edge tiling, Mission Control, minimise, zoom and keyboard shortcuts.",
       "Spotlight search (⌘K) across apps, projects, notes and actions.",
       "A zsh-like terminal over a virtual filesystem: ls, cd, cat, grep, pipes, redirects and Tab completion.",
-      "iOS-style experience on phones, with full-screen apps and a home screen.",
+      "English and Persian (right-to-left, Jalali calendar), plus an iOS-style experience on phones.",
     ],
     stack: ["React 19", "Vite", "Tailwind CSS 4", "GSAP", "Zustand"],
     links: [
