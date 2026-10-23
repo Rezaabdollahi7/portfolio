@@ -1435,6 +1435,22 @@ html[lang="fa"] {
     display: grid;
     gap: 6px;
     justify-items: center;
+
+    /* Short viewports (e.g. 1262x568): five full-size icons ran into the dock. */
+    @media (max-height: 720px) {
+      gap: 2px;
+
+      .desktop-icon {
+        width: 80px;
+        padding: 2px 4px;
+        gap: 2px;
+
+        img {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
   }
 
   .desktop-icon {
