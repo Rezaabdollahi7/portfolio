@@ -16,7 +16,8 @@ export const profile = {
   website: "https://srezadev.ir",
   resumeUrl: "/files/reza-abdollahi-resume.pdf",
   availability: "Open to freelance projects and full-time full-stack roles",
-  education: "Software Engineering graduate",
+  education: "B.Sc. in Computer Engineering",
+  university: "Azerbaijan Shahid Madani University · Tabriz, Iran",
   summary: [
     "I'm a Software Engineer focused on full-stack development and building practical, scalable software products.",
     "I work primarily with React, Next.js, TypeScript and Node.js, developing everything from modern web applications to SaaS platforms. I enjoy turning ideas into real products, designing clean architectures and solving problems that matter to users.",
@@ -41,7 +42,8 @@ export const profileFa = {
   headline: "مهندس نرم‌افزار | توسعه فول‌استک و ساخت محصول",
   location: "تهران، ایران",
   availability: "آماده همکاری فریلنس و تمام‌وقت در نقش فول‌استک",
-  education: "دانش‌آموخته مهندسی نرم‌افزار",
+  education: "کارشناسی مهندسی کامپیوتر",
+  university: "دانشگاه شهید مدنی آذربایجان · تبریز",
   summary: [
     "مهندس نرم‌افزار هستم و روی توسعه فول‌استک و ساخت محصولات نرم‌افزاری کاربردی و مقیاس‌پذیر تمرکز دارم.",
     "بیشتر با React، Next.js، TypeScript و Node.js کار می‌کنم و از وب‌اپلیکیشن‌های مدرن تا پلتفرم‌های SaaS می‌سازم. از تبدیل ایده به محصول واقعی، طراحی معماری تمیز و حل مسئله‌هایی که برای کاربر مهم‌اند لذت می‌برم.",
