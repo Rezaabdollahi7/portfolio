@@ -1392,6 +1392,18 @@ html[lang="fa"] {
     max-width: 90vw;
   }
 
+  .welcome-photo {
+    display: block;
+    width: clamp(72px, 6.4vw, 96px);
+    height: auto;
+    aspect-ratio: 1;
+    margin: 0 auto 18px;
+    border-radius: 999px;
+    object-fit: cover;
+    border: 3px solid rgb(255 255 255 / 0.85);
+    box-shadow: 0 10px 30px -8px rgb(0 0 0 / 0.35);
+  }
+
   .welcome-sub {
     font-family: var(--font-display);
     font-size: clamp(22px, 2.3vw, 32px);
@@ -3137,23 +3149,6 @@ html[lang="fa"] {
     color: #4a4a50;
   }
 
-  .resume-id {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .resume-photo {
-    width: 72px;
-    height: 72px;
-    border-radius: 999px;
-    object-fit: cover;
-    flex: none;
-  }
-
-  .resume-focus {
-    margin-top: 6px;
-  }
 
   .resume-doc .resume-contact {
     list-style: none;
@@ -3201,7 +3196,7 @@ html[lang="fa"] {
 
     div {
       display: grid;
-      grid-template-columns: 90px 1fr;
+      grid-template-columns: 150px 1fr;
       gap: 10px;
     }
 
@@ -5348,5 +5343,17 @@ html[lang="fa"] {
     font-size: 13.5px;
     color: var(--text-2);
     line-height: 1.55;
+  }
+}
+
+/* Keep resume headings and short sections with their content when printed. */
+@media print {
+  .resume-doc h2 {
+    break-after: avoid;
+  }
+
+  .resume-doc .resume-item,
+  .resume-doc .resume-skills {
+    break-inside: avoid;
   }
 }

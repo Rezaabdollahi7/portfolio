@@ -81,6 +81,14 @@ const Welcome = () => {
 
   return (
     <section ref={rootRef} className="welcome" aria-labelledby="welcome-title">
+      <img
+        className="welcome-photo"
+        src="/images/profile/reza-256.webp"
+        alt=""
+        width="88"
+        height="88"
+        decoding="async"
+      />
       <p ref={subtitleRef} className="welcome-sub">
         {split ? (
           <>
