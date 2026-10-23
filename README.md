@@ -38,7 +38,7 @@ with the Jalali calendar, at [`/fa/`](https://srezadev.ir/fa/).
 | **Photos** | Albums of screenshots, one per project |
 | **VS Code** | The site's own data as code, with a small syntax highlighter, file search and source control panel |
 | **Mail** | A compose window that sends a message straight to my inbox, with validation, a saved draft and spam protection |
-| **Contacts** | Email (with copy), phone, Telegram, GitHub, LinkedIn and Tehran local time |
+| **Contacts** | Email (with copy), phone, Telegram, GitHub and Tehran local time |
 | **Resume** | An HTML resume with print styles and a PDF download |
 | **System Settings** | Appearance (light, dark, auto), language (English or Persian) and four wallpapers, saved per visitor |
 
@@ -71,6 +71,7 @@ activity** (the contribution graph and my latest commits).
 | --- | --- |
 | [Dofixo](https://dofixo.ir) | Multi-tenant SaaS for repair workshops: React 19, Node.js, PostgreSQL with row-level security, Prisma |
 | [Finora](https://github.com/Rezaabdollahi7/Finora) | Self-hosted, Persian-first household finance manager: Next.js, Prisma, PostgreSQL, Three.js |
+| Secure Assessment Dashboard | Multi-tenant, role-based security findings tracker: NestJS, PostgreSQL, Redis, Next.js 16 |
 | [NextApps](https://nextapps.ir) | The digital product studio I founded: Next.js, TypeScript |
 | [SieManage](https://siemanage.com) | Real-time task management for teams: React, Express, PostgreSQL, Socket.io |
 | [Siemenspart](https://github.com/Rezaabdollahi7/siemenspart-landing) | Catalogue site for industrial CNC parts: Astro, React, Fuse.js |

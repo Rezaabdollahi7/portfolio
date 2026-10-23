@@ -3,14 +3,14 @@ import { useLocale } from "./locale";
 
 const META = {
   en: {
-    title: "Reza Abdollahi · Frontend Developer",
+    title: "Reza Abdollahi · Software Engineer",
     description:
-      "Reza Abdollahi is a frontend developer in Tehran and founder of NextApps, building fast, Persian-first web products with React, Next.js and Node.js. Explore projects like Dofixo and Finora in a macOS-style portfolio.",
+      "Reza Abdollahi is a full-stack software engineer in Tehran and founder of NextApps, building practical, scalable products with React, Next.js, TypeScript and Node.js. Explore projects like Dofixo and Finora in a macOS-style portfolio.",
   },
   fa: {
-    title: "رضا عبداللهی · توسعه‌دهنده فرانت‌اند",
+    title: "رضا عبداللهی · مهندس نرم‌افزار",
     description:
-      "رضا عبداللهی، توسعه‌دهنده فرانت‌اند در تهران و بنیان‌گذار NextApps. محصولات وب سریع و فارسی‌محور با React، Next.js و Node.js می‌سازد. پروژه‌هایی مثل دوفیکسو و Finora را در پورتفولیویی به سبک macOS ببینید.",
+      "رضا عبداللهی، مهندس نرم‌افزار فول‌استک در تهران و بنیان‌گذار NextApps. محصولات نرم‌افزاری کاربردی و مقیاس‌پذیر با React، Next.js، TypeScript و Node.js می‌سازد. پروژه‌هایی مثل دوفیکسو و Finora را در پورتفولیویی به سبک macOS ببینید.",
   },
 };
 

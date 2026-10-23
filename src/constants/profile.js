@@ -5,8 +5,9 @@ export const profile = {
   name: "Reza Abdollahi",
   firstName: "Reza",
   initials: "RA",
-  role: "Frontend Developer",
-  headline: "Frontend developer building full-stack products with React, Next.js & Node.js",
+  photo: "/images/profile/reza.webp",
+  role: "Software Engineer",
+  headline: "Software Engineer | Full-stack & Product Development",
   location: "Tehran, Iran",
   timezone: "Asia/Tehran",
   email: "srezaabdollahi7@gmail.com",
@@ -14,27 +15,45 @@ export const profile = {
   phoneHref: "tel:+989219811980",
   website: "https://srezadev.ir",
   resumeUrl: "/files/reza-abdollahi-resume.pdf",
-  availability: "Open to freelance projects and full-time frontend roles",
+  availability: "Open to freelance projects and full-time full-stack roles",
   education: "Software Engineering graduate",
   summary: [
-    "I'm a frontend developer from Tehran who takes UI a little too seriously. I build fast, responsive, user-centric web apps with React, Next.js and TypeScript, and I go full-stack when the product needs it.",
-    "I founded NextApps, a small digital product studio. Lately we ship Persian-first products end to end: Dofixo, a multi-tenant SaaS for repair workshops, and Finora, a self-hosted finance manager on the Jalali calendar.",
+    "I'm a Software Engineer focused on full-stack development and building practical, scalable software products.",
+    "I work primarily with React, Next.js, TypeScript and Node.js, developing everything from modern web applications to SaaS platforms. I enjoy turning ideas into real products, designing clean architectures and solving problems that matter to users.",
+    "I also founded NextApps, a small digital product studio. Lately we ship Persian-first products end to end, like Dofixo, a multi-tenant SaaS for repair workshops, and Finora, a self-hosted finance manager on the Jalali calendar.",
   ],
+  // What I'm building and exploring right now.
+  focus: [
+    "Full-stack web applications and SaaS products",
+    "AI-powered applications and developer workflows",
+    "Scalable backend systems and APIs",
+    "Open-source projects and product development",
+  ],
+  stack: ["React", "Next.js", "TypeScript", "Node.js", "Express", "PostgreSQL", "Prisma", "Docker"],
+  motto: "Always learning, building, and turning ideas into products.",
 };
 
 // Persian overrides, merged over `profile` when the site is in Persian.
 export const profileFa = {
   name: "رضا عبداللهی",
   firstName: "رضا",
-  role: "توسعه‌دهنده فرانت‌اند",
-  headline: "توسعه‌دهنده فرانت‌اند؛ محصولات فول‌استک با React، Next.js و Node.js می‌سازم",
+  role: "مهندس نرم‌افزار",
+  headline: "مهندس نرم‌افزار | توسعه فول‌استک و ساخت محصول",
   location: "تهران، ایران",
-  availability: "آماده همکاری فریلنس و تمام‌وقت در نقش فرانت‌اند",
+  availability: "آماده همکاری فریلنس و تمام‌وقت در نقش فول‌استک",
   education: "دانش‌آموخته مهندسی نرم‌افزار",
   summary: [
-    "توسعه‌دهنده فرانت‌اند هستم، ساکن تهران، و رابط کاربری را کمی بیش از حد جدی می‌گیرم. با React، Next.js و TypeScript وب‌اپ‌های سریع، واکنش‌گرا و کاربرمحور می‌سازم و هر وقت محصول لازم داشته باشد، فول‌استک کار می‌کنم.",
-    "بنیان‌گذار NextApps هستم؛ یک استودیوی کوچک توسعه محصولات دیجیتال. این روزها محصولات فارسی‌محور را از صفر تا انتشار می‌سازیم: دوفیکسو، یک SaaS چندمستاجره برای تعمیرگاه‌ها، و Finora، برنامه مدیریت مالی‌ای که روی سرور خودتان اجرا می‌شود.",
+    "مهندس نرم‌افزار هستم و روی توسعه فول‌استک و ساخت محصولات نرم‌افزاری کاربردی و مقیاس‌پذیر تمرکز دارم.",
+    "بیشتر با React، Next.js، TypeScript و Node.js کار می‌کنم و از وب‌اپلیکیشن‌های مدرن تا پلتفرم‌های SaaS می‌سازم. از تبدیل ایده به محصول واقعی، طراحی معماری تمیز و حل مسئله‌هایی که برای کاربر مهم‌اند لذت می‌برم.",
+    "بنیان‌گذار NextApps هم هستم؛ یک استودیوی کوچک توسعه محصولات دیجیتال. این روزها محصولات فارسی‌محور را از صفر تا انتشار می‌سازیم، مثل دوفیکسو، یک SaaS چندمستاجره برای تعمیرگاه‌ها، و Finora، برنامه مدیریت مالی‌ای که روی سرور خودتان اجرا می‌شود.",
   ],
+  focus: [
+    "وب‌اپلیکیشن‌های فول‌استک و محصولات SaaS",
+    "اپلیکیشن‌های مبتنی بر هوش مصنوعی و جریان‌های کاری توسعه‌دهنده‌ها",
+    "سیستم‌های بک‌اند و APIهای مقیاس‌پذیر",
+    "پروژه‌های متن‌باز و توسعه محصول",
+  ],
+  motto: "همیشه در حال یادگیری، ساختن و تبدیل ایده به محصول.",
 };
 
 export const socials = [
@@ -43,12 +62,6 @@ export const socials = [
     label: "GitHub",
     handle: "@Rezaabdollahi7",
     href: "https://github.com/Rezaabdollahi7",
-  },
-  {
-    id: "linkedin",
-    label: "LinkedIn",
-    handle: "seyedreza-abdollahi",
-    href: "https://www.linkedin.com/in/seyedreza-abdollahi",
   },
   {
     id: "telegram",
@@ -88,9 +101,9 @@ export const skills = [
   { category: "Motion", items: ["GSAP", "Framer Motion", "Three.js"] },
   {
     category: "Backend",
-    items: ["Node.js", "Express", "Prisma", "Socket.io", "Zod"],
+    items: ["Node.js", "Express", "NestJS", "Prisma", "TypeORM", "Socket.io", "Zod"],
   },
-  { category: "Database", items: ["PostgreSQL", "MongoDB"] },
+  { category: "Database", items: ["PostgreSQL", "Redis", "MongoDB"] },
   {
     category: "DevOps",
     items: ["Docker", "Nginx", "Caddy", "Git", "GitHub"],

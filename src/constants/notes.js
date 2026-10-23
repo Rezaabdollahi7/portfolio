@@ -15,11 +15,17 @@ export const notes = [
       { type: "h1", text: `hey, I'm ${profile.firstName}` },
       {
         type: "p",
-        text: "I'm a frontend developer in Tehran. I build fast, responsive web apps with React, Next.js and TypeScript, and I go full-stack (Node.js, PostgreSQL, Docker) when a product needs it.",
+        text: profile.summary[0],
       },
       {
         type: "p",
-        text: "I care about the details people feel but rarely notice: how a window settles when you drop it, whether a number lines up, how an RTL layout handles a Jalali date.",
+        text: profile.summary[1],
+      },
+      { type: "h2", text: "currently building and exploring" },
+      { type: "ul", items: profile.focus },
+      {
+        type: "p",
+        text: `Tech stack: ${profile.stack.join(" · ")}`,
       },
       { type: "h2", text: "right now" },
       {
@@ -28,14 +34,15 @@ export const notes = [
           "Founded and run [NextApps](app:safari/nextapps), a small digital product studio.",
           "Running [Dofixo](app:safari/dofixo), a multi-tenant SaaS for repair workshops.",
           "Building [Finora](app:safari/finora), an open-source, self-hosted finance manager.",
+          "Shipped a [secure multi-tenant assessment dashboard](app:safari/assessment) with NestJS and Next.js.",
         ],
       },
+      { type: "p", text: profile.motto },
       { type: "h2", text: "elsewhere" },
       {
         type: "ul",
         items: [
           "[GitHub](https://github.com/Rezaabdollahi7)",
-          "[LinkedIn](https://www.linkedin.com/in/seyedreza-abdollahi)",
           "[Telegram](https://t.me/rezaabdollahi7)",
           `[${profile.email}](mailto:${profile.email})`,
         ],
@@ -142,11 +149,17 @@ export const notesFa = [
       { type: "h1", text: `سلام، من ${profileFa.firstName} هستم` },
       {
         type: "p",
-        text: "توسعه‌دهنده فرانت‌اند هستم، ساکن تهران. با React، Next.js و TypeScript وب‌اپ‌های سریع و واکنش‌گرا می‌سازم و هر وقت محصول لازم داشته باشد، فول‌استک (Node.js، PostgreSQL و Docker) کار می‌کنم.",
+        text: profileFa.summary[0],
       },
       {
         type: "p",
-        text: "به جزئیاتی اهمیت می‌دهم که آدم‌ها حسشان می‌کنند ولی کمتر به چشمشان می‌آید: اینکه پنجره بعد از رها کردن چطور سر جایش می‌نشیند، اینکه عددها درست زیر هم قرار می‌گیرند یا نه، و اینکه چیدمان راست‌به‌چپ با تاریخ شمسی چطور کنار می‌آید.",
+        text: profileFa.summary[1],
+      },
+      { type: "h2", text: "در حال ساخت و یادگیری" },
+      { type: "ul", items: profileFa.focus },
+      {
+        type: "p",
+        text: `تکنولوژی‌ها: ${profile.stack.join(" · ")}`,
       },
       { type: "h2", text: "این روزها" },
       {
@@ -155,14 +168,15 @@ export const notesFa = [
           "بنیان‌گذار [NextApps](app:safari/nextapps) هستم؛ یک استودیوی کوچک توسعه محصولات دیجیتال.",
           "[دوفیکسو](app:safari/dofixo) را اداره می‌کنم؛ یک SaaS چندمستاجره برای تعمیرگاه‌ها.",
           "[Finora](app:safari/finora) را می‌سازم؛ برنامه متن‌باز مدیریت مالی که روی سرور خودتان اجرا می‌شود.",
+          "یک [داشبورد ارزیابی امنیتی چندمستاجره](app:safari/assessment) با NestJS و Next.js ساختم.",
         ],
       },
+      { type: "p", text: profileFa.motto },
       { type: "h2", text: "جاهای دیگر" },
       {
         type: "ul",
         items: [
           "[گیت‌هاب](https://github.com/Rezaabdollahi7)",
-          "[لینکدین](https://www.linkedin.com/in/seyedreza-abdollahi)",
           "[تلگرام](https://t.me/rezaabdollahi7)",
           `[${profile.email}](mailto:${profile.email})`,
         ],

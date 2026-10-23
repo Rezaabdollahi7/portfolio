@@ -140,9 +140,14 @@ const MobileHome = () => {
             onClick={() => openWindow("notes", { noteId: "about" })}
           >
             <span className="ios-profile-top">
-              <span className="contact-avatar is-small" aria-hidden="true">
-                {profile.initials}
-              </span>
+              <img
+                className="contact-avatar is-small"
+                src="/images/profile/reza-128.webp"
+                alt=""
+                width="46"
+                height="46"
+                decoding="async"
+              />
               <span className="availability is-compact">
                 <span className="availability-dot" aria-hidden="true" />
                 {t("mobile.available")}

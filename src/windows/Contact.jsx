@@ -1,11 +1,11 @@
-import { Copy, Github, Linkedin, Mail, MessageCircle, Phone, Send } from "lucide-react";
+import { Copy, Github, Mail, MessageCircle, Phone, Send } from "lucide-react";
 import WindowHeader from "../components/window/WindowHeader";
 import { useNow } from "../hooks/useNow";
 import { copyEmail, openWindow } from "../lib/actions";
 import { useContent } from "../i18n/content";
 import { formatDate, useLocale, useT } from "../i18n";
 
-const ICONS = { github: Github, linkedin: Linkedin, telegram: Send, email: Mail };
+const ICONS = { github: Github, telegram: Send, email: Mail };
 
 const Contact = () => {
   const now = useNow();
@@ -25,9 +25,14 @@ const Contact = () => {
       <WindowHeader title={t("contact.title")} />
       <div className="window-body contact-card">
         <div className="contact-hero">
-          <div className="contact-avatar" aria-hidden="true">
-            {profile.initials}
-          </div>
+          <img
+            className="contact-avatar"
+            src="/images/profile/reza-256.webp"
+            alt={profile.name}
+            width="96"
+            height="96"
+            decoding="async"
+          />
           <h1 className="contact-name">{profile.name}</h1>
           <p className="contact-role">
             {profile.role} · {profile.location}
