@@ -2,19 +2,21 @@ import { profile, projects, skills, socials } from "#constants";
 
 // The resume, as a document. Rendered in the Resume window and as the
 // print/PDF version. Only facts that appear elsewhere on this site.
-const RESUME_PROJECTS = ["dofixo", "finora", "nextapps", "siemanage", "siemenspart", "dashstack"];
+const RESUME_PROJECTS = ["dofixo", "finora", "assessment", "nextapps", "siemanage", "dashstack"];
 
 const ResumeDocument = () => {
   const items = RESUME_PROJECTS.map((id) => projects.find((p) => p.id === id));
   const github = socials.find((s) => s.id === "github");
-  const linkedin = socials.find((s) => s.id === "linkedin");
 
   return (
     <div className="resume-doc">
       <div className="resume-head">
-        <div>
-          <h1>{profile.name}</h1>
-          <p className="resume-role">{profile.role}</p>
+        <div className="resume-id">
+          <img className="resume-photo" src="/images/profile/reza-256.webp" alt="" width="72" height="72" />
+          <div>
+            <h1>{profile.name}</h1>
+            <p className="resume-role">{profile.headline}</p>
+          </div>
         </div>
         <ul className="resume-contact">
           <li>{profile.location}</li>
@@ -30,20 +32,21 @@ const ResumeDocument = () => {
           <li>
             <a href={github.href}>github.com/Rezaabdollahi7</a>
           </li>
-          <li>
-            <a href={linkedin.href}>linkedin.com/in/{linkedin.handle}</a>
-          </li>
         </ul>
       </div>
 
       <section>
         <h2>Profile</h2>
         <p>
-          Frontend developer and founder of NextApps, a small digital product
-          studio. Builds fast, responsive, user-centric web apps with React,
-          Next.js and TypeScript, and goes full-stack with Node.js, PostgreSQL
-          and Docker when the product needs it. Focused on Persian-first,
-          right-to-left products with careful interaction detail.
+          Software Engineer focused on full-stack development and building
+          practical, scalable software products, and founder of NextApps, a small
+          digital product studio. Works primarily with React, Next.js,
+          TypeScript and Node.js, from modern web applications to SaaS
+          platforms: turning ideas into real products, designing clean
+          architectures and solving problems that matter to users.
+        </p>
+        <p className="resume-focus">
+          <strong>Currently building and exploring:</strong> {profile.focus.join(" · ")}.
         </p>
       </section>
 

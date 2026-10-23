@@ -2912,6 +2912,7 @@ html[lang="fa"] {
     font-weight: 600;
     letter-spacing: 0.02em;
     box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25);
+    object-fit: cover;
 
     &.is-small {
       width: 46px;
@@ -3134,6 +3135,24 @@ html[lang="fa"] {
   .resume-role {
     font-size: 14px;
     color: #4a4a50;
+  }
+
+  .resume-id {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .resume-photo {
+    width: 72px;
+    height: 72px;
+    border-radius: 999px;
+    object-fit: cover;
+    flex: none;
+  }
+
+  .resume-focus {
+    margin-top: 6px;
   }
 
   .resume-doc .resume-contact {
@@ -4733,6 +4752,7 @@ html[lang="fa"] {
     font-size: 10px;
     font-weight: 700;
     flex: none;
+    object-fit: cover;
   }
 
   .mail-chip-email {

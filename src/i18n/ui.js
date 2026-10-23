@@ -165,6 +165,7 @@ export const ui = {
     "projects.openShot": "Open screenshot {n}",
     "status.Live": "Live",
     "status.Open source": "Open source",
+    "status.Private": "Private",
 
     "notes.title": "Notes",
     "notes.search": "Search",
@@ -483,6 +484,7 @@ export const ui = {
     "projects.openShot": "باز کردن تصویر {n}",
     "status.Live": "فعال",
     "status.Open source": "متن‌باز",
+    "status.Private": "خصوصی",
 
     "notes.title": "یادداشت‌ها",
     "notes.search": "جستجو",
