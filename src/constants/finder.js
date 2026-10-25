@@ -15,10 +15,10 @@ export const finderLabels = {
     resumeFile: "Resume.pdf",
     trashReadme: "why-these-are-here.txt",
     trashTitle: "Why these are here",
-    trashSubtitle: "Old experiments, kept for nostalgia",
+    trashSubtitle: "An old experiment, kept for nostalgia",
     trashBody: [
-      "These are some of my first projects from 2023 and 2024: static HTML sites and early React experiments.",
-      "They taught me a lot, but they don't represent how I build today, so they live in the Trash. The repos are still on GitHub if you're curious.",
+      "A university assignment from 2024: a small tool that minimises deterministic finite automata (DFAs).",
+      "It taught me a lot, but it doesn't represent how I build today, so it lives in the Trash. My other early experiments are gone for good.",
     ],
   },
   fa: {
@@ -34,10 +34,10 @@ export const finderLabels = {
     resumeFile: "رزومه.pdf",
     trashReadme: "چرا-اینجا-هستند.txt",
     trashTitle: "چرا این‌ها اینجا هستند",
-    trashSubtitle: "آزمایش‌های قدیمی، به یادگار",
+    trashSubtitle: "یک آزمایش قدیمی، به یادگار",
     trashBody: [
-      "این‌ها جزو اولین پروژه‌هایم در سال‌های ۲۰۲۳ و ۲۰۲۴ هستند: سایت‌های HTML استاتیک و آزمایش‌های اولیه با React.",
-      "چیزهای زیادی از آن‌ها یاد گرفتم، اما نشان نمی‌دهند امروز چطور کار می‌کنم؛ برای همین در سطل زباله‌اند. اگر کنجکاوید، مخزن‌هایشان هنوز در گیت‌هاب هست.",
+      "یک تمرین دانشگاهی از سال ۲۰۲۴: ابزاری کوچک برای کمینه‌سازی ماشین‌های متناهی قطعی (DFA).",
+      "چیزهای زیادی از آن یاد گرفتم، اما نشان نمی‌دهد امروز چطور کار می‌کنم؛ برای همین در سطل زباله است. بقیه آزمایش‌های اولیه‌ام را کامل پاک کرده‌ام.",
     ],
   },
 };
