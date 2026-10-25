@@ -151,6 +151,7 @@ export const ui = {
     "projects.allProjects": "All projects",
     "projects.overview": "Overview",
     "projects.highlights": "Highlights",
+    "projects.features": "What it does",
     "projects.screens": "Screens",
     "projects.type": "Type",
     "projects.year": "Year",
@@ -165,7 +166,6 @@ export const ui = {
     "projects.openShot": "Open screenshot {n}",
     "status.Live": "Live",
     "status.Open source": "Open source",
-    "status.Private": "Private",
 
     "notes.title": "Notes",
     "notes.search": "Search",
@@ -470,6 +470,7 @@ export const ui = {
     "projects.allProjects": "همه پروژه‌ها",
     "projects.overview": "معرفی",
     "projects.highlights": "نکات برجسته",
+    "projects.features": "قابلیت‌ها",
     "projects.screens": "تصاویر",
     "projects.type": "نوع",
     "projects.year": "سال",
@@ -484,7 +485,6 @@ export const ui = {
     "projects.openShot": "باز کردن تصویر {n}",
     "status.Live": "فعال",
     "status.Open source": "متن‌باز",
-    "status.Private": "خصوصی",
 
     "notes.title": "یادداشت‌ها",
     "notes.search": "جستجو",

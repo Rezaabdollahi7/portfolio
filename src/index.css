@@ -2390,6 +2390,37 @@ html[lang="fa"] {
     }
   }
 
+  /* Optional per-project feature grid ("What it does"). */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+
+    @container (max-width: 560px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .feature {
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    box-shadow: 0 0 0 0.5px var(--line);
+
+    dt {
+      font-size: 14px;
+      font-weight: 650;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    dd {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text-2);
+    }
+  }
+
   .detail-aside {
     align-self: start;
     padding: 18px;
@@ -2449,6 +2480,16 @@ html[lang="fa"] {
     &:hover img {
       transform: scale(1.02);
     }
+  }
+
+  .shot-caption {
+    display: block;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    color: var(--text-2);
+    text-align: start;
+    background: var(--surface-2);
+    border-top: 0.5px solid var(--line);
   }
 
   .next-project {
@@ -3142,6 +3183,14 @@ html[lang="fa"] {
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 12px 24px;
+  }
+
+  .resume-link {
+    margin-inline-start: 6px;
+    font-size: 0.85em;
+    font-weight: 400;
+    color: #1f5fcc;
+    text-decoration: none;
   }
 
   .resume-role {

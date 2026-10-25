@@ -92,6 +92,22 @@ const ProjectDetail = ({ project, onBack, onOpen }) => {
             ))}
           </section>
 
+          {project.features?.length > 0 && (
+            <section aria-labelledby="features">
+              <h2 id="features" className="section-title">
+                {t("projects.features")}
+              </h2>
+              <dl className="features">
+                {project.features.map((f) => (
+                  <div key={f.title} className="feature">
+                    <dt>{f.title}</dt>
+                    <dd>{f.text}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          )}
+
           <section aria-labelledby="highlights">
             <h2 id="highlights" className="section-title">
               {t("projects.highlights")}
@@ -147,9 +163,10 @@ const ProjectDetail = ({ project, onBack, onOpen }) => {
               type="button"
               className="shot"
               onClick={() => setLightbox(i)}
-              aria-label={t("projects.openShot", { n: i + 1 })}
+              aria-label={project.captions?.[i] ?? t("projects.openShot", { n: i + 1 })}
             >
               <img src={src} alt="" loading="lazy" decoding="async" />
+              {project.captions?.[i] && <span className="shot-caption">{project.captions[i]}</span>}
             </button>
           ))}
         </div>

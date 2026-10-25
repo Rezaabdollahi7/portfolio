@@ -34,7 +34,7 @@ with the Jalali calendar, at [`/fa/`](https://srezadev.ir/fa/).
 | **Projects** (Safari) | Case studies for each project with tabs, back/forward history, filters, screenshots and a lightbox. Pages are deep-linkable: `srezadev.ir/#/projects/dofixo` |
 | **Notes** | The "about me", what I'm building, my stack and the site roadmap, in an Apple Notes layout with search |
 | **Terminal** | A zsh-like shell over a virtual filesystem built from the site's data: `ls -la`, `cd dofixo`, `cat README.md`, `tree`, `find`, `grep -rn`, `open .`, pipes, `&&`, `>` redirects, globs, Tab completion, history and `neofetch` |
-| **Finder** | Every project as a folder with its write-up, links and screenshots. Old experiments live in the Trash |
+| **Finder** | Every project as a folder with its write-up, links and screenshots. An old university experiment lives in the Trash |
 | **Photos** | Albums of screenshots, one per project |
 | **VS Code** | The site's own data as code, with a small syntax highlighter, file search and source control panel |
 | **Mail** | A compose window that sends a message straight to my inbox, with validation, a saved draft and spam protection |
@@ -71,10 +71,10 @@ activity** (the contribution graph and my latest commits).
 | --- | --- |
 | [Dofixo](https://dofixo.ir) | Multi-tenant SaaS for repair workshops: React 19, Node.js, PostgreSQL with row-level security, Prisma |
 | [Finora](https://github.com/Rezaabdollahi7/Finora) | Self-hosted, Persian-first household finance manager: Next.js, Prisma, PostgreSQL, Three.js |
-| Secure Assessment Dashboard | Multi-tenant, role-based security findings tracker: NestJS, PostgreSQL, Redis, Next.js 16 |
+| [Secure Assessment Dashboard](https://github.com/Rezaabdollahi7/Multi-Tenant-Assessment) | Multi-tenant, role-based security findings tracker: NestJS, PostgreSQL, Redis, Next.js 16 |
 | [NextApps](https://nextapps.ir) | The digital product studio I founded: Next.js, TypeScript |
 | [SieManage](https://siemanage.com) | Real-time task management for teams: React, Express, PostgreSQL, Socket.io |
-| [Siemenspart](https://github.com/Rezaabdollahi7/siemenspart-landing) | Catalogue site for industrial CNC parts: Astro, React, Fuse.js |
+| [Siemenspart](https://siemenspart-landing.vercel.app) | Catalogue site for industrial CNC parts: Astro, React, Fuse.js |
 | [DashStack](https://github.com/Rezaabdollahi7/DashStack) | Open-source admin dashboard template: React, Material UI, Tailwind CSS 4 |
 | [Maliko](https://github.com/Rezaabdollahi7/maliko-landing) | Landing page for an SMS-powered finance app: Next.js, GSAP, Lottie |
 

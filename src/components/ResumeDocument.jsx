@@ -6,6 +6,7 @@ import { profile, socials } from "#constants";
 const PROJECTS = [
   {
     title: "Dofixo",
+    link: "app.dofixo.ir",
     kind: "Multi-tenant SaaS",
     year: "2026",
     summary:
@@ -18,6 +19,7 @@ const PROJECTS = [
   },
   {
     title: "Finora",
+    link: "github.com/Rezaabdollahi7/Finora",
     kind: "Open-source product",
     year: "2026",
     summary:
@@ -30,6 +32,7 @@ const PROJECTS = [
   },
   {
     title: "Secure Assessment Dashboard",
+    link: "github.com/Rezaabdollahi7/Multi-Tenant-Assessment",
     kind: "Full-stack app",
     year: "2026",
     summary:
@@ -42,6 +45,7 @@ const PROJECTS = [
   },
   {
     title: "NextApps",
+    link: "nextapps.ir",
     kind: "Founder · Studio website",
     year: "2026",
     summary:
@@ -51,6 +55,7 @@ const PROJECTS = [
   },
   {
     title: "SieManage",
+    link: "siemanage.com",
     kind: "Full-stack app",
     year: "2025",
     summary:
@@ -117,6 +122,14 @@ const ResumeDocument = () => {
             <div className="resume-item-head">
               <h3>
                 {p.title} <span>· {p.kind}</span>
+                {p.link && (
+                  <>
+                    {" "}
+                    <a className="resume-link" href={`https://${p.link}`}>
+                      {p.link}
+                    </a>
+                  </>
+                )}
               </h3>
               <span className="resume-year">{p.year}</span>
             </div>
